@@ -1,0 +1,53 @@
+.carousel-card {
+  margin-right: 10px; /* Sesuaikan dengan jarak yang diinginkan */
+}
+
+.slider {
+  margin: 0 20px;
+  overflow: "hidden";
+  padding: 2rem 0;
+}
+
+.slider img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.react-multi-carousel-list {
+  padding: 0rem 0 2rem 0;
+}
+
+.custom-dot-list-style button {
+  border: none;
+  background: rgb(255, 68, 68);
+}
+.react-multi-carousel-dot.react-multi-carousel-dot--active button {
+  background: rgb(255, 68, 68) !important;
+}
+
+.rtl.react-multiple-carousel__arrow--left {
+  left: 0;
+  right: auto; /* Pastikan right diatur ke auto untuk mengabaikan pengaturan right sebelumnya */
+}
+
+/* Set tombol "right" pada posisi kanan */
+.rtl.react-multiple-carousel__arrow--right {
+  right: 0;
+  left: auto; /* Pastikan left diatur ke auto untuk mengabaikan pengaturan left sebelumnya */
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
