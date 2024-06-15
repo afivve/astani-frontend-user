@@ -51,9 +51,7 @@ const Login = () => {
                 </div>
                 <div className="flex flex-col">
                   <div className="flex justify-between items-center">
-                    <label className="font-Poppins text-[15px] mb-[4px]">
-                      Password
-                    </label>
+                    <label className="font-Poppins text-[15px] mb-[4px]">Password</label>
                   </div>
                   <div className="relative ">
                     <input
@@ -84,15 +82,13 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="flex items-center justify-center w-full font-Poppins bg-YELLOW05 text-white py-[10px] rounded-xl mt-5 hover:bg-YELLOW05 font-bold shadow-md"
+                className="flex items-center justify-center w-full font-Poppins bg-GREEN01 text-white py-[10px] rounded-xl mt-5 hover:bg-YELLOW05 font-bold shadow-md"
               >
                 {isLoading ? <SpinnerLoading /> : <span>Masuk</span>}
               </button>
             </form>
             <div className="flex justify-center items-center gap-2 mt-6">
-              <h1 className="font-Poppins text-[14px] font-normal">
-                Belum punya akun?
-              </h1>
+              <h1 className="font-Poppins text-[14px] font-normal">Belum punya akun?</h1>
               <Link
                 to="/register"
                 className="font-Poppins text-DARKBLUE05 text-[14px] font-bold transition duration-300 ease-in-out hover:underline hover:border-DARKBLUE05"

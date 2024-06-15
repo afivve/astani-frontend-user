@@ -1,38 +1,16 @@
 /* import { useState } from "react"; */
 import { /* useNavigate, useSearchParams, */ NavLink, Link } from "react-router-dom";
 import { FaArrowRightToBracket } from "react-icons/fa6";
-import { TfiMenuAlt } from "react-icons/tfi";
+
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsFillPersonFill } from "react-icons/bs";
 import PropTypes from "prop-types";
 import Persone from "../../assets/persone_plus.svg";
 import { FaHome } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
+import { MdForum } from "react-icons/md";
 
 const Desktop = ({ user }) => {
-  /* const [searchParams] = useSearchParams(); */
-  /* const query = searchParams.get("query"); */
-
-  /* const [keyword, setKeyword] = useState(query || "");
-  const navigate = useNavigate(); */
-
-  //searching kelas
-/*   const onSubmitHandler = (event) => {
-    event.preventDefault();
-
-    const searchQuery = keyword.trim();
-    if (searchQuery === "") {
-      // Jika input kosong, arahkan ke halaman beranda atau URL yang sesuai.
-      navigate("/");
-    } else {
-      const searchUrl = `/search-course/${searchQuery}`;
-      navigate(searchUrl);
-    }
-  }; */
-
-  /* const onKeywordChangeHandler = (event) => {
-    setKeyword(event.target.value);
-  }; */
-
   return (
     <>
       <nav className="hidden  sm:block bg-white drop-shadow-lg ">
@@ -40,10 +18,10 @@ const Desktop = ({ user }) => {
         <div className="container flex justify-between mx-auto py-4 bg-white">
           <NavLink to="/" className="flex flex-row text-2xl font-bold">
             <p className="text-BLUE05">As</p>
-            <p className="text-YELLOW05">Tani</p>
+            <p className="text-GREEN01">Tani</p>
           </NavLink>
 
-{/*           <form action="search" onSubmit={onSubmitHandler}>
+          {/*           <form action="search" onSubmit={onSubmitHandler}>
             <div className="relative md:w-64 lg:w-96">
               <svg
                 // xmlns="http://www.w3.org/2000/svg"
@@ -77,27 +55,37 @@ const Desktop = ({ user }) => {
                   to="/"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center rounded-[4px] bg-YELLOW05 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Beranda']"
+                      ? "flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Beranda']"
                       : "px-2"
                   }
                 >
                   <FaHome className="text-lg" />
                 </NavLink>
                 <NavLink
-                  to="/"
+                  to="/identifikasi"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center rounded-[4px] bg-YELLOW05 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Kelas']"
+                      ? "flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Identifikasi']"
                       : "px-2"
                   }
                 >
-                  <TfiMenuAlt className="text-sm" />
+                  <FaCamera className="text-sm" />
+                </NavLink>
+                <NavLink
+                  to="/discussion"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Forum']"
+                      : "px-2"
+                  }
+                >
+                  <MdForum className="text-sm" />
                 </NavLink>
                 <NavLink
                   to="/notification"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center rounded-[4px] bg-YELLOW05 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Notifikasi']"
+                      ? "flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Notifikasi']"
                       : "px-2"
                   }
                 >
@@ -107,7 +95,7 @@ const Desktop = ({ user }) => {
                   to="/profile"
                   className={({ isActive }) =>
                     isActive
-                      ? "flex items-center rounded-[4px] bg-YELLOW05 text-white gap-2 h-full pl-2.5 pr-3.5 after:content-['Akun']"
+                      ? "flex items-center rounded-[4px] bg-GREEN01 text-white gap-2 h-full pl-2.5 pr-3.5 after:content-['Akun']"
                       : "px-2"
                   }
                 >
@@ -119,7 +107,7 @@ const Desktop = ({ user }) => {
                 <div className="">
                   <Link
                     to="/login"
-                    className=" h-full flex bg-YELLOW05 shadow-md text-white px-2 py-1 rounded-md items-center gap-2 text-base"
+                    className=" h-full flex bg-GREEN01 shadow-md text-white px-2 py-1 rounded-md items-center gap-2 text-base"
                     // onClick={onLogin}
                   >
                     <FaArrowRightToBracket />
@@ -129,7 +117,7 @@ const Desktop = ({ user }) => {
                 <div className="">
                   <Link
                     to="/register"
-                    className=" h-full flex border-2 shadow-md border-YELLOW05 text-white px-2 py-1 rounded-md items-center gap-2 text-base"
+                    className=" h-full flex border-2 shadow-md bg-GREEN01 text-white px-2 py-1 rounded-md items-center gap-2 text-base"
                     // onClick={onLogin}
                   >
                     <img src={Persone} />

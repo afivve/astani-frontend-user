@@ -9,12 +9,9 @@ import {
 import { Link, useParams } from "react-router-dom";
 import AddDiscussion from "../../components/modal/AddDiscussion";
 import PaginationDiscussion from "./PaginationDiscussion";
-import { BiFilter } from "react-icons/bi";
 export default function DiscussionPage() {
   const { getData } = useSelector((state) => state.course);
   const { discussion } = useSelector((state) => state.course);
-  const [closed, setClosed] = useState([]);
-  const [active, setActive] = useState([]);
   const [search, setSearch] = useState("");
   const { id } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -22,44 +19,45 @@ export default function DiscussionPage() {
   const [idDiskusi, setIdDiskusi] = useState(null);
   const { user } = useSelector((state) => state.auth);
 
-  const handleClosed = (value) => {
-    setClosed((prevSelected) => {
-      if (prevSelected.includes(value)) {
-        // If value is already in the array, remove it
-        return prevSelected.filter((item) => item !== value);
-      } else {
-        // Otherwise, add it to the array
-        return [...prevSelected, value];
-      }
-    });
-    setActive([]);
-  };
+  // const handleClosed = (value) => {
+  //   setClosed((prevSelected) => {
+  //     if (prevSelected.includes(value)) {
+  //       // If value is already in the array, remove it
+  //       return prevSelected.filter((item) => item !== value);
+  //     } else {
+  //       // Otherwise, add it to the array
+  //       return [...prevSelected, value];
+  //     }
+  //   });
+  //   setActive([]);
+  // };
+
   const handleEdit = (discussionId) => {
     setShowModal(true);
     dispatch(editDiscussion(id, discussionId));
     setIdDiskusi(discussionId);
   };
-  const handleActive = (value) => {
-    setActive((prevSelected) => {
-      if (prevSelected.includes(value)) {
-        // If value is already in the array, remove it
-        return prevSelected.filter((item) => item !== value);
-      } else {
-        // Otherwise, add it to the array
-        return [...prevSelected, value];
-      }
-    });
-    setClosed([]);
-  };
+  // const handleActive = (value) => {
+  //   setActive((prevSelected) => {
+  //     if (prevSelected.includes(value)) {
+  //       // If value is already in the array, remove it
+  //       return prevSelected.filter((item) => item !== value);
+  //     } else {
+  //       // Otherwise, add it to the array
+  //       return [...prevSelected, value];
+  //     }
+  //   });
+  //   setClosed([]);
+  // };
   const handleSelesai = (id, idDiskusi) => {
     dispatch(Selesai(id, idDiskusi));
   };
   const dispatch = useDispatch();
   useEffect(() => {
     if (id) {
-      dispatch(getDiscussion(closed, active, search, id, pageNumber));
+      dispatch(getDiscussion(search, id, pageNumber));
     }
-  }, [dispatch, closed, active, search, id, pageNumber]);
+  }, [dispatch, search, id, pageNumber]);
 
   return (
     <div>
@@ -74,9 +72,9 @@ export default function DiscussionPage() {
                 </div>
 
                 <h3 className="text-gray-800 text-xl font-semibold">
-                  Selamat Datang Di Forum Diskusi Kelas
+                  Selamat Datang Di Forum Diskusi AsTani
                 </h3>
-                <p className="text-gray-600">Konsultasi seputar materi anda</p>
+                <p className="text-gray-600">Konsultasi seputar penyakit tanaman anda</p>
               </div>
             </div>
           </div>
@@ -87,7 +85,7 @@ export default function DiscussionPage() {
           <div className="p-5 flex flex-row md:justify-between gap-8 ">
             <div className="hidden w-1/5 md:flex flex-col gap-y-4 sticky top-[3vh] h-[10vh]">
               <button
-                className="w-full bg-YELLOW05 text-white p-2 rounded-lg hover:bg-yellow-500 drop-shadow-xl font-semibold"
+                className="w-full bg-GREEN01 text-white p-2 rounded-lg  drop-shadow-xl font-semibold"
                 type="button"
                 onClick={() => setShowModal(true)}
               >
@@ -100,7 +98,7 @@ export default function DiscussionPage() {
                 idDiskusi={idDiskusi}
                 setIdDiskusi={setIdDiskusi}
               />
-              <div className="rounded-lg border-black-200 border-2 p-2 divide-y divide-slate-200 ">
+              {/* <div className="rounded-lg border-black-200 border-2 p-2 divide-y divide-slate-200 ">
                 <div>
                   <p className="font-semibold">Filter Berdasarkan</p>
                   <div className="my-2">
@@ -130,7 +128,7 @@ export default function DiscussionPage() {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="w-full md:w-4/5 flex flex-col gap-y-4">
               {showModal == false && (
@@ -144,19 +142,19 @@ export default function DiscussionPage() {
                     </div>
                     <div className="flex flex-row gap-3">
                       <button
-                        className="md:hidden w-auto bg-YELLOW05 text-white p-1 rounded-lg hover:bg-yellow-500 drop-shadow-xl font-semibold"
+                        className="md:hidden w-auto bg-GREEN01 text-white p-1 rounded-lg  drop-shadow-xl font-semibold"
                         type="button"
                         onClick={() => setShowModal(true)}
                       >
                         Buat Diskusi Baru
                       </button>
-                      <button
+                      {/* <button
                         className="flex items-center md:hidden w-auto bg-white text-YELLOW05 p-1 rounded-lg hover:bg-yellow-100 border-2 border-YELLOW05 drop-shadow-xl font-semibold"
                         type="button"
                         onClick={() => setShowModal(true)}
                       >
                         <BiFilter /> filter
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                   <input
@@ -179,9 +177,7 @@ export default function DiscussionPage() {
                             src={item.userPhoto}
                             alt=""
                           />
-                          <h3 className="font-semibold text-lg">
-                            {item.username}
-                          </h3>
+                          <h3 className="font-semibold text-lg">{item.username}</h3>
                           <p className="font-gray-100 text-xs">
                             {new Date(item.cretedAt).toLocaleString()}
                           </p>
@@ -204,18 +200,15 @@ export default function DiscussionPage() {
                       </div>
                       <div className="flex flex-wrap mt-6 gap-5">
                         <div className="flex flex-row gap-2 items-center">
-                          {item.closed == false &&
-                            user?.name === item.username && (
-                              <button
-                                type="button"
-                                className="text-white text-xs font-Montserrat font-bold flex flex-row gap-1 items-center bg-YELLOW05 border-2 p-1 border-YELLOW05 rounded-sm w-auto "
-                                onClick={() =>
-                                  handleSelesai(id, item.discussionId)
-                                }
-                              >
-                                Selesai
-                              </button>
-                            )}
+                          {item.closed == false && user?.name === item.username && (
+                            <button
+                              type="button"
+                              className="text-white text-xs font-Montserrat font-bold flex flex-row gap-1 items-center bg-YELLOW05 border-2 p-1 border-YELLOW05 rounded-sm w-auto "
+                              onClick={() => handleSelesai(id, item.discussionId)}
+                            >
+                              Selesai
+                            </button>
+                          )}
                           {user?.name === item.username && (
                             <button
                               type="button"
@@ -229,9 +222,7 @@ export default function DiscussionPage() {
                           )}
                           <div className="flex flex-row gap-1 items-center font-semibold">
                             <img className="w-5" src={chat} alt="" />
-                            <Link
-                              to={`/detailDiscussion/${id}/${item.discussionId}`}
-                            >
+                            <Link to={`/detailDiscussion/${id}/${item.discussionId}`}>
                               <p className="text-gray-500">
                                 {item.totalComments} Pembahasan
                               </p>

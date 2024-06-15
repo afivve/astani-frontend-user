@@ -40,7 +40,7 @@ export default {
         LightBlue5: "#EBF3FC",
         LightBlue4: "#489CFF",
         DEEPGRAY: "#8A8A8A",
-        YELLOW05: "#10b981",
+        GREEN01: "#10b981",
         YELLOW04: "#34d399",
         BLUE05: "#1e293b",
         WHITE05: "#FDFDFD",

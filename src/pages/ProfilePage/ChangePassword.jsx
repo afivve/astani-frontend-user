@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import EditeIcon from "../../assets/edit.svg";
 import SettingIcon from "../../assets/setting.svg";
-import ShopIcon from "../../assets/shopping_card.svg";
+import ShopIcon from "../../assets/camera.svg";
 import LogoutIcon from "../../assets/log_out.svg";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -113,8 +113,8 @@ const ChangePassword = () => {
                         to="/history"
                         className="flex flex-row py-3 gap-2 border-b-2"
                       >
-                        <img src={ShopIcon} />
-                        <div>Riwayat Pembelian</div>
+                        <img src={ShopIcon} className="" />
+                        <div>Riwayat Indentifikasi</div>
                       </Link>
                       <button
                         onClick={handleLogout}
@@ -141,9 +141,7 @@ const ChangePassword = () => {
                         </div>
                         <div className="relative ">
                           <input
-                            type={
-                              showPassword.passwordOld ? "text" : "password"
-                            }
+                            type={showPassword.passwordOld ? "text" : "password"}
                             className="border w-full py-3 px-4 rounded-2xl pr-[3.5rem] "
                             placeholder="********"
                             value={changePassword.passwordOld}
@@ -175,9 +173,7 @@ const ChangePassword = () => {
                         </div>
                         <div className="relative ">
                           <input
-                            type={
-                              showPassword.passwordNew ? "text" : "password"
-                            }
+                            type={showPassword.passwordNew ? "text" : "password"}
                             className="border w-full py-3 px-4 rounded-2xl pr-[3.5rem] "
                             placeholder="********"
                             value={changePassword.passwordNew}
@@ -209,9 +205,7 @@ const ChangePassword = () => {
                         </div>
                         <div className="relative ">
                           <input
-                            type={
-                              showPassword.passwordConfNew ? "text" : "password"
-                            }
+                            type={showPassword.passwordConfNew ? "text" : "password"}
                             className="border w-full py-3 px-4 rounded-2xl pr-[3.5rem] "
                             placeholder="********"
                             value={changePassword.passwordConfNew}

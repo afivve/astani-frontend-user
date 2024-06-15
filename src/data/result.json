@@ -1,0 +1,77 @@
+{
+  "status": "success",
+  "message": "Identifikasi berhasil dilakukan",
+  "value": {
+    "name": "Tungro",
+    "confidence": 86,
+    "caused": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus hic odio eligendi et officiis a fugit optio!",
+    "symptoms": "Lorem, ipsum dolor.",
+    "solutions": [
+      {
+        "id": 3,
+        "action": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis illo eum.",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      },
+      {
+        "id": 7,
+        "action": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis illo eum.",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      },
+      {
+        "id": 11,
+        "action": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis illo eum.",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      },
+      {
+        "id": 15,
+        "action": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis illo eum.",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      },
+      {
+        "id": 19,
+        "action": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis illo eum.",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      },
+      {
+        "id": 23,
+        "action": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis illo eum.",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      },
+      {
+        "id": 27,
+        "action": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente perspiciatis illo eum.",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      }
+    ],
+    "literatures": [
+      {
+        "id": 5,
+        "link": "https://plantix.net/id/library/plant-diseases/100064/brown-spot-of-rice/",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      },
+      {
+        "id": 6,
+        "link": "https://id.wikipedia.org/wiki/Hawar",
+        "diseaseId": 3,
+        "createdAt": "2024-06-14T14:12:41.000Z",
+        "updatedAt": "2024-06-14T14:12:41.000Z"
+      }
+    ]
+  }
+}

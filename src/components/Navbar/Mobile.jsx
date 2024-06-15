@@ -1,52 +1,18 @@
-import { useState } from "react";
-import {
-  NavLink,
-  useSearchParams,
-  useNavigate,
-  Link,
-  useLocation,
-} from "react-router-dom";
-import { GrHomeRounded } from "react-icons/gr";
-import { GrCamera, GrCalculator } from "react-icons/gr";
+import { NavLink, Link, useLocation } from "react-router-dom";
+
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { BsFillCameraReelsFill } from "react-icons/bs";
-import { LuClipboardList } from "react-icons/lu";
-import { MdOutlinePersonOutline } from "react-icons/md";
-import Search from "../../assets/search.svg";
-import Notification from "../../assets/notification.svg";
-import Persone from "../../assets/image_profile.svg";
-import { GoX } from "react-icons/go";
+
 import PropTypes from "prop-types";
 import LoginIcon from "../../assets/log_in.svg";
+import { FaHome } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
+import { MdForum } from "react-icons/md";
+import { BsFillPersonFill } from "react-icons/bs";
 
 const Mobile = ({ user }) => {
   const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const [openSearch, setOpenSearch] = useState(false);
-  const query = searchParams.get("query");
 
   const path = location.pathname;
-
-  const [keyword, setKeyword] = useState(query || "");
-  const navigate = useNavigate();
-
-  //searching kelas
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-
-    const searchQuery = keyword.trim();
-    if (searchQuery === "") {
-      // Jika input kosong, arahkan ke halaman beranda atau URL yang sesuai.
-      navigate("/");
-    } else {
-      const searchUrl = `/search-course/${searchQuery}`;
-      navigate(searchUrl);
-    }
-  };
-
-  const onKeywordChangeHandler = (event) => {
-    setKeyword(event.target.value);
-  };
 
   return (
     <>
@@ -57,7 +23,6 @@ const Mobile = ({ user }) => {
           <form
             className="sticky top-0 p-3 sm:p-0 bg-white shadow-lg z-[999]"
             action="search"
-            onSubmit={onSubmitHandler}
           >
             <div
               className="relative mx-auto w-full flex flex-row justify-between sm:hidden "
@@ -66,24 +31,16 @@ const Mobile = ({ user }) => {
               <Link as={Link} to="/" className="flex flex-row ">
                 <div className="text-xl font-bold flex flex-row">
                   <p className="text-BLUE05">As</p>
-                  <p className="text-YELLOW05">Tani</p>
+                  <p className="text-GREEN01">Tani</p>
                 </div>
               </Link>
               <div className="flex flex-row gap-4 mr-[7px]">
                 {user ? (
-                  <><Link
-                  as={Link}
-                  to="/notification"
-                  className=" p-[2px]"
-                >
-                  <IoMdNotificationsOutline className="text-3xl self-center" />
-                </Link><Link
-                  as={Link}
-                  to="/profile"
-                  className=" p-[2px]"
-                >
-                     <MdOutlinePersonOutline className="text-3xl self-center" />
-                  </Link></>
+                  <>
+                    <Link as={Link} to="/notification" className=" p-[2px]">
+                      <IoMdNotificationsOutline className="text-3xl self-center" />
+                    </Link>
+                  </>
                 ) : (
                   <>
                     {/* <button
@@ -143,30 +100,14 @@ const Mobile = ({ user }) => {
           }
           style={{ flex: "1" }}
         >
-          <GrHomeRounded className="text-3xl self-center" />
+          <FaHome className="text-3xl self-center" />
           <p className="self-center text-sm font-medium h-full align-bottom leading-none">
             Beranda
           </p>
         </NavLink>
 
-        {/* <NavLink
-          to="/notification"
-          className={({ isActive }) =>
-            isActive
-              ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
-              : "flex justify-between gap-2.5 items center flex-col"
-          }
-          style={{ flex: "1" }}
-        >
-          <IoMdNotificationsOutline className="text-3xl self-center" />
-
-          <p className="self-center text-sm font-medium align-bottom leading-none">
-            Notifikasi
-          </p>
-        </NavLink> */}
-
         <NavLink
-          to="/my-course"
+          to="/identifikasi"
           className={({ isActive }) =>
             isActive
               ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
@@ -174,7 +115,7 @@ const Mobile = ({ user }) => {
           }
           style={{ flex: "1" }}
         >
-          <GrCamera className="text-3xl self-center" />
+          <FaCamera className="text-3xl self-center" />
 
           <p className="self-center text-sm font-medium h-full align-bottom leading-none">
             Identifikasi
@@ -182,7 +123,7 @@ const Mobile = ({ user }) => {
         </NavLink>
 
         <NavLink
-          to="/course"
+          to="/discussion"
           className={({ isActive }) =>
             isActive
               ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
@@ -190,15 +131,15 @@ const Mobile = ({ user }) => {
           }
           style={{ flex: "1" }}
         >
-          <GrCalculator className="text-3xl self-center" />
+          <MdForum className="text-3xl self-center" />
 
           <p className="self-center text-sm font-medium align-bottom leading-none">
-            Kalkulator
+            Forum
           </p>
         </NavLink>
 
         <NavLink
-          to="/akun"
+          to="/profile"
           className={({ isActive }) =>
             isActive
               ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
@@ -206,10 +147,8 @@ const Mobile = ({ user }) => {
           }
           style={{ flex: "1" }}
         >
-          <LuClipboardList className="text-3xl self-center" />
-          <p className="self-center text-sm font-medium align-bottom leading-3">
-            Forum
-          </p>
+          <BsFillPersonFill className="text-3xl self-center" />
+          <p className="self-center text-sm font-medium align-bottom leading-3">Forum</p>
         </NavLink>
       </nav>
     </>

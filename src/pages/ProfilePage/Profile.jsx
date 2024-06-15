@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import EditeIcon from "../../assets/edit.svg";
 import SettingIcon from "../../assets/setting.svg";
-import ShopIcon from "../../assets/shopping_card.svg";
+import ShopIcon from "../../assets/camera.svg";
 import LogoutIcon from "../../assets/log_out.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
@@ -148,7 +148,7 @@ const Profile = () => {
                         className="flex flex-row py-3 gap-2 border-b-2 font-Montserrat"
                       >
                         <img src={ShopIcon} />
-                        <div>Riwayat Pembelian</div>
+                        <div>Riwayat Indentifikasi</div>
                       </Link>
                       <button
                         onClick={handleLogout}
@@ -185,10 +185,7 @@ const Profile = () => {
                         />
                       </button>
                     </div>
-                    <form
-                      onSubmit={handleSubmit}
-                      className="flex flex-col gap-4"
-                    >
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                       <div className="flex flex-col gap-4 font-Poppins ">
                         <div>
                           <p>Nama</p>

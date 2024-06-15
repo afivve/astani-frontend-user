@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import EditeIcon from "../../assets/edit.svg";
 import SettingIcon from "../../assets/setting.svg";
-import ShopIcon from "../../assets/shopping_card.svg";
+import ShopIcon from "../../assets/camera.svg";
 import LogoutIcon from "../../assets/log_out.svg";
 import CardHistori from "../../components/card/CardHistori";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,7 +90,7 @@ const Histori = () => {
                         className="flex flex-row py-3 gap-2 border-b-2  font-bold text-YELLOW05"
                       >
                         <img src={ShopIcon} />
-                        <div>Riwayat Pembelian</div>
+                        <div>Riwayat Indentifikasi</div>
                       </Link>
                       <button
                         onClick={handleLogout}
@@ -106,9 +106,7 @@ const Histori = () => {
                       Riwayat Pembayaran
                     </div>
                     {history.length > 0 ? (
-                      history.map((data) => (
-                        <CardHistori key={data.id} data={data} />
-                      ))
+                      history.map((data) => <CardHistori key={data.id} data={data} />)
                     ) : (
                       <p className="text-center font-Montserrat font-bold">
                         Tidak ada history pembelian

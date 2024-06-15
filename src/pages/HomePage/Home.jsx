@@ -1,50 +1,50 @@
-import CardKategori from "../../components/card/CardKategori";
-import CardCourse from "../../components/card/CardPopular";
+// import CardKategori from "../../components/card/CardKategori";
+// import CardCourse from "../../components/card/CardPopular";
 import PeopleHome from "../../assets/farmer.png";
-import Carousel from "react-multi-carousel";
-import Whatsapp from "../../assets/whattsap.svg";
-import Personal from "../../assets/persone.svg";
+// import Carousel from "react-multi-carousel";
+// import Whatsapp from "../../assets/whattsap.svg";
+// import Personal from "../../assets/persone.svg";
 import "react-multi-carousel/lib/styles.css";
-import { responsive } from "../../utils/responsiveCarousel";
-import { responsive2 } from "../../utils/responsiveCarousel";
+// import { responsive } from "../../utils/responsiveCarousel";
+// import { responsive2 } from "../../utils/responsiveCarousel";
 import "../../utils/CssConfig.css";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getCategory,
-  getCoursePromo,
-  getPopular,
-} from "../../redux/actions/CourseActions";
-import { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   getCategory,
+//   getCoursePromo,
+//   getPopular,
+// } from "../../redux/actions/CourseActions";
+// import { useEffect, useState } from "react";
 /* import CourseIcon from "../../assets/course.svg"; */
 import CourseIcon from "../../assets/identify.png";
 import Footer from "../../components/Navbar/Footers";
 
 const HomePage = () => {
-  const dispatch = useDispatch();
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const { category, popular, coursePromo } = useSelector(
-    (state) => state.course
-  );
+  // const dispatch = useDispatch();
+  // const [selectedCategory, setSelectedCategory] = useState("All");
+  // const { category, popular, coursePromo } = useSelector(
+  //   (state) => state.course
+  // );
 
-  useEffect(() => {
-    dispatch(getCategory());
-    dispatch(getPopular());
-    dispatch(getCoursePromo());
-    setSelectedCategory("All");
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCategory());
+  //   dispatch(getPopular());
+  //   dispatch(getCoursePromo());
+  //   setSelectedCategory("All");
+  // }, [dispatch]);
 
-  const filterCourses = (category) => {
-    if (!Array.isArray(popular)) {
-      return [];
-    }
+  // const filterCourses = (category) => {
+  //   if (!Array.isArray(popular)) {
+  //     return [];
+  //   }
 
-    if (category === "All") {
-      return popular;
-    } else {
-      return popular.filter((course) => course.category === category);
-    }
-  };
+  //   if (category === "All") {
+  //     return popular;
+  //   } else {
+  //     return popular.filter((course) => course.category === category);
+  //   }
+  // };
 
   return (
     <>
@@ -53,12 +53,20 @@ const HomePage = () => {
         <div className="mx-auto flex flex-col lg:flex-row container ">
           <div className="lg:w-[60%]  py-14 flex flex-col w-full  gap-4 ">
             <div>
-              <p className="font-bold text-4xl text-BLUE05 font-Montserrat"> Sahabat Petani,</p>
-              <p className="font-bold text-4xl text-BLUE05 font-Montserrat"> Solusi Masa Kini</p>
+              <p className="font-bold text-4xl text-BLUE05 font-Montserrat">
+                {" "}
+                Sahabat Petani,
+              </p>
+              <p className="font-bold text-4xl text-BLUE05 font-Montserrat">
+                {" "}
+                Solusi Masa Kini
+              </p>
             </div>
-            
+
             <div className="font-Montserrat text-sm text-justify max-w-lg">
-            AsTani hadir dengan sepenuh hati untuk mendampingi petani dalam setiap langkahnya. Kami berkomitmen untuk menjadi sahabat terbaik mereka, dengan membawa teknologi dan inovasi tepat guna. 
+              AsTani hadir dengan sepenuh hati untuk mendampingi petani dalam setiap
+              langkahnya. Kami berkomitmen untuk menjadi sahabat terbaik mereka, dengan
+              membawa teknologi dan inovasi tepat guna.
             </div>
           </div>
           <div className=" flex lg:w-[40%] ">
@@ -80,22 +88,18 @@ const HomePage = () => {
                   Bingung mau mulai dari mana? Ikuti jalur belajar berikut ini
                 </p>
               </div> */}
-             {/*  <Link
+              {/*  <Link
                 to="/course"
                 className="font-Montserrat font-extrabold text-xs max-w-fit text-DARKBLUE05 self-center"
               >
                 Lihat Semua
               </Link> */}
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-6 justify-between gap-3 w-full ">
+            {/* <div className="grid grid-cols-2 lg:grid-cols-6 justify-between gap-3 w-full ">
               {category.map((data) => (
-                // <div key={data.id}>
-                // {/* <Link as={Link} to={`/course/category=${data.slug}`}> */}
                 <CardKategori key={data.id} data={data} />
-                // {/* </Link> */}
-                // </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -111,8 +115,8 @@ const HomePage = () => {
             </div>
             <div className="flex flex-row mx-auto gap-3">
               <Link
-                to="/"
-                className="border-2 text-white py-2 px-5 font-semibold bg-YELLOW05 rounded-xl flex flex-row items-center gap-1"
+                to="/identifikasi"
+                className="border-2 text-white py-2 px-5 font-semibold bg-GREEN01 rounded-xl flex flex-row items-center gap-1"
               >
                 Coba Sekarang
               </Link>
@@ -147,15 +151,15 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="flex justify-center bg-LightBlue5 py-8">
+      {/* <div className="flex justify-center bg-LightBlue5 py-8">
         <div className="container flex  flex-col gap-6 justify-center">
           <p className="text-center font-Montserrat font-bold md:text-4xl text-2xl text-BLUE05">
             Jangan lewatkan kesempatan ini !
           </p>
           <div className="self-center md:w-[50%]">
             <p className="text-center">
-              Manfaatkan kelas gratis kami sekarang dan dapatkan akses tanpa
-              batas untuk mengembangkan potensi Anda!
+              Manfaatkan kelas gratis kami sekarang dan dapatkan akses tanpa batas untuk
+              mengembangkan potensi Anda!
             </p>
           </div>
           <Link
@@ -165,7 +169,7 @@ const HomePage = () => {
             Mulai Sekarang
           </Link>
         </div>
-      </div>
+      </div> */}
       <div className="drop-shadow-xl">
         <Footer />
       </div>
