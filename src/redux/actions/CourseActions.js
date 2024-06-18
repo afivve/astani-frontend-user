@@ -87,9 +87,7 @@ export const NotificationUser = () => async (dispatch, getState) => {
 
 export const getCourse = (pageNumber) => async (dispatch) => {
   try {
-    const response = await axios.get(
-      `${VITE_API_URL}/courses?page=${pageNumber}`
-    );
+    const response = await axios.get(`${VITE_API_URL}/courses?page=${pageNumber}`);
     const { data } = response;
     dispatch(setHasil(data.value));
     const pageArray = [];
@@ -105,11 +103,10 @@ export const getCourse = (pageNumber) => async (dispatch) => {
     }
   }
 };
+
 export const getSearchCourse = (pageNumber, nameCourse) => async (dispatch) => {
   try {
-    const response = await axios.get(
-      `${VITE_API_URL}/courses?search=${nameCourse}`
-    );
+    const response = await axios.get(`${VITE_API_URL}/courses?search=${nameCourse}`);
     const { data } = response;
     dispatch(setData(data.value));
     const pageArray = [];
@@ -167,144 +164,136 @@ export const getMyCourse = (errors) => async (dispatch, getState) => {
     }
   }
 };
-export const getDiscussion =
-  (closed, active, search, id, pageNumber) => async (dispatch, getState) => {
-    const { token } = getState().auth;
-    try {
-      const response = await axios.get(
-        `${VITE_API_URL}/courses/${id}/course-discussions?limit=6`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            active: active,
-            closed: closed,
-            search: search,
-            page: pageNumber,
-          },
-        }
-      );
-      const { data } = response;
-      dispatch(setGetData(data.value));
-      const { discussion } = data.value;
-      dispatch(setDiscussion(discussion));
-      const pageArray = [];
-      for (let index = 1; index <= data.totalPage; index++) {
-        pageArray.push(index);
-      }
-      dispatch(setPage(pageArray));
-    } catch (error) {
-      if (error.response.status === 500) {
-        dispatch(setErrors("Silahkan login untuk melihat kelas yang diambil"));
-      } else if (error.response.status === 404) {
-        dispatch(setErrors("Tidak ada kelas yang diambil"));
-      }
+export const getDiscussion = () => async (dispatch, getState) => {
+  const { token } = getState().auth;
+  try {
+    const response = await axios.get(`${VITE_API_URL}/discussions`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      // params: {
+      //   active: active,
+      //   closed: closed,
+      //   search: search,
+      //   page: pageNumber,
+      // },
+    });
+    const { value } = response.data;
+    dispatch(setGetData(value));
+
+    dispatch(setDiscussion(value));
+    // const pageArray = [];
+    // for (let index = 1; index <= data.totalPage; index++) {
+    //   pageArray.push(index);
+    // }
+    dispatch(setPage(response.data.totalPage));
+  } catch (error) {
+    if (error.response.status === 500) {
+      dispatch(setErrors("Silahkan login untuk melihat kelas yang diambil"));
+    } else if (error.response.status === 404) {
+      dispatch(setErrors("Tidak ada kelas yang diambil"));
     }
-  };
-export const getDetailDiscussion =
-  (id, discussionId) => async (dispatch, getState) => {
-    const { token } = getState().auth;
-    try {
-      const response = await axios.get(
-        `${VITE_API_URL}/courses/${id}/discussions/${discussionId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const { data } = response;
-      const { commentars } = data.value;
-      dispatch(setDetailDiscussion(data.value));
-      dispatch(setComentar(commentars));
-    } catch (error) {
-      if (error.response.status === 500) {
-        dispatch(setErrors("Silahkan login untuk melihat kelas yang diambil"));
-      } else if (error.response.status === 404) {
-        dispatch(setErrors("Tidak ada kelas yang diambil"));
-      }
-    }
-  };
-export const editDiscussion =
-  (id, discussionId) => async (dispatch, getState) => {
-    const { token } = getState().auth;
-    try {
-      const response = await axios.get(
-        `${VITE_API_URL}/courses/${id}/discussions/${discussionId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const { data } = response;
-      dispatch(setDiscussionToEdit(data.value));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-export const addDiscussion =
-  (id, judul, pertanyaan, gambar) => async (_, getState) => {
-    const { token } = getState().auth;
-    try {
-      const formData = new FormData();
-      formData.append("title", judul);
-      formData.append("question", pertanyaan);
-      formData.append("photoDiscussion", gambar);
-      console.log(gambar);
-      await axios.post(
-        `${VITE_API_URL}/courses/${id}/discussions`,
-        {
-          title: judul,
-          question: pertanyaan,
-          photoDiscussion: gambar,
+  }
+};
+export const getDetailDiscussion = (id, discussionId) => async (dispatch, getState) => {
+  const { token } = getState().auth;
+  try {
+    const response = await axios.get(
+      `${VITE_API_URL}/courses/${id}/discussions/${discussionId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      toastify({
-        message: "Pertanyaan berhasil di buat ",
-        type: "success",
-      });
-      window.location.reload()
-    } catch (error) {
-      console.log(error);
+      }
+    );
+    const { data } = response;
+    const { commentars } = data.value;
+    dispatch(setDetailDiscussion(data.value));
+    dispatch(setComentar(commentars));
+  } catch (error) {
+    if (error.response.status === 500) {
+      dispatch(setErrors("Silahkan login untuk melihat kelas yang diambil"));
+    } else if (error.response.status === 404) {
+      dispatch(setErrors("Tidak ada kelas yang diambil"));
     }
-  };
-export const addComment =
-  (jawaban, gambar, id, discussionId) => async (_, getState) => {
-    const { token } = getState().auth;
-    try {
-      const formData = new FormData();
-      formData.append("photoCommentar", gambar);
-      await axios.post(
-        `${VITE_API_URL}/courses/${id}/commentars`,
-        {
-          discussionId: discussionId,
-          commentar: jawaban,
-          photoCommentar: gambar,
+  }
+};
+export const editDiscussion = (id, discussionId) => async (dispatch, getState) => {
+  const { token } = getState().auth;
+  try {
+    const response = await axios.get(
+      `${VITE_API_URL}/courses/${id}/discussions/${discussionId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      toastify({
-        message: "Commentar berhasil di buat ",
-        type: "success",
-      });
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      }
+    );
+    const { data } = response;
+    dispatch(setDiscussionToEdit(data.value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addDiscussion = (id, judul, pertanyaan, gambar) => async (_, getState) => {
+  const { token } = getState().auth;
+  try {
+    const formData = new FormData();
+    formData.append("title", judul);
+    formData.append("question", pertanyaan);
+    formData.append("photoDiscussion", gambar);
+    console.log(gambar);
+    await axios.post(
+      `${VITE_API_URL}/courses/${id}/discussions`,
+      {
+        title: judul,
+        question: pertanyaan,
+        photoDiscussion: gambar,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    toastify({
+      message: "Pertanyaan berhasil di buat ",
+      type: "success",
+    });
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const addComment = (jawaban, gambar, id, discussionId) => async (_, getState) => {
+  const { token } = getState().auth;
+  try {
+    const formData = new FormData();
+    formData.append("photoCommentar", gambar);
+    await axios.post(
+      `${VITE_API_URL}/courses/${id}/commentars`,
+      {
+        discussionId: discussionId,
+        commentar: jawaban,
+        photoCommentar: gambar,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    toastify({
+      message: "Commentar berhasil di buat ",
+      type: "success",
+    });
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const Selesai = (id, idDiskusi) => async (_, getState) => {
   const { token } = getState().auth;
   try {
@@ -321,7 +310,6 @@ export const Selesai = (id, idDiskusi) => async (_, getState) => {
     );
     window.location.reload();
     toastify({
-
       message: "Commentar berhasil di tutup ",
 
       type: "success",
@@ -362,38 +350,8 @@ export const getCourseFree = (courseId, navigate) => async (_, getState) => {
   }
 };
 
-export const putProgress = (userCourseId, contentId) => async (_, getState) => {
-  try {
-    let { token } = getState().auth;
-
-    await axios.put(
-      `${VITE_API_URL}/learning-progress/${userCourseId}/contents/${contentId}`,
-      {
-        userCourseId: Number(userCourseId),
-        contentId: Number(contentId),
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.log(error?.response?.data?.message);
-    }
-  }
-};
-
 export const checkbox =
-  (
-    typeButton,
-    selectedCheckboxes,
-    selectedLevel,
-    typeCourse,
-    linkFilter,
-    pageNumber
-  ) =>
+  (typeButton, selectedCheckboxes, selectedLevel, typeCourse, linkFilter, pageNumber) =>
   async (dispatch) => {
     try {
       const response = await axios.get(
@@ -428,19 +386,16 @@ export const checkbox =
 export const searchCheckbox =
   (typeButton, selectedLevel, typeCourse, nameCourse) => async (dispatch) => {
     try {
-      const response = await axios.get(
-        `${VITE_API_URL}/courses?search=${nameCourse}`,
-        {
-          params: {
-            type: typeButton,
-            level: selectedLevel,
-            ...typeCourse.reduce((acc, value) => {
-              acc[value] = true;
-              return acc;
-            }, {}),
-          },
-        }
-      );
+      const response = await axios.get(`${VITE_API_URL}/courses?search=${nameCourse}`, {
+        params: {
+          type: typeButton,
+          level: selectedLevel,
+          ...typeCourse.reduce((acc, value) => {
+            acc[value] = true;
+            return acc;
+          }, {}),
+        },
+      });
       const { data } = response;
       dispatch(setData(data.value));
     } catch (error) {

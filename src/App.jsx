@@ -1,19 +1,19 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import HomePage from "./pages/HomePage/Home";
-import RegisterPage from "./pages/RegisterPage/Register";
+import HomePage from "./pages/user/HomePage/Home";
+import RegisterPage from "./pages/user/RegisterPage/Register";
 import LoginPage from "./pages/LoginPage/Login";
 // import DetailPage from "./pages/DetailPage/DetailPageCourse/DetailPage";
-import ProfilePage from "./pages/ProfilePage/Profile";
-import NotificationPage from "./pages/NotificationPage/Notifications";
-import ResetPasswordPage from "./pages/PasswordPage/ResetPassword";
+import ProfilePage from "./pages//user/ProfilePage/Profile";
+import NotificationPage from "./pages/user/NotificationPage/Notifications";
+import ResetPasswordPage from "./pages/user/PasswordPage/ResetPassword";
 // import MyCourse from "./pages/Class/MyCourse";
 // import Course from "./pages/Class/Course";
-import OtpPage from "./pages/OtpPage/Otp";
-import VerifyEmail from "./pages/PasswordPage/VerifyEmail";
+import OtpPage from "./pages/user/OtpPage/Otp";
+import VerifyEmail from "./pages/user/PasswordPage/VerifyEmail";
 // import DetailPaymentPage from "./pages/PaymentPage/DetailClassPayment";
-import ChangePassword from "./pages/ProfilePage/ChangePassword";
+import ChangePassword from "./pages/user/ProfilePage/ChangePassword";
 // import DetailContent from "./pages/DetailPage/DetailContentPage/DetailContent";
 // import HistoryPage from "./pages/ProfilePage/Histori";
 import Proctected from "./components/Protecd/Proctected";
@@ -22,13 +22,20 @@ import NotFound from "./pages/NotFound/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import SearchCourse from "./pages/Class/SearchCourse";
-import DiscussionPage from "./pages/DiscussionPage/DiscussionPage";
-import DetailDiscussion from "./pages/DiscussionPage/DetailDiscussion";
+import DiscussionPage from "./pages/user/DiscussionPage/DiscussionPage";
+import DetailDiscussion from "./pages/user/DiscussionPage/DetailDiscussion";
 import Header from "./components/Navbar/Header";
-import Indentifikasi from "./pages/Indentifikasi/Indentifikasi";
+import Indentifikasi from "./pages/user/Indentifikasi/Indentifikasi";
 // import StatusSucces from "./pages/PaymentPage/StatusSucces";
-import HistoriIndentify from "./pages/History/HistoryIndetify";
-import DetailIdentify from "./pages/Detail/DetailIdentify";
+import HistoriIndentify from "./pages/user/History/HistoryIndetify";
+import DetailIdentify from "./pages/user/Detail/DetailIdentify";
+
+import Dashboard from "./pages/Admin/Dashboard/Dashboard";
+import Disease from "./pages/Admin/disease/Disease.jsx";
+import HandlingDisease from "./pages/Admin/disease/DiseaseHandling.jsx";
+import LiteraturDisease from "./pages/Admin/disease/DiseaseLiteratur.jsx";
+import YoutubeDiseases from "./pages/Admin/disease/DiseaseYoutube.jsx";
+import HistoryUser from "./pages/Admin/HistoryUser/HistooryUser.jsx";
 
 function App() {
   return (
@@ -159,6 +166,55 @@ function App() {
           element={
             <NoAccesToken>
               <Indentifikasi />
+            </NoAccesToken>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <NoAccesToken>
+              <Dashboard />
+            </NoAccesToken>
+          }
+        />
+        <Route
+          path="/penyakit"
+          element={
+            <NoAccesToken>
+              <Disease />
+            </NoAccesToken>
+          }
+        />
+        <Route
+          path="/penyakit/penanganan/:id"
+          element={
+            <NoAccesToken>
+              <HandlingDisease />
+            </NoAccesToken>
+          }
+        />
+
+        <Route
+          path="/penyakit/literatur/:id"
+          element={
+            <NoAccesToken>
+              <LiteraturDisease />
+            </NoAccesToken>
+          }
+        />
+        <Route
+          path="/penyakit/youtube/:id"
+          element={
+            <NoAccesToken>
+              <YoutubeDiseases />
+            </NoAccesToken>
+          }
+        />
+        <Route
+          path="/history-user"
+          element={
+            <NoAccesToken>
+              <HistoryUser />
             </NoAccesToken>
           }
         />

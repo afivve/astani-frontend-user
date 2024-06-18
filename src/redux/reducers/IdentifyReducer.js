@@ -4,6 +4,7 @@ const initialState = {
   identify: [],
   historyIdentify: [],
   detailIdentify: [],
+  notification: [],
 };
 
 const identifySlice = createSlice({
@@ -19,10 +20,13 @@ const identifySlice = createSlice({
     setDetailIdentify: (state, action) => {
       state.detailIdentify = action.payload;
     },
+    setNotification: (state, action) => {
+      state.notification = action.payload;
+    },
   },
 });
 
-export const { setIdentify, setHistoryIdentify, setDetailIdentify } =
+export const { setIdentify, setHistoryIdentify, setDetailIdentify, setNotification } =
   identifySlice.actions;
 
 export default identifySlice.reducer;

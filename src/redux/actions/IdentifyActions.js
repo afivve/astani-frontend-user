@@ -5,6 +5,7 @@ import {
   setHistoryIdentify,
   setDetailIdentify,
   setIdentify,
+  setNotification,
 } from "../reducers/IdentifyReducer";
 
 export const HistoryIdentify = () => async (dispatch, getState) => {
@@ -75,5 +76,21 @@ export const Indentify = (fileObj, setLoading) => async (dispatch, getState) => 
     setLoading(false);
   } finally {
     setLoading(false);
+  }
+};
+
+export const Notications = () => async (dispatch, getState) => {
+  try {
+    let { token } = getState().auth;
+    const response = await axios.get(`${VITE_API_URL}/notifications`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { value } = response.data;
+    dispatch(setNotification(value));
+  } catch (error) {
+    console.log(error);
   }
 };

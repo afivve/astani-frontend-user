@@ -19,7 +19,9 @@ const Mobile = ({ user }) => {
       {path !== "/notification" &&
         path !== "/profile" &&
         path !== "/change-password" &&
-        path !== "/history" && (
+        path !== "/history" &&
+        path !== "/dashboard" &&
+        path !== "/penyakit" && (
           <form
             className="sticky top-0 p-3 sm:p-0 bg-white shadow-lg z-[999]"
             action="search"
@@ -90,67 +92,71 @@ const Mobile = ({ user }) => {
           </form>
         )}
 
-      <nav className="sm:hidden flex items-center fixed bg-white border-t drop-shadow-2xl shadow-outline border-gray-300 w-full bottom-0 py-4 z-[999]">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive
-              ? "flex justify-between gap-2.5 items center flex-col text-blue-500"
-              : "flex justify-between gap-2.5 items center flex-col"
-          }
-          style={{ flex: "1" }}
-        >
-          <FaHome className="text-3xl self-center" />
-          <p className="self-center text-sm font-medium h-full align-bottom leading-none">
-            Beranda
-          </p>
-        </NavLink>
+      {path !== "/dashboard" && path !== "/penyakit" && (
+        <nav className="sm:hidden flex items-center fixed bg-white border-t drop-shadow-2xl shadow-outline border-gray-300 w-full bottom-0 py-4 z-[999]">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "flex justify-between gap-2.5 items center flex-col text-blue-500"
+                : "flex justify-between gap-2.5 items center flex-col"
+            }
+            style={{ flex: "1" }}
+          >
+            <FaHome className="text-3xl self-center" />
+            <p className="self-center text-sm font-medium h-full align-bottom leading-none">
+              Beranda
+            </p>
+          </NavLink>
 
-        <NavLink
-          to="/identifikasi"
-          className={({ isActive }) =>
-            isActive
-              ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
-              : "flex justify-between gap-2.5 items center flex-col"
-          }
-          style={{ flex: "1" }}
-        >
-          <FaCamera className="text-3xl self-center" />
+          <NavLink
+            to="/identifikasi"
+            className={({ isActive }) =>
+              isActive
+                ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
+                : "flex justify-between gap-2.5 items center flex-col"
+            }
+            style={{ flex: "1" }}
+          >
+            <FaCamera className="text-3xl self-center" />
 
-          <p className="self-center text-sm font-medium h-full align-bottom leading-none">
-            Identifikasi
-          </p>
-        </NavLink>
+            <p className="self-center text-sm font-medium h-full align-bottom leading-none">
+              Identifikasi
+            </p>
+          </NavLink>
 
-        <NavLink
-          to="/discussion"
-          className={({ isActive }) =>
-            isActive
-              ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
-              : "flex justify-between gap-2.5 items center flex-col"
-          }
-          style={{ flex: "1" }}
-        >
-          <MdForum className="text-3xl self-center" />
+          <NavLink
+            to="/discussion"
+            className={({ isActive }) =>
+              isActive
+                ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
+                : "flex justify-between gap-2.5 items center flex-col"
+            }
+            style={{ flex: "1" }}
+          >
+            <MdForum className="text-3xl self-center" />
 
-          <p className="self-center text-sm font-medium align-bottom leading-none">
-            Forum
-          </p>
-        </NavLink>
+            <p className="self-center text-sm font-medium align-bottom leading-none">
+              Forum
+            </p>
+          </NavLink>
 
-        <NavLink
-          to="/profile"
-          className={({ isActive }) =>
-            isActive
-              ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
-              : "flex justify-between gap-2.5 items center flex-col"
-          }
-          style={{ flex: "1" }}
-        >
-          <BsFillPersonFill className="text-3xl self-center" />
-          <p className="self-center text-sm font-medium align-bottom leading-3">Forum</p>
-        </NavLink>
-      </nav>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive
+                ? "flex justify-between gap-2.5 items center flex-col text-blue-500 "
+                : "flex justify-between gap-2.5 items center flex-col"
+            }
+            style={{ flex: "1" }}
+          >
+            <BsFillPersonFill className="text-3xl self-center" />
+            <p className="self-center text-sm font-medium align-bottom leading-3">
+              Forum
+            </p>
+          </NavLink>
+        </nav>
+      )}
     </>
   );
 };
