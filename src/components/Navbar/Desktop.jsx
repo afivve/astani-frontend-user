@@ -24,7 +24,7 @@ const Desktop = ({ user }) => {
       {path !== "/dashboard" &&
         path !== "/penyakit" &&
         path !== "/penyakit/penanganan/:id" && (
-          <nav className="hidden  sm:block bg-white drop-shadow-lg ">
+          <nav className="hidden  sm:block bg-white drop-shadow-lg sticky top-0 right-0 left-0  z-[999]">
             {/* <div className="bg-DARKBLUE05"> */}
             <div className="container flex justify-between mx-auto py-4 bg-white">
               <NavLink to="/" className="flex flex-row text-2xl font-bold">

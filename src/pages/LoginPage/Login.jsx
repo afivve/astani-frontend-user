@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/AuthActions";
 import GoogleLogin from "../../components/GoogleLogin/Google";
 import SpinnerLoading from "../../utils/SpinnerLoading";
+import Header from "../../components/Navbar/Header";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const Login = () => {
 
   return (
     <>
+      <Header />
       <div className="flex min-h-screen bg-WHITE05  justify-center">
         <div className="w-[100%] md:w-[60%] flex justify-center items-center mx-[23px] lg:px-[145px] relative   ">
           <div

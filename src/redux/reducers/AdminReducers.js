@@ -7,6 +7,10 @@ const initialState = {
   literaturDisease: [],
   youtubeDisease: [],
   nameDisease: null || "",
+  totalUser: null || "",
+  totalUserActive: null || "",
+  totalPredict: null || "",
+  totalPersentasePredict: null || "",
 };
 
 const adminSlice = createSlice({
@@ -31,6 +35,18 @@ const adminSlice = createSlice({
     setHistoryUser: (state, action) => {
       state.historyUser = action.payload;
     },
+    setTotalUser: (state, action) => {
+      state.totalUser = action.payload;
+    },
+    setTotalUserActive: (state, action) => {
+      state.totalUserActive = action.payload;
+    },
+    setTotalPredict: (state, action) => {
+      state.totalPredict = action.payload;
+    },
+    setTotalPersentasePredict: (state, action) => {
+      state.totalPersentasePredict = action.payload;
+    },
   },
 });
 
@@ -41,6 +57,10 @@ export const {
   setYoutubeDisease,
   setNameDisease,
   setHistoryUser,
+  setTotalUser,
+  setTotalUserActive,
+  setTotalPersentasePredict,
+  setTotalPredict,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

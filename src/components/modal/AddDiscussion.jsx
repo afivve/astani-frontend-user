@@ -35,6 +35,7 @@ export default function AddDiscussion({
     setHasil(null);
     setGambar(null);
   };
+
   const handleSave = (e) => {
     e.preventDefault();
     if (pertanyaan === "" || judul === "") {
@@ -45,7 +46,7 @@ export default function AddDiscussion({
       if (editing) {
         dispatch(updateDiscussion(idDiskusi, id, judul, pertanyaan, gambar));
       } else {
-        dispatch(addDiscussion(id, judul, pertanyaan, gambar));
+        dispatch(addDiscussion(judul, pertanyaan, gambar));
       }
       handleHapus();
     }
@@ -74,7 +75,7 @@ export default function AddDiscussion({
     <>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden z-50 overflow-y-auto fixed inset-0 outline-none focus:outline-none">
+          <div className="justify-center items-center flex overflow-x-hidden z-[9999] overflow-y-auto fixed inset-0 outline-none focus:outline-none">
             <div className="relative w-[75%] my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

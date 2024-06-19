@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 /* import CourseIcon from "../../assets/course.svg"; */
 import CourseIcon from "../../../assets/identify.png";
 import Footer from "../../../components/Navbar/Footers";
+import Header from "../../../components/Navbar/Header";
 
 const HomePage = () => {
   // const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const HomePage = () => {
 
   return (
     <>
+      <Header />
       <div className="mx-auto">
         {/* bagian 1 di homepage */}
         <div className="mx-auto flex flex-col lg:flex-row container ">

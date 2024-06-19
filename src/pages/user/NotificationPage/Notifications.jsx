@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { NotificationUser } from "../../../redux/actions/CourseActions";
+import Header from "../../../components/Navbar/Header";
 
 const Notifications = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const Notifications = () => {
   }, [dispatch, navigate, token]);
   return (
     <>
+      <Header />
       <div className="mx-auto w-full relative bg-WHITE05">
         <div className="relative">
           <div className="absolute  flex justify-center   top-0 left-0 right-0 bottom-0">

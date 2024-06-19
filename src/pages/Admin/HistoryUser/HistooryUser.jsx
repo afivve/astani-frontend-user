@@ -1,6 +1,6 @@
-import { MdDelete } from "react-icons/md";
-import { AiFillEdit } from "react-icons/ai";
-import { useEffect } from "react";
+// import { MdDelete } from "react-icons/md";
+// import { AiFillEdit } from "react-icons/ai";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../../../components/SideBar/SideBar";
 import HeaderAdmin from "../../../components/Navbar/HeaderAdmin";
@@ -12,10 +12,51 @@ const HistooryUser = () => {
 
   const { historyUser } = useSelector((state) => state.admin);
 
+  const [relativeTimes, setRelativeTimes] = useState("");
+
   useEffect(() => {
     dispatch(HistoryUserData());
   }, [dispatch]);
 
+  const calculateRelativeTime = (time) => {
+    const now = new Date();
+    const differenceInMinutes = Math.floor((now - new Date(time)) / 60000); // difference in minutes
+
+    if (differenceInMinutes < 1) return "Baru saja";
+    if (differenceInMinutes < 60) return `${differenceInMinutes} menit yang lalu`;
+
+    const differenceInHours = Math.floor(differenceInMinutes / 60);
+    if (differenceInHours < 24) {
+      const minutes = differenceInMinutes % 60;
+      if (minutes === 0) return `${differenceInHours} jam yang lalu`;
+      return `${differenceInHours} jam ${minutes} menit yang lalu`;
+    }
+
+    const differenceInDays = Math.floor(differenceInHours / 24);
+    if (differenceInDays === 1) {
+      const hours = differenceInHours % 24;
+      return hours === 0 ? "1 hari yang lalu" : `1 hari ${hours} jam yang lalu`;
+    }
+
+    return `${differenceInDays} hari yang lalu`;
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newRelativeTimes = historyUser.map((data) =>
+        calculateRelativeTime(data.time)
+      );
+      setRelativeTimes(newRelativeTimes);
+    }, 60000); // update every 60 seconds
+
+    // Set the initial relative times
+    const initialRelativeTimes = historyUser.map((data) =>
+      calculateRelativeTime(data.time)
+    );
+    setRelativeTimes(initialRelativeTimes);
+
+    return () => clearInterval(interval);
+  }, [historyUser]);
   return (
     <div className="flex">
       <SideBar />
@@ -49,29 +90,21 @@ const HistooryUser = () => {
                 {historyUser.map((data) => (
                   <tr key={data?.id} className="bg-white border-b font-Montserrat  ">
                     <td scope="row" className="  pl-2 md:pl-4 whitespace-nowrap">
-                      {data?.id}
+                      {data?.historyId}
                     </td>
                     <td className=" py-4   px-2 md:px-4 whitespace-nowrap">
-                      {data?.link ?? "-"}
+                      {data?.username ?? "-"}
+                    </td>
+                    <td className=" py-4   px-2 md:px-4 whitespace-nowrap">
+                      {data?.diseaseName ?? "-"}
+                    </td>
+                    <td className=" py-4   px-2 md:px-4 whitespace-nowrap">
+                      {data?.confidence ?? "-"}
                     </td>
 
                     <td className="pr-4  px-2 md:px-4 whitespace-nowrap">
-                      <div className="flex flex-row gap-2 font-bold text-white">
-                        <div>
-                          <button
-                            //   onClick={() => handleOpenModal("editeCourse", data.id)}
-                            className="p-1 bg-DARKBLUE05 rounded-md "
-                          >
-                            <AiFillEdit className="text-lg" />
-                          </button>
-                        </div>
-                        <button
-                          // onClick={() => handleOpenModal("detailCourse", data.id)}
-                          className="p-1 bg-red-500 rounded-md"
-                        >
-                          <MdDelete className="text-lg" />
-                        </button>
-                      </div>
+                      {" "}
+                      {relativeTimes ?? "Loading..."}
                     </td>
                   </tr>
                 ))}

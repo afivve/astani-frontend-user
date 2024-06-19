@@ -14,6 +14,7 @@ import {
 } from "../../../redux/actions/AuthActions";
 import { provinces } from "../../../data/DataProvince";
 import { cities } from "../../../data/DataCities";
+import Header from "../../../components/Navbar/Header";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ const Profile = () => {
 
   return (
     <>
+      <Header />
       <div className="mx-auto w-full bg-WHITE05">
         <div className="relative ">
           <div className="absolute  flex justify-center mt-6  top-0 left-0 right-0  ">

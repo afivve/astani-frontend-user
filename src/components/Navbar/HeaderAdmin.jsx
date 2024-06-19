@@ -36,7 +36,7 @@ const HeaderAdmin = () => {
           <div
             className={`lg:hidden lg:w-1/2 h-full  ${
               isSidebarOpen ? "block" : "hidden"
-            } fixed top-0 right-0  bg-LightBlue4 z-50 p-8 shadow-md`}
+            } fixed top-0 right-0  bg-GREEN01 z-50 p-8 shadow-md`}
           >
             <div className="flex flex-col gap-6 w-full ">
               <div>
@@ -44,9 +44,9 @@ const HeaderAdmin = () => {
                   onClick={handleToggleSidebar}
                   className="flex flex-row justify-between font-Montserrat font-bold gap-1 text-black"
                 >
-                  <div className="flex flex-row">
-                    <p className="text-BLUE05">ILearn</p>
-                    <p className="text-YELLOW05">Tech</p>
+                  <div className="flex flex-row justify-center text-4xl font-bold ">
+                    <p className="text-BLUE05">As</p>
+                    <p className="text-white">Tani</p>
                   </div>
                 </button>
               </div>

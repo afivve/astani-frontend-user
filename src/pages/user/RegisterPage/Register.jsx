@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import SpinnerLoading from "../../../utils/SpinnerLoading";
 import { provinces } from "../../../data/DataProvince";
 import { cities } from "../../../data/DataCities";
+import Header from "../../../components/Navbar/Header";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -106,6 +107,7 @@ const Register = () => {
 
   return (
     <>
+      <Header />
       <div className="flex h-full bg-WHITE05 justify-center py-14">
         <div className="w-[100%] lg:w-[60%] flex justify-start items-center mx-[23px] lg:px-[128px] relative">
           <form

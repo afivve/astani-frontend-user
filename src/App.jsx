@@ -100,8 +100,12 @@ function App() {
         <Route path="/search-course/:nameCourse" element={<SearchCourse />} /> */}
         {/* <Route path="/discussion" element={<DiscussionPage />} /> */}
         <Route
-          path="/detailDiscussion/:id/:discussionId"
-          element={<DetailDiscussion />}
+          path="/detailDiscussion/:id"
+          element={
+            <NoAccesToken>
+              <DetailDiscussion />
+            </NoAccesToken>
+          }
         />
         <Route
           path="/discussion"

@@ -195,20 +195,17 @@ export const getDiscussion = () => async (dispatch, getState) => {
     }
   }
 };
-export const getDetailDiscussion = (id, discussionId) => async (dispatch, getState) => {
+export const getDetailDiscussion = (id) => async (dispatch, getState) => {
   const { token } = getState().auth;
   try {
-    const response = await axios.get(
-      `${VITE_API_URL}/courses/${id}/discussions/${discussionId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const { data } = response;
-    const { commentars } = data.value;
-    dispatch(setDetailDiscussion(data.value));
+    const response = await axios.get(`${VITE_API_URL}/discussions/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { commentars } = response.data.value;
+    dispatch(setDetailDiscussion(response.data.value));
     dispatch(setComentar(commentars));
   } catch (error) {
     if (error.response.status === 500) {
@@ -235,37 +232,38 @@ export const editDiscussion = (id, discussionId) => async (dispatch, getState) =
     console.log(error);
   }
 };
-export const addDiscussion = (id, judul, pertanyaan, gambar) => async (_, getState) => {
-  const { token } = getState().auth;
-  try {
-    const formData = new FormData();
-    formData.append("title", judul);
-    formData.append("question", pertanyaan);
-    formData.append("photoDiscussion", gambar);
-    console.log(gambar);
-    await axios.post(
-      `${VITE_API_URL}/courses/${id}/discussions`,
-      {
-        title: judul,
-        question: pertanyaan,
-        photoDiscussion: gambar,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
+export const addDiscussion =
+  (judul, pertanyaan, gambar) => async (dispatch, getState) => {
+    const { token } = getState().auth;
+    try {
+      const formData = new FormData();
+      formData.append("title", judul);
+      formData.append("question", pertanyaan);
+      formData.append("photoDiscussion", gambar);
+      console.log(gambar);
+      await axios.post(
+        `${VITE_API_URL}/discussions`,
+        {
+          title: judul,
+          question: pertanyaan,
+          photoDiscussion: gambar,
         },
-      }
-    );
-    toastify({
-      message: "Pertanyaan berhasil di buat ",
-      type: "success",
-    });
-    window.location.reload();
-  } catch (error) {
-    console.log(error);
-  }
-};
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toastify({
+        message: "Pertanyaan berhasil di buat ",
+        type: "success",
+      });
+      dispatch(getDiscussion());
+    } catch (error) {
+      console.log(error);
+    }
+  };
 export const addComment = (jawaban, gambar, id, discussionId) => async (_, getState) => {
   const { token } = getState().auth;
   try {

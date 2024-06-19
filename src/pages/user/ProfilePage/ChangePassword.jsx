@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/actions/AuthActions";
 import { ChangePasswordUser } from "../../../redux/actions/AuthActions";
+import Header from "../../../components/Navbar/Header";
 
 const ChangePassword = () => {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const ChangePassword = () => {
 
   return (
     <>
+      <Header />
       <div className="mx-auto w-full bg-WHITE05 ">
         <div className="relative ">
           <div className="absolute  flex justify-center mt-6  top-0 left-0 right-0 bottom-0 ">

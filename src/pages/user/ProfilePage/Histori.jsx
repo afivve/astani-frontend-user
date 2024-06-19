@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/AuthActions";
 import { useEffect } from "react";
 import { HistoryUser } from "../../redux/actions/CourseActions";
+import Header from "../../../components/Navbar/Header";
 
 const Histori = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const Histori = () => {
 
   return (
     <>
+      <Header />
       <div className="mx-auto w-full bg-white ">
         <div className="relative ">
           <div className="absolute  flex justify-center mt-6  top-0 left-0 right-0 bottom-0 ">

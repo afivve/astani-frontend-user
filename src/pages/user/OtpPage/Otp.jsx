@@ -5,6 +5,7 @@ import OTPInput from "react-otp-input";
 import { useState, useEffect } from "react";
 import { resendOtp, verify } from "../../../redux/actions/AuthActions";
 import SpinnerLoading from "../../../utils/SpinnerLoading";
+import Header from "../../../components/Navbar/Header";
 
 const Otp = () => {
   const dispatch = useDispatch();
@@ -20,8 +21,7 @@ const Otp = () => {
   const maskEmail = (email) => {
     if (!email) return null; // Handle null or undefined email
     const [localPart, domain] = email.split("@");
-    const maskedLocalPart =
-      localPart.slice(0, 2) + "*".repeat(localPart.length - 1);
+    const maskedLocalPart = localPart.slice(0, 2) + "*".repeat(localPart.length - 1);
     return `${maskedLocalPart}@${domain}`;
   };
   const maskedEmail = maskEmail(email);
@@ -41,10 +41,7 @@ const Otp = () => {
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = timeInSeconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0"
-    )}`;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
   useEffect(() => {
@@ -76,6 +73,7 @@ const Otp = () => {
 
   return (
     <>
+      <Header />
       <div className="flex min-h-screen bg-WHITE05 justify-center">
         <div className="w-[100%] lg:w-[50%] flex justify-start items-center mx-[23px] lg:px-[145px] relative ">
           <form
@@ -116,9 +114,7 @@ const Otp = () => {
                   {resendTimer > 0 ? (
                     <label className="font-Poppins text-[13px] mb-[20px] text-center">
                       Kirim Ulang OTP dalam{" "}
-                      <span className="font-bold">
-                        {formatTime(resendTimer)} detik
-                      </span>
+                      <span className="font-bold">{formatTime(resendTimer)} detik</span>
                     </label>
                   ) : (
                     <button
