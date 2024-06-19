@@ -6,19 +6,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
 import { useEffect } from "react";
-import { HandlingDiseaseData } from "../../../redux/actions/AdminActions";
+import {
+  DeleteSolutionData,
+  HandlingDiseaseData,
+} from "../../../redux/actions/AdminActions";
 import { Link } from "react-router-dom";
+import AddSolution from "../../../components/modal/AddSolution";
+import { useModal } from "../../../hooks/useModal";
 
 const DiseaseHandling = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const { handlingDisease, nameDisease } = useSelector((state) => state.admin);
+  const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
   useEffect(() => {
     dispatch(HandlingDiseaseData(id));
   }, [dispatch, id]);
 
+  const handleDeleteSolution = (idSolution) => {
+    dispatch(DeleteSolutionData(idSolution, id));
+  };
   return (
     <div className="flex  ">
       <SideBar />
@@ -43,7 +52,7 @@ const DiseaseHandling = () => {
                 <p>Kembali</p>
               </Link>
               <button
-                //   onClick={() => handleOpenModal("addCourse")}
+                onClick={() => handleOpenModal("addSolution")}
                 className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
                 {/* <img src={AddIcon} /> */}
@@ -92,7 +101,7 @@ const DiseaseHandling = () => {
                           </button>
                         </div>
                         <button
-                          // onClick={() => handleOpenModal("detailCourse", data.id)}
+                          onClick={() => handleDeleteSolution(data.id)}
                           className="p-1 bg-red-500 rounded-md"
                         >
                           <MdDelete className="text-lg" />
@@ -103,12 +112,7 @@ const DiseaseHandling = () => {
                 ))}
               </tbody>
             </table>
-            {/* <EditeCourse
-              editeCourses={activeModal === "editeCourse"}
-              setEditeCourses={handleCloseModal}
-              id={Number(courseId)}
-            />
-       */}
+            <AddSolution modal={activeModal} setModal={handleCloseModal} id={id} />
           </div>
         </div>
       </div>

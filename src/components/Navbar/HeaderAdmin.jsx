@@ -2,20 +2,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import HamburgerIcon from "../../assets/hamburger.svg";
 import LeaveIcon from "../../assets/leave.svg";
+import { useSelector } from "react-redux";
 
 const HeaderAdmin = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   //   const [dropDown, setDropDown] = useState(false);
+
+  const { user } = useSelector((state) => state.auth);
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-  const user = "Arwin Marinta";
+
   return (
     <nav className="w-full shadow-xl">
       <div className="w-full mx-auto py-6 bg-LightBlue5 flex justify-center">
         <div className="flex flex-row justify-between container items-center">
           <div className="flex items-center font-Montserrat text-2xl text-GREEN01 font-bold gap-2">
-            Hi <p>{user?.name}</p>
+            Hi {user?.name}
           </div>
           <button className="lg:hidden" onClick={handleToggleSidebar}>
             <img src={HamburgerIcon} alt="Hamburger Icon" />

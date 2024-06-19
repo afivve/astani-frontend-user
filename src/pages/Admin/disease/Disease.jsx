@@ -7,19 +7,28 @@ import { DiseaseData } from "../../../redux/actions/AdminActions";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
+import AddDisease from "../../../components/modal/AddDisaese";
+import { useModal } from "../../../hooks/useModal";
+import { DeleteDeseaseById } from "../../../redux/actions/IdentifyActions";
 
 const Disease = () => {
   const dispatch = useDispatch();
 
   const { disease } = useSelector((state) => state.admin);
 
+  const { activeModal, handleOpenModal, handleCloseModal } = useModal();
+
   useEffect(() => {
     dispatch(DiseaseData());
   }, [dispatch]);
-  return (
-    <div className="flex bg-gray-200 ">
-      <SideBar />
 
+  const handleDeleteDisease = (id) => {
+    dispatch(DeleteDeseaseById(id));
+  };
+
+  return (
+    <div className="flex">
+      <SideBar />
       <div className="w-[100%] lg:w-[85%] mb-14  bg-white ">
         <div>
           <HeaderAdmin />
@@ -31,7 +40,7 @@ const Disease = () => {
             </div>
             <div>
               <button
-                //   onClick={() => handleOpenModal("addCourse")}
+                onClick={() => handleOpenModal("addDisease")}
                 className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
                 {/* <img src={AddIcon} /> */}
@@ -83,7 +92,7 @@ const Disease = () => {
                           </button>
                         </div>
                         <button
-                          // onClick={() => handleOpenModal("detailCourse", data.id)}
+                          onClick={() => handleDeleteDisease(data.id)}
                           className="p-1 bg-red-500 rounded-md"
                         >
                           <MdDelete className="text-lg" />
@@ -116,12 +125,7 @@ const Disease = () => {
                 ))}
               </tbody>
             </table>
-            {/* <EditeCourse
-              editeCourses={activeModal === "editeCourse"}
-              setEditeCourses={handleCloseModal}
-              id={Number(courseId)}
-            />
-       */}
+            <AddDisease modal={activeModal} setModal={handleCloseModal} />
           </div>
         </div>
       </div>

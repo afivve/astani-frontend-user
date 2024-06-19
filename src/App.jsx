@@ -24,7 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import SearchCourse from "./pages/Class/SearchCourse";
 import DiscussionPage from "./pages/user/DiscussionPage/DiscussionPage";
 import DetailDiscussion from "./pages/user/DiscussionPage/DetailDiscussion";
-import Header from "./components/Navbar/Header";
+// import Header from "./components/Navbar/Header";
 import Indentifikasi from "./pages/user/Indentifikasi/Indentifikasi";
 // import StatusSucces from "./pages/PaymentPage/StatusSucces";
 import HistoriIndentify from "./pages/user/History/HistoryIndetify";
@@ -40,7 +40,7 @@ import HistoryUser from "./pages/Admin/HistoryUser/HistooryUser.jsx";
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

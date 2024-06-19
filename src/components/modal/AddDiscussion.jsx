@@ -2,10 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { BiImage } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addDiscussion,
-  updateDiscussion,
-} from "../../redux/actions/CourseActions";
+import { addDiscussion, updateDiscussion } from "../../redux/actions/CourseActions";
 
 export default function AddDiscussion({
   showModal,
@@ -82,7 +79,7 @@ export default function AddDiscussion({
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t items-center">
+                <div className="flex  justify-between p-5 border-b border-solid border-blueGray-200 rounded-t items-center">
                   <h3 className="text-3xl font-semibold">Membuat Diskusi</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-2 float-right text-4xl leading-none font-semibold outline-none focus:outline-none"

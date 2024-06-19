@@ -5,18 +5,29 @@ import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../../../components/SideBar/SideBar";
 import HeaderAdmin from "../../../components/Navbar/HeaderAdmin";
 import { Link, useParams } from "react-router-dom";
-import { LiteraturDiseaseData } from "../../../redux/actions/AdminActions";
+import {
+  DeleteLiteraturData,
+  LiteraturDiseaseData,
+} from "../../../redux/actions/AdminActions";
 import { LiteraturPenyakit } from "../../../data/DataPenyakit";
+import { useModal } from "../../../hooks/useModal";
+import AddLiteratur from "../../../components/modal/AddLiteratur";
 
 const DiseaseLiteratur = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const { literaturDisease, nameDisease } = useSelector((state) => state.admin);
+  const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
   useEffect(() => {
     dispatch(LiteraturDiseaseData(id));
   }, [dispatch, id]);
+
+  const handleSubmitLitearur = (idLiteratur) => {
+    console.log(idLiteratur);
+    dispatch(DeleteLiteraturData(idLiteratur, id));
+  };
 
   return (
     <div className="flex  ">
@@ -42,7 +53,7 @@ const DiseaseLiteratur = () => {
                 <p>Kembali</p>
               </Link>
               <button
-                //   onClick={() => handleOpenModal("addCourse")}
+                onClick={() => handleOpenModal("addLiteratur")}
                 className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
                 {/* <img src={AddIcon} /> */}
@@ -91,7 +102,7 @@ const DiseaseLiteratur = () => {
                           </button>
                         </div>
                         <button
-                          // onClick={() => handleOpenModal("detailCourse", data.id)}
+                          onClick={() => handleSubmitLitearur(data.id)}
                           className="p-1 bg-red-500 rounded-md"
                         >
                           <MdDelete className="text-lg" />
@@ -102,12 +113,7 @@ const DiseaseLiteratur = () => {
                 ))}
               </tbody>
             </table>
-            {/* <EditeCourse
-              editeCourses={activeModal === "editeCourse"}
-              setEditeCourses={handleCloseModal}
-              id={Number(courseId)}
-            />
-       */}
+            <AddLiteratur modal={activeModal} setModal={handleCloseModal} id={id} />
           </div>
         </div>
       </div>

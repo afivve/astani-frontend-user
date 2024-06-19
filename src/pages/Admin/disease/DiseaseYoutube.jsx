@@ -5,18 +5,28 @@ import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../../../components/SideBar/SideBar";
 import HeaderAdmin from "../../../components/Navbar/HeaderAdmin";
 import { Link, useParams } from "react-router-dom";
-import { LiteraturDiseaseData } from "../../../redux/actions/AdminActions";
+import {
+  DeleteYoutubeData,
+  YoutubeDiseaseData,
+} from "../../../redux/actions/AdminActions";
 import { LiteraturPenyakit } from "../../../data/DataPenyakit";
+import AddYoutube from "../../../components/modal/AddYoutube";
+import { useModal } from "../../../hooks/useModal";
 
 const DiseaseYoutube = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { literaturDisease, nameDisease } = useSelector((state) => state.admin);
+  const { youtubeDisease, nameDisease } = useSelector((state) => state.admin);
+  const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
   useEffect(() => {
-    dispatch(LiteraturDiseaseData(id));
+    dispatch(YoutubeDiseaseData(id));
   }, [dispatch, id]);
+
+  const handleDeleteYoutube = (idYT) => {
+    dispatch(DeleteYoutubeData(idYT, id));
+  };
   return (
     <div className="flex  ">
       <SideBar />
@@ -45,16 +55,12 @@ const DiseaseYoutube = () => {
                 <p>Kembali</p>
               </Link>
               <button
-                //   onClick={() => handleOpenModal("addCourse")}
+                onClick={() => handleOpenModal("addYoutube")}
                 className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
                 {/* <img src={AddIcon} /> */}
                 <p>Tambah</p>
               </button>
-              {/* <AddCourse
-                  addCourse={activeModal === "addCourse"}
-                  setAddCourse={handleCloseModal}
-                /> */}
             </div>
           </div>
 
@@ -74,7 +80,7 @@ const DiseaseYoutube = () => {
                 </tr>
               </thead>
               <tbody className="text-left text-xs">
-                {literaturDisease.map((data) => (
+                {youtubeDisease.map((data) => (
                   <tr key={data?.id} className="bg-white border-b font-Montserrat  ">
                     <td scope="row" className="  pl-2 md:pl-4 whitespace-nowrap">
                       {data?.id}
@@ -94,7 +100,7 @@ const DiseaseYoutube = () => {
                           </button>
                         </div>
                         <button
-                          // onClick={() => handleOpenModal("detailCourse", data.id)}
+                          onClick={() => handleDeleteYoutube(data.id)}
                           className="p-1 bg-red-500 rounded-md"
                         >
                           <MdDelete className="text-lg" />
@@ -105,12 +111,7 @@ const DiseaseYoutube = () => {
                 ))}
               </tbody>
             </table>
-            {/* <EditeCourse
-              editeCourses={activeModal === "editeCourse"}
-              setEditeCourses={handleCloseModal}
-              id={Number(courseId)}
-            />
-       */}
+            <AddYoutube modal={activeModal} setModal={handleCloseModal} id={id} />
           </div>
         </div>
       </div>

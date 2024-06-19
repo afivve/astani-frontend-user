@@ -1,10 +1,13 @@
 import SideBar from "../../../components/SideBar/SideBar";
+import HeaderAdmin from "../../../components/Navbar/HeaderAdmin";
 
 const Dashboard = () => {
   return (
-    <div className="w-full">
+    <div className="flex">
       <SideBar />
-      <div className="container"></div>
+      <div className="w-[100%] lg:w-[85%] mb-14  bg-white ">
+        <HeaderAdmin />
+      </div>
     </div>
   );
 };
