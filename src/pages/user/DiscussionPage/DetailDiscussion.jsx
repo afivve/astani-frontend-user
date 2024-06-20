@@ -2,10 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import chat from "../../../assets/chating.svg";
 import galery from "../../../assets/galery.svg";
 import { useEffect, useState } from "react";
-import {
-  addComment,
-  getDetailDiscussion,
-} from "../../../redux/actions/CourseActions";
+import { addComment, getDetailDiscussion } from "../../../redux/actions/CourseActions";
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
 export default function DetailDiscussion() {
@@ -62,9 +59,9 @@ export default function DetailDiscussion() {
                 </div>
 
                 <h3 className="text-gray-800 text-xl font-semibold">
-                  Selamat Datang Di Forum Diskusi Kelas
+                  Selamat Datang Di Forum Diskusi AsTani
                 </h3>
-                <p className="text-gray-600">Konsultasi seputar materi anda</p>
+                <p className="text-gray-600">Konsultasi seputar Penyakit Tanaman Anda</p>
               </div>
             </div>
           </div>
@@ -80,9 +77,7 @@ export default function DetailDiscussion() {
                   className="w-10 rounded-full bg-blue-200 object-top object-cover h-10"
                   alt=""
                 />
-                <h3 className="font-semibold text-xl">
-                  {detailDiscussion.username}
-                </h3>
+                <h3 className="font-semibold text-xl">{detailDiscussion.username}</h3>
                 <p className="font-gray-100 text-xs">
                   {new Date(detailDiscussion.createdAt).toLocaleString()}
                 </p>
@@ -100,9 +95,7 @@ export default function DetailDiscussion() {
               </div>
             </div>
             <div>
-              <p className="font-semibold text-xl mt-3">
-                {detailDiscussion.title}
-              </p>
+              <p className="font-semibold text-xl mt-3">{detailDiscussion.title}</p>
               <p className="font-sm text-current text-xl mt-2">
                 {detailDiscussion.question}
               </p>
@@ -117,12 +110,12 @@ export default function DetailDiscussion() {
       </div>
       <div className="my-5 border-b-2 border-gray-200"></div>
       <div className="flex justify-center">
-        {detailDiscussion.closed == true && (
+        {/* {detailDiscussion.closed == true && (
           <div className="font-bold text-lg text-gray-400">
             Comentar ditutup
           </div>
-        )}
-        {detailDiscussion.closed == false && (
+        )} */}
+        {detailDiscussion.discussionId && (
           <div className="container">
             <div className="flex flex-row items-center gap-3">
               <img
@@ -135,15 +128,11 @@ export default function DetailDiscussion() {
             <div>
               <div
                 action=""
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+                className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
               >
                 <label htmlFor="imageInput" className="cursor-pointer ">
                   <div className="flex flex-row items-center">
-                    <img
-                      src={galery}
-                      className="w-8"
-                      alt="Select from Gallery"
-                    />
+                    <img src={galery} className="w-8" alt="Select from Gallery" />
                     <p className="text-gray-400 font-semibold">
                       Tambahkan Gambar (png,jpg,svg...)
                     </p>
@@ -207,9 +196,7 @@ export default function DetailDiscussion() {
                             src={item.userPhoto}
                             alt=""
                           />
-                          <h3 className="font-semibold text-lg">
-                            {item.username}
-                          </h3>
+                          <h3 className="font-semibold text-lg">{item.username}</h3>
                           <p className="font-gray-100 text-xs">
                             {new Date(item.createdAt).toLocaleString()}
                           </p>
@@ -232,11 +219,7 @@ export default function DetailDiscussion() {
                       <img src={item.urlPhoto} className="max-w-[40%]" alt="" />
                     </div>
                     <div className="flex flex-wrap mt-6 gap-5">
-                      <img
-                        className="w-[50%]"
-                        src={item.photoCommentar}
-                        alt=""
-                      />
+                      <img className="w-[50%]" src={item.photoCommentar} alt="" />
                     </div>
                   </div>
                 </div>

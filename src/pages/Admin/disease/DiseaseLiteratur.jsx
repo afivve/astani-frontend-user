@@ -91,7 +91,7 @@ const DiseaseLiteratur = () => {
                       {data?.link ?? "-"}
                     </td>
 
-                    <td className="pr-4  px-2 md:px-4 whitespace-nowrap">
+                    <td className="pr-4  px-2 md:px-4 ">
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button

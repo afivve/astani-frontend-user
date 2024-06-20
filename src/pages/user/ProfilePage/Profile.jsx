@@ -281,7 +281,7 @@ const Profile = () => {
                       </div>
                       <button
                         type="submit"
-                        className="bg-YELLOW05 text-white p-3 rounded-xl font-Poppins"
+                        className="bg-GREEN01 text-white p-3 rounded-xl font-Poppins"
                       >
                         Simpan Profile Saya
                       </button>

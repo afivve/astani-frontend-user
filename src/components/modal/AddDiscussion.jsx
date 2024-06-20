@@ -2,7 +2,11 @@ import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { BiImage } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { addDiscussion, updateDiscussion } from "../../redux/actions/CourseActions";
+import {
+  addDiscussion,
+  getDetailDiscussion,
+  updateDiscussion,
+} from "../../redux/actions/CourseActions";
 
 export default function AddDiscussion({
   showModal,
@@ -10,8 +14,9 @@ export default function AddDiscussion({
   id,
   idDiskusi,
   setIdDiskusi,
+  message,
+  type,
 }) {
-  const [editing, setEditing] = useState(false);
   const [judul, setJudul] = useState("");
   const [pertanyaan, setPertanyaan] = useState("");
   const [gambar, setGambar] = useState(null);
@@ -20,15 +25,14 @@ export default function AddDiscussion({
   const [notif, setNotif] = useState("");
   const img = useRef();
   const { discussionToEdit } = useSelector((state) => state.course);
+
   const handleImageChange = (e) => {
-    e.preventDefault();
     const file = e.target.files[0];
     setHasil(URL.createObjectURL(file));
 
-    const selectedFile = e.target.files[0];
-
-    setGambar(selectedFile);
+    setGambar(file);
   };
+
   const handleHapus = () => {
     setJudul("");
     setPertanyaan("");
@@ -38,13 +42,14 @@ export default function AddDiscussion({
 
   const handleSave = (e) => {
     e.preventDefault();
+
     if (pertanyaan === "" || judul === "") {
       setNotif("Judul Pertanyaan dan Pertanyaan wajib diisi");
     } else {
       setShowModal(false);
 
-      if (editing) {
-        dispatch(updateDiscussion(idDiskusi, id, judul, pertanyaan, gambar));
+      if (type === "edit") {
+        dispatch(updateDiscussion(idDiskusi, judul, pertanyaan, gambar));
       } else {
         dispatch(addDiscussion(judul, pertanyaan, gambar));
       }
@@ -54,13 +59,11 @@ export default function AddDiscussion({
   useEffect(() => {
     if (showModal) {
       if (idDiskusi) {
-        setEditing(true);
         setJudul(discussionToEdit.title || "");
         setPertanyaan(discussionToEdit.question || "");
         setHasil(discussionToEdit.urlPhoto || null);
         setGambar(discussionToEdit.urlPhoto || null);
       } else {
-        setEditing(false);
         if (judul != "" && pertanyaan != "") {
           setNotif("");
         }
@@ -71,17 +74,24 @@ export default function AddDiscussion({
       handleHapus();
     }
   }, [id, showModal, discussionToEdit]);
+
+  useEffect(() => {
+    if (type === "edit" && idDiskusi) {
+      dispatch(getDetailDiscussion(idDiskusi));
+    }
+  }, [dispatch, idDiskusi, type]);
+
   return (
     <>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden z-[9999] overflow-y-auto fixed inset-0 outline-none focus:outline-none">
-            <div className="relative w-[75%] my-6 mx-auto max-w-3xl">
+            <div className="relative lg:w-[75%] w-full  lg:my-6  lg:mx-auto lg:max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex  justify-between p-5 border-b border-solid border-blueGray-200 rounded-t items-center">
-                  <h3 className="text-3xl font-semibold">Membuat Diskusi</h3>
+                  <h3 className="text-3xl font-semibold">{message}</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-2 float-right text-4xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
@@ -122,7 +132,7 @@ export default function AddDiscussion({
 
                     <input
                       type="file"
-                      className="w-full border-2 border-black-200 rounded-lg outline-none p-1 hidden"
+                      className="w-full border-2 border-black-200 rounded-lg outline-none p-1 hidden "
                       ref={img}
                       id="gambar"
                       onChange={handleImageChange}
@@ -132,7 +142,7 @@ export default function AddDiscussion({
                         <img
                           src={hasil}
                           alt="Preview"
-                          className="max-w-[25%] h-auto rounded-lg"
+                          className="max-w-[25%] h-auto rounded-lg "
                         />
                       </div>
                     )}
@@ -170,4 +180,6 @@ AddDiscussion.propTypes = {
   id: PropTypes.string,
   idDiskusi: PropTypes.number,
   setIdDiskusi: PropTypes.func,
+  message: PropTypes.string,
+  type: PropTypes.bool,
 };

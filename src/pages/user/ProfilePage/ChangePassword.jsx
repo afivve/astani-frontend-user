@@ -232,7 +232,7 @@ const ChangePassword = () => {
                         </div>
                         <button
                           type="submit"
-                          className="bg-YELLOW05 font-bold text-white p-3 rounded-xl mt-6"
+                          className="bg-GREEN01 font-bold text-white p-3 rounded-xl mt-6"
                         >
                           Ubah Password
                         </button>

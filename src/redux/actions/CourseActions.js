@@ -142,44 +142,20 @@ export const filterData = () => async (dispatch) => {
   }
 };
 
-export const getMyCourse = (errors) => async (dispatch, getState) => {
-  const { token } = getState().auth;
-  try {
-    const response = await axios.get(`${VITE_API_URL}/user-courses`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const coursesData = response.data.value;
-    if (errors) {
-      dispatch(setHasil([]));
-    } else if (errors == null) {
-      dispatch(setHasil(coursesData));
-    }
-  } catch (error) {
-    if (error.response.status === 500) {
-      dispatch(setErrors("Silahkan login untuk melihat kelas yang diambil"));
-    } else if (error.response.status === 404) {
-      dispatch(setErrors("Tidak ada kelas yang diambil"));
-    }
-  }
-};
-export const getDiscussion = () => async (dispatch, getState) => {
+export const getDiscussion = (search, pageNumber) => async (dispatch, getState) => {
   const { token } = getState().auth;
   try {
     const response = await axios.get(`${VITE_API_URL}/discussions`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      // params: {
-      //   active: active,
-      //   closed: closed,
-      //   search: search,
-      //   page: pageNumber,
-      // },
+      params: {
+        search: search,
+        page: pageNumber,
+      },
     });
     const { value } = response.data;
-    dispatch(setGetData(value));
+    dispatch(setGetData(response.data));
 
     dispatch(setDiscussion(value));
     // const pageArray = [];
@@ -205,8 +181,12 @@ export const getDetailDiscussion = (id) => async (dispatch, getState) => {
     });
 
     const { commentars } = response.data.value;
+    const { title, urlPhoto, question } = response.data.value;
+
+    const edite = { title, urlPhoto, question };
     dispatch(setDetailDiscussion(response.data.value));
     dispatch(setComentar(commentars));
+    dispatch(setDiscussionToEdit(edite));
   } catch (error) {
     if (error.response.status === 500) {
       dispatch(setErrors("Silahkan login untuk melihat kelas yang diambil"));
@@ -218,14 +198,11 @@ export const getDetailDiscussion = (id) => async (dispatch, getState) => {
 export const editDiscussion = (id, discussionId) => async (dispatch, getState) => {
   const { token } = getState().auth;
   try {
-    const response = await axios.get(
-      `${VITE_API_URL}/courses/${id}/discussions/${discussionId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${VITE_API_URL}/discussions/${discussionId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const { data } = response;
     dispatch(setDiscussionToEdit(data.value));
   } catch (error) {
@@ -264,15 +241,14 @@ export const addDiscussion =
       console.log(error);
     }
   };
-export const addComment = (jawaban, gambar, id, discussionId) => async (_, getState) => {
+export const addComment = (jawaban, gambar, id) => async (dispatch, getState) => {
   const { token } = getState().auth;
   try {
     const formData = new FormData();
     formData.append("photoCommentar", gambar);
     await axios.post(
-      `${VITE_API_URL}/courses/${id}/commentars`,
+      `${VITE_API_URL}/discussions/${id}/commentar`,
       {
-        discussionId: discussionId,
         commentar: jawaban,
         photoCommentar: gambar,
       },
@@ -287,7 +263,7 @@ export const addComment = (jawaban, gambar, id, discussionId) => async (_, getSt
       message: "Commentar berhasil di buat ",
       type: "success",
     });
-    window.location.reload();
+    dispatch(getDetailDiscussion(id));
   } catch (error) {
     console.log(error);
   }
@@ -498,13 +474,13 @@ export const getCoursePremium =
     }
   };
 export const updateDiscussion =
-  (idDiskusi, id, judul, pertanyaan, gambar) => async (_, getState) => {
+  (idDiskusi, judul, pertanyaan, gambar) => async (_, getState) => {
     const { token } = getState().auth;
     try {
       const formData = new FormData();
       formData.append("photoDiscussion", gambar);
       await axios.put(
-        `${VITE_API_URL}/courses/${id}/discussions/${idDiskusi}`,
+        `${VITE_API_URL}/discussions/${idDiskusi}`,
         {
           title: judul,
           question: pertanyaan,

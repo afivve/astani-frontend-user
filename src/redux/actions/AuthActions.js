@@ -5,49 +5,48 @@ import { toastify } from "../../utils/toastify";
 
 // import { toastify } from "../../utils/toastify";
 
-export const login =
-  (email, password, setIsLoading, navigate) => async (dispatch) => {
-    try {
-      setIsLoading(true);
-      const response = await axios.post(`${VITE_API_URL}/auth/login`, {
-        email,
-        password,
-      });
-      const { data } = response;
-      const { token } = data.value;
+export const login = (email, password, setIsLoading, navigate) => async (dispatch) => {
+  try {
+    setIsLoading(true);
+    const response = await axios.post(`${VITE_API_URL}/auth/login`, {
+      email,
+      password,
+    });
+    const { data } = response;
+    const { token } = data.value;
 
-      dispatch(setToken(token));
-      navigate("/");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (
-          error.response.data.message ===
-          "Akun belum terverifikasi. Periksa email masuk untuk verifikasi kode Otp"
-        ) {
-          toastify({
-            message: error.response.data.message,
-            type: "error",
-          });
-          localStorage.setItem("registeredEmail", email);
-          // Navigate to "/otp"
-          setTimeout(() => {
-            navigate("/otp");
-          }, 2000);
-        } else {
-          toastify({
-            message: error.response.data.message,
-            type: "error",
-          });
-        }
+    dispatch(setToken(token));
+    navigate("/");
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (
+        error.response.data.message ===
+        "Akun belum terverifikasi. Periksa email masuk untuk verifikasi kode Otp"
+      ) {
+        toastify({
+          message: error.response.data.message,
+          type: "error",
+        });
+        localStorage.setItem("registeredEmail", email);
+        // Navigate to "/otp"
+        setTimeout(() => {
+          navigate("/otp");
+        }, 2000);
+      } else {
+        toastify({
+          message: error.response.data.message,
+          type: "error",
+        });
       }
-      setIsLoading(false);
-      // toastify({
-      //   message: error?.message,
-      //   type: "Error",
-      // });
     }
     setIsLoading(false);
-  };
+    // toastify({
+    //   message: error?.message,
+    //   type: "Error",
+    // });
+  }
+  setIsLoading(false);
+};
 
 export const logout = () => (dispatch) => {
   dispatch(setToken(null));
@@ -55,52 +54,48 @@ export const logout = () => (dispatch) => {
 };
 
 export const profile =
-  (navigate, navigatePathSuccess, navigatePathError) =>
-    async (dispatch, getState) => {
-      try {
-        let { token } = getState().auth;
+  (navigate, navigatePathSuccess, navigatePathError) => async (dispatch, getState) => {
+    try {
+      let { token } = getState().auth;
 
-        const response = await axios.get(`${VITE_API_URL}/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      const response = await axios.get(`${VITE_API_URL}/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        // console.log(response.data.value);
-        const { value } = response.data;
-        const data = value;
+      // console.log(response.data.value);
+      const { value } = response.data;
+      const data = value;
 
-        dispatch(setUser(data));
+      dispatch(setUser(data));
 
-        // if navigatePath params is false/null/undefined, it will not executed
-        if (navigatePathSuccess) navigate(navigatePathSuccess);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          // If token is not valid
-          if (error.response.status === 401) {
-            dispatch(logout());
-            // if navigatePathError params is false/null/undefined, it will not executed
-            if (navigatePathError) navigate(navigatePathError);
-            // console.log("eror 401");
-            return;
-          }
+      // if navigatePath params is false/null/undefined, it will not executed
+      if (navigatePathSuccess) navigate(navigatePathSuccess);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // If token is not valid
+        if (error.response.status === 401) {
+          dispatch(logout());
+          // if navigatePathError params is false/null/undefined, it will not executed
+          if (navigatePathError) navigate(navigatePathError);
+          // console.log("eror 401");
+          return;
         }
-        // toastify({
-        //   message: error?.message,
-        //   type: "error",
-        // });
       }
-    };
+      // toastify({
+      //   message: error?.message,
+      //   type: "error",
+      // });
+    }
+  };
 
 export const RequestPassword = (email, setIsLoading) => async () => {
   try {
     setIsLoading(true);
-    const response = await axios.post(
-      `${VITE_API_URL}/auth/request-reset-password`,
-      {
-        email,
-      }
-    );
+    const response = await axios.post(`${VITE_API_URL}/auth/request-reset-password`, {
+      email,
+    });
     toastify({
       message: response.data.message,
       type: "success",
@@ -119,47 +114,59 @@ export const RequestPassword = (email, setIsLoading) => async () => {
 };
 
 export const register =
-  (name, email, phone, age, gender, province, city, password, confPassword, setIsLoading, navigate) =>
-    async () => {
-      try {
-        setIsLoading(true);
-        const response = await axios.post(`${VITE_API_URL}/auth/register`, {
-          name,
-          email,
-          phone,
-          age,
-          gender,
-          province,
-          city,
-          password,
-          confPassword,
+  (
+    name,
+    email,
+    phone,
+    age,
+    gender,
+    province,
+    city,
+    password,
+    confPassword,
+    setIsLoading,
+    navigate
+  ) =>
+  async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${VITE_API_URL}/auth/register`, {
+        name,
+        email,
+        phone,
+        age,
+        gender,
+        province,
+        city,
+        password,
+        confPassword,
+      });
+
+      if (response.status === 201) {
+        const { email } = response.data.value;
+
+        // Menyimpan email ke dalam localStorage
+        localStorage.setItem("registeredEmail", email);
+
+        toastify({
+          message: response.data.message,
+          type: "success",
         });
-
-        if (response.status === 201) {
-          const { email } = response.data.value;
-
-          // Menyimpan email ke dalam localStorage
-          localStorage.setItem("registeredEmail", email);
-
-          toastify({
-            message: response.data.message,
-            type: "success",
-          });
-          setTimeout(() => {
-            // Menunggu 2 detik sebelum navigasi ke halaman OTP
-            navigate("/otp");
-          }, 2000);
-        }
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          toastify({
-            message: error.response.data.message,
-            type: "error",
-          });
-        }
-        setIsLoading(false);
+        setTimeout(() => {
+          // Menunggu 2 detik sebelum navigasi ke halaman OTP
+          navigate("/otp");
+        }, 2000);
       }
-    };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toastify({
+          message: error.response.data.message,
+          type: "error",
+        });
+      }
+      setIsLoading(false);
+    }
+  };
 
 export const verify = (otp, setIsLoading, navigate) => async () => {
   try {
@@ -285,7 +292,7 @@ export const ChangePasswordUser =
   };
 
 export const UpdateProfile =
-  (name, email, phone, city, country) => async (_, getState) => {
+  (name, email, phone, city, province, gender, age) => async (dispatch, getState) => {
     try {
       let { token } = getState().auth;
       const response = await axios.put(
@@ -295,7 +302,9 @@ export const UpdateProfile =
           email,
           phone,
           city,
-          country,
+          province,
+          gender,
+          age,
         },
         {
           headers: {
@@ -308,9 +317,9 @@ export const UpdateProfile =
         message: response.data.message,
         type: "success",
       });
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
+      if (token) {
+        dispatch(profile());
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toastify({

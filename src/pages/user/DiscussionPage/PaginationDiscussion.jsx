@@ -2,18 +2,19 @@ import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
 function PaginationDiscussion({ setPageNumber, pageNumber }) {
-  const { page } = useSelector((state) => state.course);
+  const { page, currentPage } = useSelector((state) => state.course);
 
   const handlePage = (value) => {
     setPageNumber(value);
   };
 
   const renderPagination = () => {
-    if (page.length < 1) {
+    // Pastikan page adalah array sebelum melanjutkan
+    if (!Array.isArray(page) || page.length < 1) {
       return null;
     }
 
-    const currentIndex = page;
+    const currentIndex = currentPage;
     const prevPage = currentIndex > 0 ? page[currentIndex - 1] : null;
     const nextPage = currentIndex < page.length - 1 ? page[currentIndex + 1] : null;
 
@@ -60,9 +61,7 @@ function PaginationDiscussion({ setPageNumber, pageNumber }) {
 
 PaginationDiscussion.propTypes = {
   setPageNumber: PropTypes.func,
-  setPage: PropTypes.func,
   pageNumber: PropTypes.number,
-  page: PropTypes.number,
 };
 
 export default PaginationDiscussion;
