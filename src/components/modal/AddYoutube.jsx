@@ -1,24 +1,38 @@
 import { Button, Modal } from "flowbite-react";
 import PropTypes from "prop-types";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AddYoutubeData } from "../../redux/actions/AdminActions";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AddYoutubeData, GetYoutubeDataId } from "../../redux/actions/AdminActions";
 
 // import { addDataCategory } from "../../redux/Actions/CourseActions";
 
-const AddYoutube = ({ modal, setModal, id }) => {
+const AddYoutube = ({ modal, setModal, id, idYt, type, message }) => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
+
+  const { youtubeDiseaseId } = useSelector((state) => state.admin);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(AddYoutubeData(name, id));
   };
 
+  useEffect(() => {
+    if (type === "edit" && idYt) {
+      dispatch(GetYoutubeDataId(idYt));
+    }
+  }, [dispatch, type, idYt]);
+
+  useEffect(() => {
+    if (type === "edit") {
+      setName(youtubeDiseaseId || "");
+    }
+  }, [type, youtubeDiseaseId]);
+
   return (
     <Modal show={modal} onClose={() => setModal(false)}>
-      <Modal.Header>Tambah Youtube Penyakit</Modal.Header>
+      <Modal.Header>{message}</Modal.Header>
       <Modal.Body>
         <div className="space-y-6">
           <div className="flex flex-col">
@@ -44,6 +58,9 @@ AddYoutube.propTypes = {
   modal: PropTypes.string,
   setModal: PropTypes.func,
   id: PropTypes.number,
+  idYt: PropTypes.number,
+  type: PropTypes.string,
+  message: PropTypes.string,
 };
 
 export default AddYoutube;

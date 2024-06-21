@@ -137,7 +137,10 @@ export const DeleteDeseaseById = (id) => async (dispatch, getState) => {
     });
 
     dispatch(DiseaseData());
-    alert(response.data.message);
+    toastify({
+      message: response.data.message,
+      type: "success",
+    });
   } catch (error) {
     console.log(error);
   }

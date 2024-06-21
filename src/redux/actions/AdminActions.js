@@ -9,6 +9,10 @@ import {
   setTotalUserActive,
   setTotalPredict,
   setTotalPersentasePredict,
+  setDiseaseId,
+  setHandlingDiseaseId,
+  setLiteraturDiseaseId,
+  setYoutubeDiseaseId,
 } from "../reducers/AdminReducers";
 import { VITE_API_URL } from "../../config/config";
 import axios from "axios";
@@ -44,6 +48,21 @@ export const HandlingDiseaseData = (id) => async (dispatch, getState) => {
     const { value } = response.data;
     dispatch(setHandlingDisease(value));
     dispatch(setNameDisease(response.data.diseaseName));
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const HandlingDiseaseIdData = (idPenanganan) => async (dispatch, getState) => {
+  try {
+    let { token } = getState().auth;
+    const response = await axios.get(`${VITE_API_URL}/disease-solution/${idPenanganan}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { action } = response.data.value;
+    dispatch(setHandlingDiseaseId(action));
   } catch (error) {
     console.log(error);
   }
@@ -128,6 +147,35 @@ export const AddSolutionData = (name, id) => async (dispatch, getState) => {
     });
   }
 };
+export const EditSolutionData =
+  (name, id, idPenanganan) => async (dispatch, getState) => {
+    try {
+      let { token } = getState().auth;
+      const response = await axios.put(
+        `${VITE_API_URL}/disease-solution/${idPenanganan}`,
+        {
+          action: name,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch(HandlingDiseaseData(id));
+
+      toastify({
+        message: response.data.message,
+        type: "success",
+      });
+    } catch (error) {
+      toastify({
+        message: error.response.data.message,
+        type: "error",
+      });
+    }
+  };
 
 export const DeleteSolutionData = (idSolution, id) => async (dispatch, getState) => {
   try {
@@ -182,6 +230,29 @@ export const AddLiteraturData = (name, id) => async (dispatch, getState) => {
     });
   }
 };
+export const LiteraturIdData = (idLiteratur) => async (dispatch, getState) => {
+  try {
+    let { token } = getState().auth;
+    const response = await axios.get(
+      `${VITE_API_URL}/disease-literatur/${idLiteratur}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const { link } = response.data.value;
+
+    dispatch(setLiteraturDiseaseId(link));
+  } catch (error) {
+    toastify({
+      message: error.response.data.message,
+      type: "error",
+    });
+  }
+};
 
 export const DeleteLiteraturData = (idLiteratur, id) => async (dispatch, getState) => {
   try {
@@ -207,6 +278,35 @@ export const DeleteLiteraturData = (idLiteratur, id) => async (dispatch, getStat
     });
   }
 };
+export const EditLiteraturData =
+  (name, idLiteratur, id) => async (dispatch, getState) => {
+    try {
+      let { token } = getState().auth;
+      const response = await axios.put(
+        `${VITE_API_URL}/disease-literatur/${idLiteratur}`,
+        {
+          link: name,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch(LiteraturDiseaseData(id));
+
+      toastify({
+        message: response.data.message,
+        type: "success",
+      });
+    } catch (error) {
+      toastify({
+        message: error.response.data.message,
+        type: "error",
+      });
+    }
+  };
 
 export const AddYoutubeData = (name, id) => async (dispatch, getState) => {
   try {
@@ -251,6 +351,24 @@ export const DeleteYoutubeData = (idYT, id) => async (dispatch, getState) => {
       message: response.data.message,
       type: "success",
     });
+  } catch (error) {
+    toastify({
+      message: error.response.data.message,
+      type: "error",
+    });
+  }
+};
+export const GetYoutubeDataId = (idYt) => async (dispatch, getState) => {
+  try {
+    let { token } = getState().auth;
+    const response = await axios.get(`${VITE_API_URL}/disease-youtube/${idYt}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { link } = response.data.value;
+    dispatch(setYoutubeDiseaseId(link));
   } catch (error) {
     toastify({
       message: error.response.data.message,
@@ -320,3 +438,57 @@ export const DashboardPredict = () => async (dispatch, getState) => {
     console.log(error);
   }
 };
+
+export const DisaeseByIdData = (id) => async (dispatch, getState) => {
+  try {
+    let { token } = getState().auth;
+    const response = await axios.get(`${VITE_API_URL}/disease/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { name, symtomps, caused } = response.data.value;
+
+    const data = { name, symtomps, caused };
+    dispatch(setDiseaseId(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const EditeDiseaseData =
+  (name, cause, solution, id, setModal) => async (dispatch, getState) => {
+    try {
+      let { token } = getState().auth;
+      const response = await axios.put(
+        `${VITE_API_URL}/disease/${id}`,
+        {
+          name: name,
+          caused: cause,
+          symtomps: solution,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch(DiseaseData());
+
+      toastify({
+        message: response.data.message,
+        type: "success",
+      });
+
+      if (response.data.status === "success") {
+        setModal(false);
+      }
+    } catch (error) {
+      toastify({
+        message: error.response.data.message,
+        type: "error",
+      });
+    }
+  };

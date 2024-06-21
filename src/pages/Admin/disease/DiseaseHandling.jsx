@@ -5,7 +5,7 @@ import { PenangananPenyakit } from "../../../data/DataPenyakit";
 import { useDispatch, useSelector } from "react-redux";
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   DeleteSolutionData,
   HandlingDiseaseData,
@@ -18,6 +18,10 @@ const DiseaseHandling = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const [idPenanganan, setIdPenanganan] = useState(null);
+  const [message, setMessage] = useState("Tambah Solusi Penyakit");
+  const [type, setType] = useState("add");
+
   const { handlingDisease, nameDisease } = useSelector((state) => state.admin);
   const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
@@ -27,6 +31,13 @@ const DiseaseHandling = () => {
 
   const handleDeleteSolution = (idSolution) => {
     dispatch(DeleteSolutionData(idSolution, id));
+  };
+
+  const handleOpenEditModal = (id) => {
+    setIdPenanganan(id);
+    handleOpenModal("editSolution");
+    setMessage("Ubah Solusi Penyakit");
+    setType("edit");
   };
   return (
     <div className="flex  ">
@@ -38,9 +49,8 @@ const DiseaseHandling = () => {
         </div>
         <div className="flex flex-col  justify-center items-center container mt-10 mx-auto">
           <div className="flex flex-col mt-2 justify-between w-full mb-4 items-center gap-2">
-            <div className="w-full text-start flex flex-row text-xl  font-bold gap-2">
-              <h1>Data Penyakit</h1>
-              <span>{nameDisease}</span>
+            <div className="w-full text-start flex flex-row text-xl  font-bold ">
+              <h1>Data Penyakit {nameDisease}</h1>
             </div>
             <div className="flex flex-row justify-between w-full mt-4 items-end gap-3">
               <Link
@@ -48,20 +58,14 @@ const DiseaseHandling = () => {
                 //   onClick={() => handleOpenModal("addCourse")}
                 className="bg-red-500 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
-                {/* <img src={AddIcon} /> */}
                 <p>Kembali</p>
               </Link>
               <button
                 onClick={() => handleOpenModal("addSolution")}
                 className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
-                {/* <img src={AddIcon} /> */}
                 <p>Tambah</p>
               </button>
-              {/* <AddCourse
-                  addCourse={activeModal === "addCourse"}
-                  setAddCourse={handleCloseModal}
-                /> */}
             </div>
           </div>
 
@@ -94,7 +98,7 @@ const DiseaseHandling = () => {
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button
-                            //   onClick={() => handleOpenModal("editeCourse", data.id)}
+                            onClick={() => handleOpenEditModal(data.id)}
                             className="p-1 bg-DARKBLUE05 rounded-md "
                           >
                             <AiFillEdit className="text-lg" />
@@ -112,7 +116,14 @@ const DiseaseHandling = () => {
                 ))}
               </tbody>
             </table>
-            <AddSolution modal={activeModal} setModal={handleCloseModal} id={id} />
+            <AddSolution
+              modal={activeModal}
+              setModal={handleCloseModal}
+              id={id}
+              idPenanganan={idPenanganan}
+              type={type}
+              message={message}
+            />
           </div>
         </div>
       </div>

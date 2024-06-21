@@ -1,16 +1,24 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HamburgerIcon from "../../assets/hamburger.svg";
-import LeaveIcon from "../../assets/leave.svg";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/actions/AuthActions";
 
 const HeaderAdmin = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   //   const [dropDown, setDropDown] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
   };
 
   return (
@@ -25,10 +33,10 @@ const HeaderAdmin = () => {
           </button>
           <div className="hidden lg:block">
             <button
-              //   onClick={handleLogout}
+              onClick={handleLogout}
               className="flex flex-row font-Montserrat font-semibold gap-1"
             >
-              <img src={LeaveIcon} />
+              {/* <img src={LeaveIcon} /> */}
               <p>Keluar</p>
             </button>
           </div>
@@ -64,7 +72,7 @@ const HeaderAdmin = () => {
               </div>
               <div className="none lg:hidden absolute bottom-10">
                 <button
-                  //   onClick={handleLogout}
+                  onClick={handleLogout}
                   className="flex flex-row font-Montserrat font-semibold gap-1"
                 >
                   {/* <img src={LeaveIcon} /> */}

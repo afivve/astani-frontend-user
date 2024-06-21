@@ -1,6 +1,6 @@
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../../../components/SideBar/SideBar";
 import HeaderAdmin from "../../../components/Navbar/HeaderAdmin";
@@ -17,6 +17,10 @@ const DiseaseLiteratur = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const [idLiteratur, setIdLiteratur] = useState(null);
+  const [message, setMessage] = useState("Tambah Data Penyakit");
+  const [type, setType] = useState("add");
+
   const { literaturDisease, nameDisease } = useSelector((state) => state.admin);
   const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
@@ -27,6 +31,13 @@ const DiseaseLiteratur = () => {
   const handleSubmitLitearur = (idLiteratur) => {
     console.log(idLiteratur);
     dispatch(DeleteLiteraturData(idLiteratur, id));
+  };
+
+  const handleOpenEditModal = (id) => {
+    setIdLiteratur(id);
+    handleOpenModal("editLiteratur");
+    setMessage("Ubah Data Penyakit");
+    setType("edit");
   };
 
   return (
@@ -95,7 +106,7 @@ const DiseaseLiteratur = () => {
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button
-                            //   onClick={() => handleOpenModal("editeCourse", data.id)}
+                            onClick={() => handleOpenEditModal(data.id)}
                             className="p-1 bg-DARKBLUE05 rounded-md "
                           >
                             <AiFillEdit className="text-lg" />
@@ -113,7 +124,14 @@ const DiseaseLiteratur = () => {
                 ))}
               </tbody>
             </table>
-            <AddLiteratur modal={activeModal} setModal={handleCloseModal} id={id} />
+            <AddLiteratur
+              modal={activeModal}
+              setModal={handleCloseModal}
+              id={id}
+              idLiteratur={idLiteratur}
+              type={type}
+              message={message}
+            />
           </div>
         </div>
       </div>

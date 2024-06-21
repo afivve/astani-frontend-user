@@ -1,6 +1,6 @@
 import { MdDelete } from "react-icons/md";
 import { AiFillEdit } from "react-icons/ai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar from "../../../components/SideBar/SideBar";
 import HeaderAdmin from "../../../components/Navbar/HeaderAdmin";
@@ -17,6 +17,10 @@ const DiseaseYoutube = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
+  const [idYt, setIdYt] = useState(null);
+  const [message, setMessage] = useState("Tambah Data Penyakit");
+  const [type, setType] = useState("add");
+
   const { youtubeDisease, nameDisease } = useSelector((state) => state.admin);
   const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
@@ -27,6 +31,14 @@ const DiseaseYoutube = () => {
   const handleDeleteYoutube = (idYT) => {
     dispatch(DeleteYoutubeData(idYT, id));
   };
+
+  const handleOpenEditModal = (id) => {
+    setIdYt(id);
+    handleOpenModal("editLiteratur");
+    setMessage("Ubah Data Penyakit");
+    setType("edit");
+  };
+
   return (
     <div className="flex  ">
       <SideBar />
@@ -38,12 +50,7 @@ const DiseaseYoutube = () => {
         <div className="flex flex-col  justify-center items-center container mt-10 mx-auto">
           <div className="flex flex-col mt-2 justify-between w-full mb-4 items-center gap-2">
             <div className="w-full text-start text-xl font-bold gap-2  flex flex-row items-center ">
-              <h1>Data Penyakit:</h1>
-
-              <span>
-                {""}
-                {nameDisease}
-              </span>
+              <h1>Data Penyakit {nameDisease}</h1>
             </div>
             <div className="flex flex-row justify-between w-full mt-4 items-end gap-3">
               <Link
@@ -93,7 +100,7 @@ const DiseaseYoutube = () => {
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button
-                            //   onClick={() => handleOpenModal("editeCourse", data.id)}
+                            onClick={() => handleOpenEditModal(data.id)}
                             className="p-1 bg-DARKBLUE05 rounded-md "
                           >
                             <AiFillEdit className="text-lg" />
@@ -111,7 +118,14 @@ const DiseaseYoutube = () => {
                 ))}
               </tbody>
             </table>
-            <AddYoutube modal={activeModal} setModal={handleCloseModal} id={id} />
+            <AddYoutube
+              modal={activeModal}
+              setModal={handleCloseModal}
+              id={id}
+              idYt={idYt}
+              type={type}
+              message={message}
+            />
           </div>
         </div>
       </div>

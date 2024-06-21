@@ -3,9 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   historyUser: [],
   disease: [],
+  diseaseId: [],
   handlingDisease: [],
+  handlingDiseaseId: "",
   literaturDisease: [],
+  literaturDiseaseId: "",
   youtubeDisease: [],
+  youtubeDiseaseId: "",
   nameDisease: null || "",
   totalUser: null || "",
   totalUserActive: null || "",
@@ -47,6 +51,18 @@ const adminSlice = createSlice({
     setTotalPersentasePredict: (state, action) => {
       state.totalPersentasePredict = action.payload;
     },
+    setDiseaseId: (state, action) => {
+      state.diseaseId = action.payload;
+    },
+    setHandlingDiseaseId: (state, action) => {
+      state.handlingDiseaseId = action.payload;
+    },
+    setLiteraturDiseaseId: (state, action) => {
+      state.literaturDiseaseId = action.payload;
+    },
+    setYoutubeDiseaseId: (state, action) => {
+      state.youtubeDiseaseId = action.payload;
+    },
   },
 });
 
@@ -61,6 +77,10 @@ export const {
   setTotalUserActive,
   setTotalPersentasePredict,
   setTotalPredict,
+  setDiseaseId,
+  setHandlingDiseaseId,
+  setLiteraturDiseaseId,
+  setYoutubeDiseaseId,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

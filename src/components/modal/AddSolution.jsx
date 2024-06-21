@@ -1,24 +1,45 @@
 import { Button, Modal } from "flowbite-react";
 import PropTypes from "prop-types";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AddSolutionData } from "../../redux/actions/AdminActions";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  AddSolutionData,
+  EditSolutionData,
+  HandlingDiseaseIdData,
+} from "../../redux/actions/AdminActions";
 
 // import { addDataCategory } from "../../redux/Actions/CourseActions";
 
-const AddSolution = ({ modal, setModal, id }) => {
+const AddSolution = ({ modal, setModal, id, message, type, idPenanganan }) => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    dispatch(AddSolutionData(name, id));
+  const { handlingDiseaseId } = useSelector((state) => state.admin);
+
+  const handleSubmit = () => {
+    if (type == "edit" && idPenanganan) {
+      dispatch(EditSolutionData(name, id, idPenanganan));
+    } else {
+      dispatch(AddSolutionData(name, id));
+    }
   };
+
+  useEffect(() => {
+    if (type === "edit" && idPenanganan) {
+      dispatch(HandlingDiseaseIdData(idPenanganan));
+    }
+  }, [dispatch, idPenanganan, type]);
+
+  useEffect(() => {
+    if (idPenanganan) {
+      setName(handlingDiseaseId || "");
+    }
+  }, [idPenanganan, handlingDiseaseId]);
 
   return (
     <Modal show={modal} onClose={() => setModal(false)}>
-      <Modal.Header>Tambah Solusi Penyakit</Modal.Header>
+      <Modal.Header>{message}</Modal.Header>
       <Modal.Body>
         <div className="space-y-6">
           <div className="flex flex-col">
@@ -34,7 +55,7 @@ const AddSolution = ({ modal, setModal, id }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleSubmit}>Tambah</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
       </Modal.Footer>
     </Modal>
   );
@@ -44,6 +65,9 @@ AddSolution.propTypes = {
   modal: PropTypes.string,
   setModal: PropTypes.func,
   id: PropTypes.number,
+  message: PropTypes.string,
+  type: PropTypes.string,
+  idPenanganan: PropTypes.number,
 };
 
 export default AddSolution;

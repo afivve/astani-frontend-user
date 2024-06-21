@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../../../components/SideBar/SideBar";
 import { HeadTabel } from "../../../data/Dashboard";
 import HeaderAdmin from "../../../components/Navbar/HeaderAdmin";
@@ -15,6 +15,9 @@ const Disease = () => {
   const dispatch = useDispatch();
 
   const { disease } = useSelector((state) => state.admin);
+  const [id, setId] = useState(null);
+  const [message, setMessage] = useState("Tambah Data Penyakit");
+  const [type, setType] = useState("add");
 
   const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
@@ -24,6 +27,13 @@ const Disease = () => {
 
   const handleDeleteDisease = (id) => {
     dispatch(DeleteDeseaseById(id));
+  };
+
+  const handleOpenEditModal = (id) => {
+    setId(id);
+    handleOpenModal("editDisease");
+    setMessage("Ubah Data Penyakit");
+    setType("edit");
   };
 
   return (
@@ -85,7 +95,7 @@ const Disease = () => {
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button
-                            //   onClick={() => handleOpenModal("editeCourse", data.id)}
+                            onClick={() => handleOpenEditModal(data.id)}
                             className="p-1 bg-DARKBLUE05 rounded-md "
                           >
                             <AiFillEdit className="text-lg" />
@@ -125,7 +135,13 @@ const Disease = () => {
                 ))}
               </tbody>
             </table>
-            <AddDisease modal={activeModal} setModal={handleCloseModal} />
+            <AddDisease
+              modal={activeModal}
+              setModal={handleCloseModal}
+              id={id}
+              message={message}
+              type={type}
+            />
           </div>
         </div>
       </div>
