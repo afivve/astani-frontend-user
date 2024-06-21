@@ -333,7 +333,6 @@ export const UpdateProfile =
 export const UpdatePicture = (selectedFile) => async (_, getState) => {
   try {
     let { token } = getState().auth;
-    console.log(selectedFile);
     const formData = new FormData();
     formData.append("photoProfile", selectedFile);
     await axios.put(

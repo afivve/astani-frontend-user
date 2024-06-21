@@ -33,11 +33,17 @@ const DiseaseHandling = () => {
     dispatch(DeleteSolutionData(idSolution, id));
   };
 
-  const handleOpenEditModal = (id) => {
-    setIdPenanganan(id);
-    handleOpenModal("editSolution");
-    setMessage("Ubah Solusi Penyakit");
-    setType("edit");
+  const handleModal = (id, type) => {
+    if (type === "add") {
+      handleOpenModal("addSolution");
+      setMessage("Tamabah Solusi Penyakit");
+      setType(type);
+    } else if (type === "edit") {
+      setIdPenanganan(id);
+      handleOpenModal("editSolution");
+      setMessage("Ubah Solusi Penyakit");
+      setType("edit");
+    }
   };
   return (
     <div className="flex  ">
@@ -61,7 +67,7 @@ const DiseaseHandling = () => {
                 <p>Kembali</p>
               </Link>
               <button
-                onClick={() => handleOpenModal("addSolution")}
+                onClick={() => handleModal(null, "add")}
                 className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
                 <p>Tambah</p>
@@ -98,7 +104,7 @@ const DiseaseHandling = () => {
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button
-                            onClick={() => handleOpenEditModal(data.id)}
+                            onClick={() => handleModal(data.id, "edit")}
                             className="p-1 bg-DARKBLUE05 rounded-md "
                           >
                             <AiFillEdit className="text-lg" />

@@ -28,6 +28,8 @@ const AddSolution = ({ modal, setModal, id, message, type, idPenanganan }) => {
   useEffect(() => {
     if (type === "edit" && idPenanganan) {
       dispatch(HandlingDiseaseIdData(idPenanganan));
+    } else if (type === "add") {
+      setName("");
     }
   }, [dispatch, idPenanganan, type]);
 

@@ -33,10 +33,12 @@ const AddLiteratur = ({ modal, setModal, id, idLiteratur, message, type }) => {
   }, [dispatch, idLiteratur, type]);
 
   useEffect(() => {
-    if (idLiteratur) {
+    if (type === "edit" && idLiteratur) {
       setName(literaturDiseaseId || "");
+    } else if (type === "add") {
+      setName("");
     }
-  }, [idLiteratur, literaturDiseaseId]);
+  }, [idLiteratur, type, literaturDiseaseId]);
 
   return (
     <Modal show={modal} onClose={() => setModal(false)}>

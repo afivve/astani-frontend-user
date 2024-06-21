@@ -238,7 +238,10 @@ export const addDiscussion =
       });
       dispatch(getDiscussion());
     } catch (error) {
-      console.log(error);
+      toastify({
+        message: error.response.data.message,
+        type: "error",
+      });
     }
   };
 export const addComment = (jawaban, gambar, id) => async (dispatch, getState) => {

@@ -8,7 +8,7 @@ import {
   DashboardTotalUser,
   DashboardUserActive,
 } from "../../../redux/actions/AdminActions";
-// import { Doughnut } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 // import { Chart as ChartJS } from "chart.js/auto";
 
 const Dashboard = () => {
@@ -22,23 +22,43 @@ const Dashboard = () => {
     dispatch(DashboardUserActive());
   }, [dispatch]);
 
-  // const isCourseTypeAvailable =
-  //   totalPersentasePredict && totalPersentasePredict.length > 0;
+  const isCourseTypeAvailable =
+    totalPersentasePredict && totalPersentasePredict.length > 0;
 
-  // const dataCourseType = {
-  //   labels: isCourseTypeAvailable
-  //     ? totalPersentasePredict.map((data) => data.typeName.toString())
-  //     : [],
-  //   datasets: [
-  //     {
-  //       label: "Banyak Kelas",
-  //       data: isCourseTypeAvailable
-  //         ? totalPersentasePredict.map((data) => data.totalCourse)
-  //         : [],
-  //       backgroundColor: ["#00CF6C", "#FF0000"],
-  //     },
-  //   ],
-  // };
+  const dataCourseType = {
+    labels: isCourseTypeAvailable
+      ? totalPersentasePredict.map((data) => data.diseaseName.toString())
+      : [],
+    datasets: [
+      {
+        label: "Banyak Kelas",
+        data: isCourseTypeAvailable
+          ? totalPersentasePredict.map((data) => data.percentage)
+          : [],
+        backgroundColor: [
+          "#FF0000",
+          "#00FF00",
+          "#0000FF",
+          "#FFFF00",
+          "#800080",
+          "#FFC0CB",
+          "#00FFFF",
+          "#FF00FF",
+          "#00FF00",
+          "#800000",
+          "#000080",
+          "#C0C0C0",
+          "#808080",
+          "#000000",
+          "#FFFFFF",
+          "#A52A2A",
+          "#FFD700",
+          "#F0E68C",
+          "#00CF6C",
+        ],
+      },
+    ],
+  };
   return (
     <div className="flex justify-center">
       <SideBar />
@@ -57,15 +77,20 @@ const Dashboard = () => {
                 </span>
               </div>
             </div>
-            {/* <div className="border-2  flex justify-center  bg-[#F6F6F6] py-28 drop-shadow-xl">
-            <Doughnut data={dataCourseType} />
-            {totalPersentasePredict.map((data) => (
-              <div key={data.count}>
-                <div>{data.diseaseName}</div>
-                <div>{data.percentage}%</div>
+            <div className="border-2  px-4 flex justify-center items-center flex-col  bg-[#F6F6F6] py-28 drop-shadow-xl">
+              <div className="h-[200px]">
+                <Doughnut data={dataCourseType} />
               </div>
-            ))}
-          </div> */}
+
+              <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 ">
+                {totalPersentasePredict.map((data) => (
+                  <div key={data.count}>
+                    <div>{data.diseaseName}</div>
+                    <div>{data.percentage}%</div>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="border-2  flex justify-center w-full  bg-[#F6F6F6] px-4 md:py-28 py-16 drop-shadow-xl">
               <div className="flex flex-col items-center text-center">
                 <h1 className="font-semibold text-2xl ">Total User</h1>

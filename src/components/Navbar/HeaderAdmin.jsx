@@ -52,10 +52,13 @@ const HeaderAdmin = () => {
                   onClick={handleToggleSidebar}
                   className="flex flex-row justify-between font-Montserrat font-bold gap-1 text-black"
                 >
-                  <div className="flex flex-row justify-center text-4xl font-bold ">
+                  <Link
+                    to="/dashboard"
+                    className="flex flex-row justify-center text-4xl font-bold "
+                  >
                     <p className="text-BLUE05">As</p>
                     <p className="text-white">Tani</p>
-                  </div>
+                  </Link>
                 </button>
               </div>
               <div className="flex flex-col text-base font-semibold text-white font-Montserrat ">

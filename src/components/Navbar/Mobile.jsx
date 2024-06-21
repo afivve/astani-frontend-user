@@ -23,7 +23,7 @@ const Mobile = ({ user }) => {
         path !== "/dashboard" &&
         path !== "/penyakit" && (
           <form
-            className="sticky top-0 p-3 sm:p-0 bg-white shadow-lg z-[999]"
+            className="sticky top-0 p-3 sm:p-0 bg-white shadow-lg z-[50] "
             action="search"
           >
             <div
@@ -93,7 +93,7 @@ const Mobile = ({ user }) => {
         )}
 
       {path !== "/dashboard" && path !== "/penyakit" && (
-        <nav className="sm:hidden flex items-center fixed bg-white border-t drop-shadow-2xl shadow-outline border-gray-300 w-full bottom-0 py-4 z-[999]">
+        <nav className="sm:hidden flex items-center fixed bg-white border-t z-[50] drop-shadow-2xl shadow-outline border-gray-300 w-full bottom-0 py-4 ">
           <NavLink
             to="/"
             className={({ isActive }) =>

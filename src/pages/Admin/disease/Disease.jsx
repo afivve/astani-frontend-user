@@ -17,7 +17,7 @@ const Disease = () => {
   const { disease } = useSelector((state) => state.admin);
   const [id, setId] = useState(null);
   const [message, setMessage] = useState("Tambah Data Penyakit");
-  const [type, setType] = useState("add");
+  const [type, setType] = useState("");
 
   const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
@@ -29,11 +29,17 @@ const Disease = () => {
     dispatch(DeleteDeseaseById(id));
   };
 
-  const handleOpenEditModal = (id) => {
-    setId(id);
-    handleOpenModal("editDisease");
-    setMessage("Ubah Data Penyakit");
-    setType("edit");
+  const handleModal = (id, types) => {
+    if (types === "add") {
+      handleOpenModal("addDisease");
+      setType(types);
+      setMessage("Tambah Data Penyakit");
+    } else {
+      setId(id);
+      handleOpenModal("editDisease");
+      setMessage("Ubah Data Penyakit");
+      setType(types);
+    }
   };
 
   return (
@@ -50,7 +56,7 @@ const Disease = () => {
             </div>
             <div>
               <button
-                onClick={() => handleOpenModal("addDisease")}
+                onClick={() => handleModal(null, "add")}
                 className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
               >
                 {/* <img src={AddIcon} /> */}
@@ -95,7 +101,7 @@ const Disease = () => {
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button
-                            onClick={() => handleOpenEditModal(data.id)}
+                            onClick={() => handleModal(data.id, "edit")}
                             className="p-1 bg-DARKBLUE05 rounded-md "
                           >
                             <AiFillEdit className="text-lg" />

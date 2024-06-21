@@ -32,12 +32,16 @@ const AddDisease = ({ modal, setModal, type, id, message }) => {
   }, [dispatch, id, type]);
 
   useEffect(() => {
-    if (id) {
+    if (type === "edit" && id) {
       setName(diseaseId.name || "");
       setSolution(diseaseId.symtomps || "");
       setCause(diseaseId.caused || "");
+    } else if (type === "add") {
+      setName("");
+      setSolution("");
+      setCause("");
     }
-  }, [id, diseaseId]);
+  }, [id, diseaseId, type]);
 
   return (
     <Modal show={modal} onClose={() => setModal(false)}>

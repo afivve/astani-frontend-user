@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Selesai, getDiscussion } from "../../../redux/actions/CourseActions";
 import { Link, useParams } from "react-router-dom";
-import AddDiscussion from "../../../components/modal/AddDiscussion";
+// import AddDiscussion from "../../../components/modal/AddDiscussion";
 import PaginationDiscussion from "./PaginationDiscussion";
 import Header from "../../../components/Navbar/Header";
-import { BiFilter } from "react-icons/bi";
+// import { BiFilter } from "react-icons/bi";
+import Discussion from "../../../components/modal/Discussion";
+import { useModal } from "../../../hooks/useModal";
 
 export default function DiscussionPage() {
   const dispatch = useDispatch();
@@ -16,12 +18,14 @@ export default function DiscussionPage() {
   // const [active, setActive] = useState([]);
   const [search, setSearch] = useState("");
   const { id } = useParams();
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [pageNumber, setPageNumber] = useState(null);
   const [idDiskusi, setIdDiskusi] = useState(null);
   const [message, setMessage] = useState("Membuat Diskusi");
   const [type, setType] = useState("add");
   const { user } = useSelector((state) => state.auth);
+
+  const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
   // const handleClosed = (value) => {
   //   setClosed((prevSelected) => {
@@ -36,11 +40,17 @@ export default function DiscussionPage() {
   //   setActive([]);
   // };
 
-  const handleEdit = (discussionId) => {
-    setShowModal(true);
-    setIdDiskusi(discussionId);
-    setMessage("Edit Diskusi");
-    setType("edit");
+  const handleModal = (discussionId, type) => {
+    if (type === "add") {
+      setMessage("Tamab Diskusi");
+      setType("add");
+      handleOpenModal("addDiscussion");
+    } else if (type === "edit") {
+      setIdDiskusi(discussionId);
+      setMessage("Edit Diskusi");
+      setType("edit");
+      handleOpenModal("editDiscussion");
+    }
   };
 
   // const handleActive = (value) => {
@@ -68,7 +78,7 @@ export default function DiscussionPage() {
     <>
       <Header />
       <div>
-        <div className="justify-center flex bg-gradient-to-r bg-white/50 drop-shadow-lg">
+        <div className="justify-center flex bg-gradient-to-r bg-white/50 drop-shadow-lg z-[20]">
           <div className="container m-8">
             <div className="flex flex-row justify-between">
               <div className="flex flex-row items-center gap-5">
@@ -95,13 +105,13 @@ export default function DiscussionPage() {
                 <button
                   className="w-full bg-GREEN01 text-white p-2 rounded-lg  drop-shadow-xl font-semibold"
                   type="button"
-                  onClick={() => setShowModal(true)}
+                  onClick={() => handleModal(null, "add")}
                 >
                   Buat Diskusi Baru
                 </button>
-                <AddDiscussion
-                  showModal={showModal}
-                  setShowModal={setShowModal}
+                <Discussion
+                  modal={activeModal}
+                  setModal={handleCloseModal}
                   id={id}
                   idDiskusi={idDiskusi}
                   setIdDiskusi={setIdDiskusi}
@@ -141,41 +151,41 @@ export default function DiscussionPage() {
                 </div> */}
               </div>
               <div className="w-full md:w-4/5 flex flex-col gap-y-4">
-                {showModal == false && (
-                  <div className="md:flex flex-row w-full justify-between gap-3  md:top-0 h-auto z-0 pt-2 backdrop-blur bg-white/30">
-                    <div className="flex flex-row gap-3 font-bold text-YELLOW05 items-center justify-between">
-                      <div className="flex flex-row gap-3">
-                        <PaginationDiscussion
-                          setPageNumber={setPageNumber}
-                          pageNumber={pageNumber}
-                        />
-                      </div>
-                      <div className="flex flex-row gap-3">
-                        <button
-                          className="md:hidden w-auto bg-GREEN01 text-white p-1 rounded-lg  drop-shadow-xl font-semibold"
-                          type="button"
-                          onClick={() => setShowModal(true)}
-                        >
-                          Buat Diskusi Baru
-                        </button>
-                        <button
-                          className="flex items-center md:hidden w-auto bg-white text-YELLOW05 p-1 rounded-lg hover:bg-yellow-100 border-2 border-YELLOW05 drop-shadow-xl font-semibold"
-                          type="button"
-                          onClick={() => setShowModal(true)}
-                        >
-                          <BiFilter /> filter
-                        </button>
-                      </div>
+                <div className="md:flex flex-row w-full justify-between gap-3  md:top-0 h-auto z-0 pt-2 backdrop-blur bg-white/30">
+                  <div className="flex flex-row gap-3 font-bold text-YELLOW05 items-center justify-between">
+                    <div className="flex flex-row gap-3">
+                      <PaginationDiscussion
+                        setPageNumber={setPageNumber}
+                        pageNumber={pageNumber}
+                      />
                     </div>
-                    <input
-                      className="active:ring-YELLOW05 focus:ring-YELLOW05 ring-2 ring-gray-200 outline-none rounded-lg w-full md:w-2/5 p-2 mt-2 "
-                      type="text"
-                      placeholder="Pencarian...."
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
+                    <div className="flex flex-row gap-3">
+                      <button
+                        className="md:hidden w-auto bg-GREEN01 text-white p-1 rounded-lg  drop-shadow-xl font-semibold"
+                        type="button"
+                        onClick={() => handleModal(null, "add")}
+                      >
+                        Buat Diskusi Baru
+                      </button>
+                      {/* <button
+                        className="flex items-center md:hidden w-auto bg-white text-YELLOW05 p-1 rounded-lg hover:bg-yellow-100 border-2 border-YELLOW05 drop-shadow-xl font-semibold"
+                        type="button"
+                        onClick={() => setShowModal(true)}
+                      >
+                        <BiFilter /> filter
+                      </button> */}
+                    </div>
                   </div>
-                )}
+
+                  <input
+                    className="active:ring-YELLOW05 focus:ring-YELLOW05 ring-2 ring-gray-200 outline-none rounded-lg w-full md:w-2/5 p-2 mt-2 "
+                    type="text"
+                    placeholder="Pencarian...."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+
                 <div>
                   {discussion.map((item) => (
                     <div key={item.discussionId}>
@@ -223,7 +233,7 @@ export default function DiscussionPage() {
                                   type="button"
                                   className="text-YELLOW05 text-xs font-Montserrat font-bold flex flex-row gap-1 items-center bg-YELLOW05/20 border-2 p-1 border-YELLOW05 rounded-sm w-auto "
                                   onClick={() => {
-                                    handleEdit(item.id);
+                                    handleModal(item.id, "edit");
                                   }}
                                 >
                                   Edit

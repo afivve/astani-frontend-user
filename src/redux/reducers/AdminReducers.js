@@ -14,7 +14,7 @@ const initialState = {
   totalUser: null || "",
   totalUserActive: null || "",
   totalPredict: null || "",
-  totalPersentasePredict: null || "",
+  totalPersentasePredict: [],
 };
 
 const adminSlice = createSlice({

@@ -474,13 +474,12 @@ export const EditeDiseaseData =
           },
         }
       );
-
-      dispatch(DiseaseData());
-
       toastify({
         message: response.data.message,
         type: "success",
       });
+
+      dispatch(DiseaseData());
 
       if (response.data.status === "success") {
         setModal(false);

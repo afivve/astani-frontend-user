@@ -27,6 +27,8 @@ const AddYoutube = ({ modal, setModal, id, idYt, type, message }) => {
   useEffect(() => {
     if (type === "edit") {
       setName(youtubeDiseaseId || "");
+    } else if (type === "add") {
+      setName("");
     }
   }, [type, youtubeDiseaseId]);
 
