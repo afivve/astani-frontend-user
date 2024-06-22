@@ -33,15 +33,16 @@ const Discussion = ({ modal, setModal, id, idDiskusi, setIdDiskusi, message, typ
     setGambar(null);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (pertanyaan === "" || judul === "") {
       setNotif("Judul Pertanyaan dan Pertanyaan wajib diisi");
     } else {
       setModal(false);
 
-      if (type === "edit") {
+      if (type === "edit" && idDiskusi && judul && pertanyaan && gambar) {
+        const formData = new FormData();
+        formData.append("file", gambar);
+
         dispatch(updateDiscussion(idDiskusi, judul, pertanyaan, gambar));
       } else {
         dispatch(addDiscussion(judul, pertanyaan, gambar));
@@ -49,13 +50,13 @@ const Discussion = ({ modal, setModal, id, idDiskusi, setIdDiskusi, message, typ
       handleHapus();
     }
   };
+
   useEffect(() => {
     if (type === "edit") {
       if (idDiskusi) {
         setJudul(discussionToEdit.title || "");
         setPertanyaan(discussionToEdit.question || "");
         setHasil(discussionToEdit.urlPhoto || null);
-        setGambar(discussionToEdit.urlPhoto || null);
       } else {
         if (judul != "" && pertanyaan != "") {
           setNotif("");
@@ -66,7 +67,7 @@ const Discussion = ({ modal, setModal, id, idDiskusi, setIdDiskusi, message, typ
       setNotif("");
       handleHapus();
     }
-  }, [id, discussionToEdit, type]);
+  }, [id, discussionToEdit, type, idDiskusi, judul, pertanyaan, setIdDiskusi]);
 
   useEffect(() => {
     if (type === "edit" && idDiskusi) {
@@ -113,6 +114,7 @@ const Discussion = ({ modal, setModal, id, idDiskusi, setIdDiskusi, message, typ
                 className="w-full border-2 border-black-200 rounded-lg outline-none p-1 hidden "
                 ref={img}
                 id="gambar"
+                accept="image/*"
                 onChange={handleImageChange}
               />
               {hasil && (
@@ -152,13 +154,13 @@ const Discussion = ({ modal, setModal, id, idDiskusi, setIdDiskusi, message, typ
 };
 
 Discussion.propTypes = {
-  modal: PropTypes.func,
-  setModal: PropTypes.bool,
+  modal: PropTypes.bool,
+  setModal: PropTypes.func,
   id: PropTypes.string,
   idDiskusi: PropTypes.number,
   setIdDiskusi: PropTypes.func,
   message: PropTypes.string,
-  type: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default Discussion;

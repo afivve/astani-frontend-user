@@ -13,6 +13,7 @@ const initialState = {
   totalPage: [],
   myCourse: [],
   getData: [],
+  topicDiscussion: [],
   discussion: [],
   detailDiscussion: [],
   comentar: [],
@@ -76,7 +77,9 @@ const courseSlice = createSlice({
     setDiscussionToEdit: (state, action) => {
       state.discussionToEdit = action.payload;
     },
-
+    setTopicDiscussion: (state, action) => {
+      state.topicDiscussion = action.payload;
+    },
   },
 });
 
@@ -98,6 +101,7 @@ export const {
   setDetailDiscussion,
   setCoursePromo,
   setDiscussionToEdit,
+  setTopicDiscussion,
 } = courseSlice.actions;
 
 export default courseSlice.reducer;

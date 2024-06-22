@@ -81,7 +81,7 @@ const Indentifikasi = () => {
                 onClick={handleIndentifikasi}
                 className="bg-GREEN01 py-2 px-4 w-full text-white rounded-2xl"
               >
-                {loading === true ? "Loading..." : "Identifikasi"}
+                {loading === true ? "Loading..." : "IDENTIFIKASI"}
               </button>
             </div>
             {alert && <div className="text-center mt-2 text-red-500">{alert}</div>}
@@ -121,28 +121,52 @@ const Indentifikasi = () => {
                 </div>
               </div>
               <div className="flex flex-col mt-10 gap-4">
-                <div className="flex flex-row">
+                <div className="flex sm:flex-row flex-col">
                   <div className="w-[40%] font-bold">Penyebab</div>
-                  <div className="w-[60%]">{identify?.symtomps}</div>
+                  <div className="sm:w-[60%]">{identify?.symtomps}</div>
                 </div>
-                <div className="flex flex-row">
+                <div className="flex sm:flex-row flex-col">
                   <div className="w-[40%] font-bold">Gejala</div>
-                  <div className="w-[60%]">{identify?.caused}</div>
+                  <div className="sm:w-[60%]">{identify?.caused}</div>
                 </div>
-                <div className="flex flex-row">
+                <div className="flex sm:flex-row flex-col">
                   <div className="w-[40%] font-bold">Penanganan</div>
-                  <div className="w-[60%]">
+                  <div className="sm:w-[60%]">
                     {identify?.solutions.map((data) => (
-                      <div key={data.id}>* {data.action}</div>
+                      <div key={data.id}>
+                        <a className="font-bold ">*</a> {data.action}
+                      </div>
                     ))}
                   </div>
                 </div>
-                <div className="flex flex-row">
+                <div className="flex sm:flex-row flex-col">
                   <div className="w-[40%] font-bold">Rujukan</div>
-                  <div className="w-[60%]">
+                  <div className="sm:w-[60%]">
                     {identify?.literaturs.map((data) => (
-                      <div key={data.id}>* {data.link}</div>
+                      <div key={data.id}>
+                        {" "}
+                        <a className="font-bold ">*</a> {data.link}
+                      </div>
                     ))}
+                  </div>
+                </div>
+                <div className="flex sm:flex-row flex-col ">
+                  <div className="w-[40%] font-bold">Youtube</div>
+                  <div className="sm:w-[60%]">
+                    <div className="grid lg:grid-cols-2  w-full gap-4">
+                      {identify?.youtubes.map((data) => (
+                        <div key={data.id}>
+                          <iframe
+                            className="w-full aspect-video rounded-md bg-black"
+                            src={`https://www.youtube.com/embed/${data.link}`}
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                          ></iframe>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

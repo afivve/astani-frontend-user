@@ -36,13 +36,95 @@ import HandlingDisease from "./pages/Admin/disease/DiseaseHandling.jsx";
 import LiteraturDisease from "./pages/Admin/disease/DiseaseLiteratur.jsx";
 import YoutubeDiseases from "./pages/Admin/disease/DiseaseYoutube.jsx";
 import HistoryUser from "./pages/Admin/HistoryUser/HistooryUser.jsx";
+import { ProtectedRouteAdmin } from "./security/ProtectRoleAdmin.jsx";
+import { ProtectedRouteUser } from "./security/ProtectRoleUser.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       {/* <Header /> */}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route element={<ProtectedRouteUser />}>
+          <Route exact path="/" element={<HomePage />} />
+          <Route
+            exact
+            path="/profile"
+            element={
+              <NoAccesToken>
+                <ProfilePage />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/change-password"
+            element={
+              <NoAccesToken>
+                <ChangePassword />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/identifikasi"
+            element={
+              <NoAccesToken>
+                <Indentifikasi />
+              </NoAccesToken>
+            }
+          />
+
+          <Route
+            exact
+            path="/notification"
+            element={
+              <NoAccesToken>
+                <NotificationPage />
+              </NoAccesToken>
+            }
+          />
+          <Route exact path="/discussion" element={<DiscussionPage />} />
+          <Route
+            exact
+            path="/history"
+            element={
+              <NoAccesToken>
+                <HistoriIndentify />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/detail-identifikasi/:id"
+            element={
+              <NoAccesToken>
+                <DetailIdentify />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/identifikasi"
+            element={
+              <NoAccesToken>
+                <Indentifikasi />
+              </NoAccesToken>
+            }
+          />
+          <Route exact path="/detailDiscussion/:id" element={<DetailDiscussion />} />
+          <Route
+            exact
+            path="/change-password"
+            element={
+              <NoAccesToken>
+                <ChangePassword />
+              </NoAccesToken>
+            }
+          />
+        </Route>
+        {/* <Route path="/discussion" element={<DiscussionPage />} />
+        <Route path="/detailDiscussion/:id" element={<DetailDiscussion />} /> */}
+        {/* <Route path="/" element={<HomePage />} /> */}
         <Route
           path="/register"
           element={
@@ -59,78 +141,8 @@ function App() {
             </Proctected>
           }
         />
-        <Route
-          path="/profile"
-          element={
-            <NoAccesToken>
-              <ProfilePage />
-            </NoAccesToken>
-          }
-        />
-        {/* <Route path="/detail/course/:courseId" element={<DetailPage />} /> */}
-        {/* <Route
-          path="/detail/course/:courseId/module/:moduleId/content/:contentId"
-          element={<DetailContent />}
-        /> */}
-        {/* <Route
-          path="/detail/payment/:courseId"
-          element={<DetailPaymentPage />}
-        /> */}
-        <Route
-          path="/notification"
-          element={
-            <NoAccesToken>
-              <NotificationPage />
-            </NoAccesToken>
-          }
-        />
-        {/* <Route
-          path="/payment-success"
-          element={
-            <NoAccesToken>
-              <StatusSucces />
-            </NoAccesToken>
-          }
-        /> */}
+
         <Route path="/reset-password/:id" element={<ResetPasswordPage />} />
-        {/* <Route path="/my-course" element={<MyCourse />} /> */}
-        {/* <Route path="/my-course/:nameCourse" element={<MyCourse />} />
-        <Route path="/course/:nameCourse" element={<Course />} />
-        <Route path="/course" element={<Course />} />
-        <Route path="/search-course/:nameCourse" element={<SearchCourse />} /> */}
-        {/* <Route path="/discussion" element={<DiscussionPage />} /> */}
-        <Route
-          path="/detailDiscussion/:id"
-          element={
-            <NoAccesToken>
-              <DetailDiscussion />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/discussion"
-          element={
-            <NoAccesToken>
-              <DiscussionPage />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/history"
-          element={
-            <NoAccesToken>
-              <HistoriIndentify />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/detail-identifikasi/:id"
-          element={
-            <NoAccesToken>
-              <DetailIdentify />
-            </NoAccesToken>
-          }
-        />
         <Route path="*" element={<NotFound />} />
         <Route
           path="/otp"
@@ -148,80 +160,64 @@ function App() {
             </Proctected>
           }
         />
-        <Route
-          path="/change-password"
-          element={
-            <NoAccesToken>
-              <ChangePassword />
-            </NoAccesToken>
-          }
-        />
-        {/* <Route
-          path="/history"
-          element={
-            <NoAccesToken>
-              <HistoryPage />
-            </NoAccesToken>
-          }
-        /> */}
 
-        <Route
-          path="/identifikasi"
-          element={
-            <NoAccesToken>
-              <Indentifikasi />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <NoAccesToken>
-              <Dashboard />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/penyakit"
-          element={
-            <NoAccesToken>
-              <Disease />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/penyakit/penanganan/:id"
-          element={
-            <NoAccesToken>
-              <HandlingDisease />
-            </NoAccesToken>
-          }
-        />
+        <Route element={<ProtectedRouteAdmin />}>
+          <Route
+            exact
+            path="/dashboard"
+            element={
+              <NoAccesToken>
+                <Dashboard />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/penyakit"
+            element={
+              <NoAccesToken>
+                <Disease />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/penyakit/penanganan/:id"
+            element={
+              <NoAccesToken>
+                <HandlingDisease />
+              </NoAccesToken>
+            }
+          />
 
-        <Route
-          path="/penyakit/literatur/:id"
-          element={
-            <NoAccesToken>
-              <LiteraturDisease />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/penyakit/youtube/:id"
-          element={
-            <NoAccesToken>
-              <YoutubeDiseases />
-            </NoAccesToken>
-          }
-        />
-        <Route
-          path="/history-user"
-          element={
-            <NoAccesToken>
-              <HistoryUser />
-            </NoAccesToken>
-          }
-        />
+          <Route
+            exact
+            path="/penyakit/literatur/:id"
+            element={
+              <NoAccesToken>
+                <LiteraturDisease />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/penyakit/youtube/:id"
+            element={
+              <NoAccesToken>
+                <YoutubeDiseases />
+              </NoAccesToken>
+            }
+          />
+          <Route
+            exact
+            path="/history-user"
+            element={
+              <NoAccesToken>
+                <HistoryUser />
+              </NoAccesToken>
+            }
+          />
+        </Route>
       </Routes>
       <ToastContainer
         position="bottom-center"

@@ -13,6 +13,8 @@ import {
   setHandlingDiseaseId,
   setLiteraturDiseaseId,
   setYoutubeDiseaseId,
+  setPage,
+  setTotalPage,
 } from "../reducers/AdminReducers";
 import { VITE_API_URL } from "../../config/config";
 import axios from "axios";
@@ -103,7 +105,7 @@ export const YoutubeDiseaseData = (id) => async (dispatch, getState) => {
   }
 };
 
-export const HistoryUserData = () => async (dispatch, getState) => {
+export const HistoryUserData = (currentPage) => async (dispatch, getState) => {
   try {
     let { token } = getState().auth;
 
@@ -111,8 +113,13 @@ export const HistoryUserData = () => async (dispatch, getState) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      params: {
+        page: currentPage,
+      },
     });
 
+    dispatch(setPage(response.data.currentPage));
+    dispatch(setTotalPage(response.data.totalPage));
     dispatch(setHistoryUser(response.data.value));
   } catch (error) {
     console.log(error);
@@ -313,6 +320,34 @@ export const AddYoutubeData = (name, id) => async (dispatch, getState) => {
     let { token } = getState().auth;
     const response = await axios.post(
       `${VITE_API_URL}/disease/${id}/disease-youtube`,
+      {
+        link: name,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch(YoutubeDiseaseData(id));
+
+    toastify({
+      message: response.data.message,
+      type: "success",
+    });
+  } catch (error) {
+    toastify({
+      message: error.response.data.message,
+      type: "error",
+    });
+  }
+};
+export const EditYoutubeData = (name, id, idYt) => async (dispatch, getState) => {
+  try {
+    let { token } = getState().auth;
+    const response = await axios.put(
+      `${VITE_API_URL}/disease-youtube/${idYt}`,
       {
         link: name,
       },

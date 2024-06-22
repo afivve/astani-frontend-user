@@ -59,7 +59,7 @@ const Desktop = ({ user }) => {
               />
             </div>
           </form> */}
-              <div>
+              <div className="flex flex-row">
                 {user ? (
                   <div className="flex h-full items-center gap-4 font-Poppins text-sm font-medium">
                     <NavLink
@@ -115,7 +115,23 @@ const Desktop = ({ user }) => {
                   </div>
                 ) : (
                   <div className="flex flex-row gap-2">
-                    <div className="">
+                    <div>
+                      <NavLink
+                        to="/"
+                        className="flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Beranda']"
+                      >
+                        <FaHome className="text-lg" />
+                      </NavLink>
+                    </div>
+                    <div>
+                      <NavLink
+                        to="/discussion"
+                        className="flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Forum']"
+                      >
+                        <MdForum className="text-sm" />
+                      </NavLink>
+                    </div>
+                    <div className="flex flex-row">
                       <Link
                         to="/login"
                         className=" h-full flex bg-GREEN01 shadow-md text-white px-2 py-1 rounded-md items-center gap-2 text-base"

@@ -2,7 +2,11 @@ import { Button, Modal } from "flowbite-react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddYoutubeData, GetYoutubeDataId } from "../../redux/actions/AdminActions";
+import {
+  AddYoutubeData,
+  EditYoutubeData,
+  GetYoutubeDataId,
+} from "../../redux/actions/AdminActions";
 
 // import { addDataCategory } from "../../redux/Actions/CourseActions";
 
@@ -15,7 +19,11 @@ const AddYoutube = ({ modal, setModal, id, idYt, type, message }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(AddYoutubeData(name, id));
+    if (type === "edit") {
+      dispatch(EditYoutubeData(name, id, idYt));
+    } else {
+      dispatch(AddYoutubeData(name, id));
+    }
   };
 
   useEffect(() => {
@@ -25,12 +33,12 @@ const AddYoutube = ({ modal, setModal, id, idYt, type, message }) => {
   }, [dispatch, type, idYt]);
 
   useEffect(() => {
-    if (type === "edit") {
+    if (type === "edit" && idYt) {
       setName(youtubeDiseaseId || "");
     } else if (type === "add") {
       setName("");
     }
-  }, [type, youtubeDiseaseId]);
+  }, [type, youtubeDiseaseId, idYt]);
 
   return (
     <Modal show={modal} onClose={() => setModal(false)}>
@@ -50,7 +58,7 @@ const AddYoutube = ({ modal, setModal, id, idYt, type, message }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleSubmit}>Tambah</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
       </Modal.Footer>
     </Modal>
   );

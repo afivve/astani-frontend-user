@@ -3,23 +3,26 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Selesai, getDiscussion } from "../../../redux/actions/CourseActions";
 import { Link, useParams } from "react-router-dom";
-// import AddDiscussion from "../../../components/modal/AddDiscussion";
-import PaginationDiscussion from "./PaginationDiscussion";
 import Header from "../../../components/Navbar/Header";
-// import { BiFilter } from "react-icons/bi";
 import Discussion from "../../../components/modal/Discussion";
 import { useModal } from "../../../hooks/useModal";
+import { Pagination } from "flowbite-react";
+import { toastify } from "../../../utils/toastify";
 
 export default function DiscussionPage() {
   const dispatch = useDispatch();
-  const { getData } = useSelector((state) => state.course);
-  const { discussion } = useSelector((state) => state.course);
+
+  const { token } = useSelector((state) => state.auth);
+  const { getData, totalPage, discussion } = useSelector((state) => state.course);
+
   // const [closed, setClosed] = useState([]);
   // const [active, setActive] = useState([]);
   const [search, setSearch] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
   const { id } = useParams();
   // const [showModal, setShowModal] = useState(false);
-  const [pageNumber, setPageNumber] = useState(null);
+
   const [idDiskusi, setIdDiskusi] = useState(null);
   const [message, setMessage] = useState("Membuat Diskusi");
   const [type, setType] = useState("add");
@@ -27,52 +30,33 @@ export default function DiscussionPage() {
 
   const { activeModal, handleOpenModal, handleCloseModal } = useModal();
 
-  // const handleClosed = (value) => {
-  //   setClosed((prevSelected) => {
-  //     if (prevSelected.includes(value)) {
-  //       // If value is already in the array, remove it
-  //       return prevSelected.filter((item) => item !== value);
-  //     } else {
-  //       // Otherwise, add it to the array
-  //       return [...prevSelected, value];
-  //     }
-  //   });
-  //   setActive([]);
-  // };
-
   const handleModal = (discussionId, type) => {
-    if (type === "add") {
-      setMessage("Tamab Diskusi");
-      setType("add");
-      handleOpenModal("addDiscussion");
-    } else if (type === "edit") {
-      setIdDiskusi(discussionId);
-      setMessage("Edit Diskusi");
-      setType("edit");
-      handleOpenModal("editDiscussion");
+    if (token) {
+      if (type === "add") {
+        setMessage("Tamab Diskusi");
+        setType("add");
+        handleOpenModal("addDiscussion");
+      } else if (type === "edit") {
+        setIdDiskusi(discussionId);
+        setMessage("Edit Diskusi");
+        setType("edit");
+        handleOpenModal("editDiscussion");
+      }
+    } else {
+      toastify({
+        message: "Silahkan Login Terlebih Dahulu",
+        type: "error",
+      });
     }
   };
-
-  // const handleActive = (value) => {
-  //   setActive((prevSelected) => {
-  //     if (prevSelected.includes(value)) {
-  //       // If value is already in the array, remove it
-  //       return prevSelected.filter((item) => item !== value);
-  //     } else {
-  //       // Otherwise, add it to the array
-  //       return [...prevSelected, value];
-  //     }
-  //   });
-  //   setClosed([]);
-  // };
 
   const handleSelesai = (id, idDiskusi) => {
     dispatch(Selesai(id, idDiskusi));
   };
 
   useEffect(() => {
-    dispatch(getDiscussion(search, pageNumber));
-  }, [dispatch, search, pageNumber]);
+    dispatch(getDiscussion(search, currentPage));
+  }, [dispatch, search, currentPage]);
 
   return (
     <>
@@ -118,47 +102,10 @@ export default function DiscussionPage() {
                   message={message}
                   type={type}
                 />
-                {/* <div className="rounded-lg border-black-200 border-2 p-2 divide-y divide-slate-200 ">
-                  <div>
-                    <p className="font-semibold">Filter Berdasarkan</p>
-                    <div className="my-2">
-                      <ul className="gap-2 flex items-center">
-                        <input
-                          type="checkbox"
-                          id="selesai"
-                          className="appearance-none rounded-full border-2 border-gray-300 h-4 w-4 checked:bg-blue-500 checked:border-transparent focus:outline-none focus:ring focus:border-blue-300"
-                          checked={closed.includes(true)}
-                          onChange={() => handleClosed(true)}
-                        />
-                        <label className="text-sm text-gray-600">
-                          Diskusi Sudah Selesai
-                        </label>
-                      </ul>
-                      <ul className="gap-2 flex items-center">
-                        <input
-                          type="checkbox"
-                          id="belumSelesai"
-                          className="appearance-none rounded-full border-2 border-gray-300 h-4 w-4 checked:bg-blue-500 checked:border-transparent focus:outline-none focus:ring focus:border-blue-300"
-                          checked={active.includes(true)}
-                          onChange={() => handleActive(true)}
-                        />
-                        <label className="text-sm text-gray-600">
-                          Diskusi Belum Selesai
-                        </label>
-                      </ul>
-                    </div>
-                  </div>
-                </div> */}
               </div>
               <div className="w-full md:w-4/5 flex flex-col gap-y-4">
                 <div className="md:flex flex-row w-full justify-between gap-3  md:top-0 h-auto z-0 pt-2 backdrop-blur bg-white/30">
                   <div className="flex flex-row gap-3 font-bold text-YELLOW05 items-center justify-between">
-                    <div className="flex flex-row gap-3">
-                      <PaginationDiscussion
-                        setPageNumber={setPageNumber}
-                        pageNumber={pageNumber}
-                      />
-                    </div>
                     <div className="flex flex-row gap-3">
                       <button
                         className="md:hidden w-auto bg-GREEN01 text-white p-1 rounded-lg  drop-shadow-xl font-semibold"
@@ -167,13 +114,6 @@ export default function DiscussionPage() {
                       >
                         Buat Diskusi Baru
                       </button>
-                      {/* <button
-                        className="flex items-center md:hidden w-auto bg-white text-YELLOW05 p-1 rounded-lg hover:bg-yellow-100 border-2 border-YELLOW05 drop-shadow-xl font-semibold"
-                        type="button"
-                        onClick={() => setShowModal(true)}
-                      >
-                        <BiFilter /> filter
-                      </button> */}
                     </div>
                   </div>
 
@@ -227,7 +167,7 @@ export default function DiscussionPage() {
                                 Selesai
                               </button>
                             )}
-                            {user?.name === item.username && (
+                            {user?.id === item.userId && (
                               <>
                                 <button
                                   type="button"
@@ -238,15 +178,6 @@ export default function DiscussionPage() {
                                 >
                                   Edit
                                 </button>
-                                {/* <AddDiscussion
-                                  showModal={showModal}
-                                  setShowModal={setShowModal}
-                                  id={id}
-                                  idDiskusi={idDiskusi}
-                                  setIdDiskusi={setIdDiskusi}
-                                  message={"Edit Diskusi"}
-                                  type={false}
-                                /> */}
                               </>
                             )}
                             <div className="flex flex-row gap-1 items-center font-semibold">
@@ -263,6 +194,16 @@ export default function DiscussionPage() {
                     </div>
                   ))}
                 </div>
+                {totalPage > 1 && (
+                  <div className="flex overflow-x-auto sm:justify-center">
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPage}
+                      onPageChange={(page) => setCurrentPage(page)}
+                      showIcons
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>

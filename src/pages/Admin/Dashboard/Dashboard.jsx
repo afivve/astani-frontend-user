@@ -9,7 +9,7 @@ import {
   DashboardUserActive,
 } from "../../../redux/actions/AdminActions";
 import { Doughnut } from "react-chartjs-2";
-// import { Chart as ChartJS } from "chart.js/auto";
+import { Chart } from "chart.js/auto";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const Dashboard = () => {
       : [],
     datasets: [
       {
-        label: "Banyak Kelas",
+        label: "Persentase",
         data: isCourseTypeAvailable
           ? totalPersentasePredict.map((data) => data.percentage)
           : [],

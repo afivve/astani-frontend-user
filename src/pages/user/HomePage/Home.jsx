@@ -1,52 +1,27 @@
-// import CardKategori from "../../components/card/CardKategori";
-// import CardCourse from "../../components/card/CardPopular";
 import PeopleHome from "../../../assets/farmer.png";
-// import Carousel from "react-multi-carousel";
-// import Whatsapp from "../../assets/whattsap.svg";
-// import Personal from "../../assets/persone.svg";
 import "react-multi-carousel/lib/styles.css";
-// import { responsive } from "../../utils/responsiveCarousel";
-// import { responsive2 } from "../../utils/responsiveCarousel";
 import "../../../utils/CssConfig.css";
 import { Link } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   getCategory,
-//   getCoursePromo,
-//   getPopular,
-// } from "../../redux/actions/CourseActions";
-// import { useEffect, useState } from "react";
-/* import CourseIcon from "../../assets/course.svg"; */
+import chat from "../../../assets/chating.svg";
 import CourseIcon from "../../../assets/identify.png";
 import Footer from "../../../components/Navbar/Footers";
 import Header from "../../../components/Navbar/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { TopicDiscussionData } from "../../../redux/actions/CourseActions";
 
 const HomePage = () => {
-  // const dispatch = useDispatch();
-  // const [selectedCategory, setSelectedCategory] = useState("All");
-  // const { category, popular, coursePromo } = useSelector(
-  //   (state) => state.course
-  // );
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  const { topicDiscussion } = useSelector((state) => state.course);
 
-  // useEffect(() => {
-  //   dispatch(getCategory());
-  //   dispatch(getPopular());
-  //   dispatch(getCoursePromo());
-  //   setSelectedCategory("All");
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(TopicDiscussionData());
+  }, [dispatch]);
 
-  // const filterCourses = (category) => {
-  //   if (!Array.isArray(popular)) {
-  //     return [];
-  //   }
-
-  //   if (category === "All") {
-  //     return popular;
-  //   } else {
-  //     return popular.filter((course) => course.category === category);
-  //   }
+  // const handleNavigate = (id) => {
+  //   navigate(`/detailDiscussion/${id}`);
   // };
-
   return (
     <>
       <Header />
@@ -81,27 +56,7 @@ const HomePage = () => {
         {/* Bagian Kategori Belajar */}
         <div className=" flex mx-auto justify-center bg-WHITE05">
           <div className="flex w-full flex-col pt-[26px] gap-5 container">
-            <div className="flex flex-row justify-between ">
-              {/* <div className="flex flex-col">
-                <p className="font-bold text-xl text-BLUE05 ">
-                  Tentukan Jalur Belajarmu di Sini
-                </p>
-                <p className="text-xs">
-                  Bingung mau mulai dari mana? Ikuti jalur belajar berikut ini
-                </p>
-              </div> */}
-              {/*  <Link
-                to="/course"
-                className="font-Montserrat font-extrabold text-xs max-w-fit text-DARKBLUE05 self-center"
-              >
-                Lihat Semua
-              </Link> */}
-            </div>
-            {/* <div className="grid grid-cols-2 lg:grid-cols-6 justify-between gap-3 w-full ">
-              {category.map((data) => (
-                <CardKategori key={data.id} data={data} />
-              ))}
-            </div> */}
+            <div className="flex flex-row justify-between "></div>
           </div>
         </div>
       </div>
@@ -124,54 +79,45 @@ const HomePage = () => {
               </Link>
             </div>
           </div>
-          {/* <div className=" flex   py-4 lg:w-[40%] ">
-            <div className="flex flex-col justify-center lg:gap-4 pl-4 lg:pl-0 gap-2 w-full">
-              <img src={CourseIcon} />
+        </div>
+      </div>
+
+      <div className="container grid lg:grid-cols-3  md:grid-cols-2 grid-cols-1 py-16 gap-6">
+        {topicDiscussion.map((item) => (
+          <div key={item.id}>
+            <div className="bg-[#F1F5F8] rounded-md h-full   p-5 gap-5">
+              <div className="flex justify-between">
+                <div className="flex flex-row justify-between w-full">
+                  <div className="flex flex-row gap-3">
+                    <img
+                      className="w-8 rounded-full bg-blue-200 object-top object-cover h-8"
+                      src={item.photoProfile}
+                      alt=""
+                    />
+                    <h3 className="font-semibold text-lg">{item.username}</h3>
+                  </div>
+
+                  <div>
+                    <span className="text-sm">{item.createdAt}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-2">
+                <p className="font-semibold">{item.title}</p>
+                <p className="font-sm text-current">{item.question}</p>
+              </div>
+              <div className="flex flex-wrap mt-6 gap-5">
+                <div className="flex flex-row gap-1 items-center font-semibold">
+                  <img className="w-5" src={chat} alt="" />
+                  <Link to={`/detailDiscussion/${item.id}`}>
+                    <p className="text-gray-500">{item.totalComments} Pembahasan</p>
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div> */}
-        </div>
+          </div>
+        ))}
       </div>
-
-      {/* Bagian Kursus Populer */}
-      {/* <div className="mx-auto flex justify-center ">
-        <div className="flex flex-col container gap-5 pt-[26px] ">
-          <div className="flex flex-row  font-Montserrat  justify-between">
-            <h2 className="font-bold text-xl border-b-[2px] border-YELLOW05">
-              Grafik Harga Beras
-            </h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto flex justify-center ">
-        <div className="flex flex-col container gap-5 ">
-          <div className="flex flex-row  font-Montserrat  justify-between">
-            <h2 className="font-bold text-xl border-b-[2px] border-YELLOW05 ">
-              Cuaca Hari Ini
-            </h2>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="flex justify-center bg-LightBlue5 py-8">
-        <div className="container flex  flex-col gap-6 justify-center">
-          <p className="text-center font-Montserrat font-bold md:text-4xl text-2xl text-BLUE05">
-            Jangan lewatkan kesempatan ini !
-          </p>
-          <div className="self-center md:w-[50%]">
-            <p className="text-center">
-              Manfaatkan kelas gratis kami sekarang dan dapatkan akses tanpa batas untuk
-              mengembangkan potensi Anda!
-            </p>
-          </div>
-          <Link
-            to={"/course"}
-            className="bg-BLUE05 px-2 py-2 max-w-fit self-center text-white font-Montserrat font-medium rounded-md"
-          >
-            Mulai Sekarang
-          </Link>
-        </div>
-      </div> */}
       <div className="drop-shadow-xl">
         <Footer />
       </div>

@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  page: null,
+  totalPage: null,
   historyUser: [],
   disease: [],
   diseaseId: [],
@@ -63,6 +65,12 @@ const adminSlice = createSlice({
     setYoutubeDiseaseId: (state, action) => {
       state.youtubeDiseaseId = action.payload;
     },
+    setPage: (state, action) => {
+      state.page = action.payload;
+    },
+    setTotalPage: (state, action) => {
+      state.totalPage = action.payload;
+    },
   },
 });
 
@@ -81,6 +89,8 @@ export const {
   setHandlingDiseaseId,
   setLiteraturDiseaseId,
   setYoutubeDiseaseId,
+  setPage,
+  setTotalPage,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

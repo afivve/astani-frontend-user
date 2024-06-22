@@ -19,6 +19,7 @@ import {
   setComentar,
   setCoursePromo,
   setDiscussionToEdit,
+  setTopicDiscussion,
 } from "../reducers/CourseReducer";
 
 export const getCategory = () => async (dispatch) => {
@@ -142,16 +143,12 @@ export const filterData = () => async (dispatch) => {
   }
 };
 
-export const getDiscussion = (search, pageNumber) => async (dispatch, getState) => {
-  const { token } = getState().auth;
+export const getDiscussion = (search, currentPage) => async (dispatch) => {
   try {
     const response = await axios.get(`${VITE_API_URL}/discussions`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       params: {
         search: search,
-        page: pageNumber,
+        page: currentPage,
       },
     });
     const { value } = response.data;
@@ -162,7 +159,8 @@ export const getDiscussion = (search, pageNumber) => async (dispatch, getState) 
     // for (let index = 1; index <= data.totalPage; index++) {
     //   pageArray.push(index);
     // }
-    dispatch(setPage(response.data.totalPage));
+    dispatch(setPage(response.data.currentPage));
+    dispatch(setTotalPage(response.data.totalPage));
   } catch (error) {
     if (error.response.status === 500) {
       dispatch(setErrors("Silahkan login untuk melihat kelas yang diambil"));
@@ -171,14 +169,9 @@ export const getDiscussion = (search, pageNumber) => async (dispatch, getState) 
     }
   }
 };
-export const getDetailDiscussion = (id) => async (dispatch, getState) => {
-  const { token } = getState().auth;
+export const getDetailDiscussion = (id) => async (dispatch) => {
   try {
-    const response = await axios.get(`${VITE_API_URL}/discussions/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(`${VITE_API_URL}/discussions/${id}`);
 
     const { commentars } = response.data.value;
     const { title, urlPhoto, question } = response.data.value;
@@ -478,10 +471,12 @@ export const getCoursePremium =
   };
 export const updateDiscussion =
   (idDiskusi, judul, pertanyaan, gambar) => async (_, getState) => {
-    const { token } = getState().auth;
     try {
+      console.log(idDiskusi);
+      console.log(gambar);
+      const { token } = getState().auth;
       const formData = new FormData();
-      formData.append("photoDiscussion", gambar);
+      formData.append("file", gambar);
       await axios.put(
         `${VITE_API_URL}/discussions/${idDiskusi}`,
         {
@@ -495,12 +490,27 @@ export const updateDiscussion =
           },
         }
       );
-      window.location.reload();
+
       toastify({
         message: "Berhasil Update Diskusi",
         type: "success",
       });
     } catch (error) {
-      console.log(error);
+      toastify({
+        message: error.response.data.message,
+        type: "error",
+      });
     }
   };
+
+export const TopicDiscussionData = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${VITE_API_URL}/dashboard/most-active-discussion`);
+
+    const { value } = response.data;
+
+    dispatch(setTopicDiscussion(value));
+  } catch (error) {
+    console.log(error.response.data.message);
+  }
+};

@@ -13,10 +13,14 @@ export const login = (email, password, setIsLoading, navigate) => async (dispatc
       password,
     });
     const { data } = response;
-    const { token } = data.value;
+    const { token, role } = data.value;
 
     dispatch(setToken(token));
-    navigate("/");
+    if (role === "admin") {
+      navigate("/dashboard");
+    } else if (role === "user") {
+      navigate("/");
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (
