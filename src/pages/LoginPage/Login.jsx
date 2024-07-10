@@ -84,7 +84,7 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="flex items-center justify-center w-full font-Poppins bg-GREEN01 text-white py-[10px] rounded-xl mt-5 hover:bg-YELLOW05 font-bold shadow-md"
+                className="flex items-center justify-center w-full font-Poppins bg-GREEN01 text-white py-[10px] rounded-xl mt-5 hover:bg-GREEN01 font-bold shadow-md"
               >
                 {isLoading ? <SpinnerLoading /> : <span>Masuk</span>}
               </button>

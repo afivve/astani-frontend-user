@@ -57,7 +57,7 @@ const DiseaseLiteratur = () => {
         <div className="flex flex-col  justify-center items-center container mt-10 mx-auto">
           <div className="flex flex-col mt-2 justify-between w-full mb-4 items-center gap-2">
             <div className="w-full text-start flex flex-row text-xl  font-bold gap-2 ">
-              <h1>Data Penyakit</h1>
+              <h1>Data Literatur Penyakit</h1>
               <span>{nameDisease}</span>
             </div>
             <div className="flex flex-row justify-between w-full mt-4 items-end gap-3">

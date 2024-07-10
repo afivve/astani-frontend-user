@@ -66,7 +66,7 @@ const CardCourse = ({ data, progress }) => {
         ) : (
           <div className="w-full mt-2 flex items-center bg-gray-200 rounded-sm  h-full">
             <p
-              className="bg-YELLOW05 whitespace-nowrap w-full p-1.5 text-sm font-medium text-white align-middle leading-none rounded-sm h-full pl-4"
+              className="bg-GREEN01 whitespace-nowrap w-full p-1.5 text-sm font-medium text-white align-middle leading-none rounded-sm h-full pl-4"
               style={{
                 width: `${progress?.progress ?? "0"}%`,
               }}

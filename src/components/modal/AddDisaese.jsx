@@ -19,9 +19,15 @@ const AddDisease = ({ modal, setModal, type, id, message }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (type === "edit" && id) {
-      dispatch(EditeDiseaseData(name, cause, solution, id, setModal));
+      const result = dispatch(EditeDiseaseData(name, cause, solution, id, setModal));
+      if (result) {
+        setModal(false); 
+      }
     } else {
-      dispatch(AddDiseaseData(name, cause, solution));
+      const result = dispatch(AddDiseaseData(name, cause, solution));
+      if (result) {
+        setModal(false);  
+      }
     }
   };
 
@@ -70,7 +76,7 @@ const AddDisease = ({ modal, setModal, type, id, message }) => {
           </div>
 
           <div className="flex flex-col">
-            <label className="font-Poppins text-[15px] mb-[4px]">Solusi</label>
+            <label className="font-Poppins text-[15px] mb-[4px]">Gejala</label>
             <textarea
               className="border w-full py-3 px-4 rounded-2xl"
               id="w3review"

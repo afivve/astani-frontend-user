@@ -122,17 +122,17 @@ const Indentifikasi = () => {
               </div>
               <div className="flex flex-col mt-10 gap-4">
                 <div className="flex sm:flex-row flex-col">
-                  <div className="w-[40%] font-bold">Penyebab</div>
+                  <div className="w-[40%] font-bold">Penyebab :</div>
                   <div className="sm:w-[60%]">{identify?.symtomps}</div>
                 </div>
                 <div className="flex sm:flex-row flex-col">
-                  <div className="w-[40%] font-bold">Gejala</div>
+                  <div className="w-[40%] font-bold">Gejala :</div>
                   <div className="sm:w-[60%]">{identify?.caused}</div>
                 </div>
                 <div className="flex sm:flex-row flex-col">
-                  <div className="w-[40%] font-bold">Penanganan</div>
+                  <div className="w-[40%] font-bold">Penanganan :</div>
                   <div className="sm:w-[60%]">
-                    {identify?.solutions.map((data) => (
+                    {identify?.solutions?.map((data) => (
                       <div key={data.id}>
                         <a className="font-bold ">*</a> {data.action}
                       </div>
@@ -140,9 +140,9 @@ const Indentifikasi = () => {
                   </div>
                 </div>
                 <div className="flex sm:flex-row flex-col">
-                  <div className="w-[40%] font-bold">Rujukan</div>
+                  <div className="w-[40%] font-bold">Rujukan  :</div>
                   <div className="sm:w-[60%]">
-                    {identify?.literaturs.map((data) => (
+                    {identify?.literaturs?.map((data) => (
                       <div key={data.id}>
                         {" "}
                         <a className="font-bold ">*</a> {data.link}
@@ -151,10 +151,10 @@ const Indentifikasi = () => {
                   </div>
                 </div>
                 <div className="flex sm:flex-row flex-col ">
-                  <div className="w-[40%] font-bold">Youtube</div>
+                  <div className="w-[40%] font-bold">Youtube  :</div>
                   <div className="sm:w-[60%]">
                     <div className="grid lg:grid-cols-2  w-full gap-4">
-                      {identify?.youtubes.map((data) => (
+                      {identify?.youtubes?.map((data) => (
                         <div key={data.id}>
                           <iframe
                             className="w-full aspect-video rounded-md bg-black"

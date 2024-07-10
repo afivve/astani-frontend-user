@@ -8,21 +8,23 @@ import {
   LiteraturIdData,
 } from "../../redux/actions/AdminActions";
 
-// import { addDataCategory } from "../../redux/Actions/CourseActions";
-
 const AddLiteratur = ({ modal, setModal, id, idLiteratur, message, type }) => {
   const dispatch = useDispatch();
-
   const [name, setName] = useState("");
-
   const { literaturDiseaseId } = useSelector((state) => state.admin);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (type === "edit" && idLiteratur) {
-      dispatch(EditLiteraturData(name, id, idLiteratur));
+      const result = dispatch(EditLiteraturData(name, id, idLiteratur));
+      if (result) {
+        setModal(false); 
+      }
     } else {
-      dispatch(AddLiteraturData(name, id));
+      const result = dispatch(AddLiteraturData(name, id));
+      if (result) {
+        setModal(false); 
+      }
     }
   };
 
@@ -39,6 +41,8 @@ const AddLiteratur = ({ modal, setModal, id, idLiteratur, message, type }) => {
       setName("");
     }
   }, [idLiteratur, type, literaturDiseaseId]);
+
+  const buttonText = type === "edit" ? "Perbarui" : "Tambah";
 
   return (
     <Modal show={modal} onClose={() => setModal(false)}>
@@ -58,14 +62,14 @@ const AddLiteratur = ({ modal, setModal, id, idLiteratur, message, type }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleSubmit}>Tambah</Button>
+        <Button onClick={handleSubmit}>{buttonText}</Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
 AddLiteratur.propTypes = {
-  modal: PropTypes.string,
+  modal: PropTypes.bool,
   setModal: PropTypes.func,
   id: PropTypes.number,
   idLiteratur: PropTypes.number,

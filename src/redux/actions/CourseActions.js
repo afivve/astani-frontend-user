@@ -6,6 +6,7 @@ import {
   setPopular,
   setHistory,
   setNotification,
+  setTotalNotification,
   setHasil,
   setFilter,
   setData,
@@ -79,6 +80,8 @@ export const NotificationUser = () => async (dispatch, getState) => {
     const { data } = response;
 
     dispatch(setNotification(data.value));
+    dispatch(setTotalNotification(data.notificationUnread));
+
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log(error.response.data.message);
@@ -322,36 +325,36 @@ export const getCourseFree = (courseId, navigate) => async (_, getState) => {
 
 export const checkbox =
   (typeButton, selectedCheckboxes, selectedLevel, typeCourse, linkFilter, pageNumber) =>
-  async (dispatch) => {
-    try {
-      const response = await axios.get(
-        `${VITE_API_URL}/${linkFilter}?page=${pageNumber}`,
-        {
-          params: {
-            type: typeButton,
-            category: selectedCheckboxes,
-            level: selectedLevel,
-            ...typeCourse.reduce((acc, value) => {
-              acc[value] = true;
-              return acc;
-            }, {}),
-          },
+    async (dispatch) => {
+      try {
+        const response = await axios.get(
+          `${VITE_API_URL}/${linkFilter}?page=${pageNumber}`,
+          {
+            params: {
+              type: typeButton,
+              category: selectedCheckboxes,
+              level: selectedLevel,
+              ...typeCourse.reduce((acc, value) => {
+                acc[value] = true;
+                return acc;
+              }, {}),
+            },
+          }
+        );
+        const { data } = response;
+        dispatch(setData(data.value));
+        const pageArray = [];
+        for (let index = 1; index <= data.totalPage; index++) {
+          pageArray.push(index);
         }
-      );
-      const { data } = response;
-      dispatch(setData(data.value));
-      const pageArray = [];
-      for (let index = 1; index <= data.totalPage; index++) {
-        pageArray.push(index);
+        dispatch(setTotalPage(data.totalPage));
+        dispatch(setPage(pageArray));
+      } catch (error) {
+        if (error.response.status === 404) {
+          dispatch(setErrors("kelas yang di pilih tidak ada"));
+        }
       }
-      dispatch(setTotalPage(data.totalPage));
-      dispatch(setPage(pageArray));
-    } catch (error) {
-      if (error.response.status === 404) {
-        dispatch(setErrors("kelas yang di pilih tidak ada"));
-      }
-    }
-  };
+    };
 
 export const searchCheckbox =
   (typeButton, selectedLevel, typeCourse, nameCourse) => async (dispatch) => {
@@ -377,40 +380,40 @@ export const searchCheckbox =
 
 export const myCheckbox =
   (status, selectedCategory, selectedLevel, typeCourse, pageNumber) =>
-  async (dispatch, getState) => {
-    let { token } = getState().auth;
-    try {
-      const response = await axios.get(`${VITE_API_URL}/user-courses`, {
-        params: {
-          page: pageNumber,
-          learningStatus: status,
-          category: selectedCategory,
-          level: selectedLevel,
-          ...typeCourse.reduce((acc, value) => {
-            acc[value] = true;
-            return acc;
-          }, {}),
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    async (dispatch, getState) => {
+      let { token } = getState().auth;
+      try {
+        const response = await axios.get(`${VITE_API_URL}/user-courses`, {
+          params: {
+            page: pageNumber,
+            learningStatus: status,
+            category: selectedCategory,
+            level: selectedLevel,
+            ...typeCourse.reduce((acc, value) => {
+              acc[value] = true;
+              return acc;
+            }, {}),
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      const coursesData = response.data.value;
-      dispatch(setMyCourse(coursesData));
-      const { data } = response;
-      const pageArray = [];
-      for (let index = 1; index <= data.totalPage; index++) {
-        pageArray.push(index);
+        const coursesData = response.data.value;
+        dispatch(setMyCourse(coursesData));
+        const { data } = response;
+        const pageArray = [];
+        for (let index = 1; index <= data.totalPage; index++) {
+          pageArray.push(index);
+        }
+        dispatch(setTotalPage(data.totalPage));
+        dispatch(setPage(pageArray));
+      } catch (error) {
+        if (error.response.status === 404) {
+          dispatch(setErrors("kelas yang di pilih tidak ada"));
+        }
       }
-      dispatch(setTotalPage(data.totalPage));
-      dispatch(setPage(pageArray));
-    } catch (error) {
-      if (error.response.status === 404) {
-        dispatch(setErrors("kelas yang di pilih tidak ada"));
-      }
-    }
-  };
+    };
 export const getCoursePromo = () => async (dispatch, getState) => {
   try {
     let { token } = getState().auth;

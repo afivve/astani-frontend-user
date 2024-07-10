@@ -50,7 +50,7 @@ const VerifyEmail = () => {
             </div>
             <button
               type="submit"
-              className="flex items-center justify-center w-full font-Poppins bg-YELLOW05 font-bold text-white py-[10px] rounded-2xl mt-5 "
+              className="flex items-center justify-center w-full font-Poppins bg-GREEN01 font-bold text-white py-[10px] rounded-2xl mt-5 "
             >
               {isLoading ? <SpinnerLoading /> : <span>Kirim</span>}
             </button>

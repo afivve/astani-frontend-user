@@ -25,7 +25,7 @@ const DetailIdentify = () => {
         <div className="container flex flex-col  items-center">
           <div className="flex justify-center flex-col ">
             <div className="text-center font-bold text-3xl">
-              <h1> IDENTIFIKASI PENYAKIT</h1>
+              <h1> DETAIL RIWAYAT IDENTIFIKASI PENYAKIT</h1>
             </div>
             <div className="mt-10 flex justify-center">
               <img src={detailIdentify?.imageUrl} className="w-[600px]" />
@@ -37,7 +37,7 @@ const DetailIdentify = () => {
                 <h1>Hasil Identifikasi:</h1>
               </div>
               <div className="flex flex-col mt-4  ">
-                <div>
+                <div className="w-full">
                   <Circle
                     progress={detailIdentify?.confidence}
                     lineWidth={50}
@@ -47,26 +47,64 @@ const DetailIdentify = () => {
                   />
                 </div>
                 <span className="text-center w-full mt-4 font-bold">
-                  {detailIdentify?.name}
+                  {detailIdentify?.diseaseName}
                 </span>
               </div>
             </div>
 
             <div className="flex flex-col mt-10 gap-4">
               <div className="flex flex-row">
-                <div className="w-[40%] font-bold ">Penyebab</div>
+                <div className="w-[40%] font-bold ">Penyebab :</div>
                 <div className="w-[60%]">{detailIdentify?.symtomps}</div>
               </div>
               <div className="flex flex-row  ">
-                <div className="w-[40%] font-bold">Gejala</div>
+                <div className="w-[40%] font-bold">Gejala :</div>
                 <div className="w-[60%]">{detailIdentify?.caused}</div>
               </div>
               <div className="flex flex-row ">
-                <div className="w-[40%] font-bold">Penanganan</div>
+                <div className="w-[40%] font-bold">Penanganan :</div>
                 <div className="w-[60%]">
                   {detailIdentify?.solutions?.map((data) => (
                     <div key={data.id}>* {data.action}</div>
                   ))}
+                </div>
+              </div>
+              <div className="flex sm:flex-row flex-col">
+                <div className="w-[40%] font-bold">Rujukan :</div>
+                <div className="sm:w-[60%]">
+                  {detailIdentify?.literaturs?.map((data) => (
+                    <div key={data.id}>
+                      <a
+                        href={data.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold"
+                      >
+                        *
+                      </a>{" "}
+                      {data.link}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex sm:flex-row flex-col ">
+                <div className="w-[40%] font-bold">Youtube</div>
+                <div className="sm:w-[60%]">
+                  <div className="grid lg:grid-cols-2  w-full gap-4">
+                    {detailIdentify?.youtubes?.map((data) => (
+                      <div key={data.id}>
+                        <iframe
+                          className="w-full aspect-video rounded-md bg-black"
+                          src={`https://www.youtube.com/embed/${data.link}`}
+                          title="YouTube video player"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen
+                        ></iframe>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               {/* <div className="flex flex-row items-center">

@@ -286,7 +286,7 @@ export const DeleteLiteraturData = (idLiteratur, id) => async (dispatch, getStat
   }
 };
 export const EditLiteraturData =
-  (name, idLiteratur, id) => async (dispatch, getState) => {
+  (name, id, idLiteratur) => async (dispatch, getState) => {
     try {
       let { token } = getState().auth;
       const response = await axios.put(
@@ -372,6 +372,7 @@ export const EditYoutubeData = (name, id, idYt) => async (dispatch, getState) =>
   }
 };
 
+
 export const DeleteYoutubeData = (idYT, id) => async (dispatch, getState) => {
   try {
     let { token } = getState().auth;
@@ -444,13 +445,13 @@ export const DashboardUserActive = () => async (dispatch, getState) => {
 export const DashboardTotalIdentifikasi = () => async (dispatch, getState) => {
   try {
     let { token } = getState().auth;
-    const response = await axios.get(`${VITE_API_URL}/dashboard/total-user`, {
+    const response = await axios.get(`${VITE_API_URL}/dashboard/total-predict`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    dispatch(setTotalUser(response.data.value.message));
+    dispatch(setTotalUser(response.data.value.totalPredict));
   } catch (error) {
     console.log(error);
   }
@@ -459,16 +460,15 @@ export const DashboardTotalIdentifikasi = () => async (dispatch, getState) => {
 export const DashboardPredict = () => async (dispatch, getState) => {
   try {
     let { token } = getState().auth;
-    const response = await axios.get(`${VITE_API_URL}/dashboard/result-precentage`, {
+    const response = await axios.get(`${VITE_API_URL}/dashboard/total-predict`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    const { value } = response.data;
+    /* const { value } = response.data; */
 
-    dispatch(setTotalPredict(response.data.totalPredict));
-    dispatch(setTotalPersentasePredict(value));
+    dispatch(setTotalPredict(response.data.value.totalPredict));
   } catch (error) {
     console.log(error);
   }

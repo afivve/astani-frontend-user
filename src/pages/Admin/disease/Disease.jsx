@@ -26,7 +26,10 @@ const Disease = () => {
   }, [dispatch]);
 
   const handleDeleteDisease = (id) => {
-    dispatch(DeleteDeseaseById(id));
+    const confirmed = window.confirm("Apakah Anda yakin ingin menghapus data penyakit ini?");
+    if (confirmed) {
+      dispatch(DeleteDeseaseById(id));
+    }
   };
 
   const handleModal = (id, types) => {
@@ -45,11 +48,11 @@ const Disease = () => {
   return (
     <div className="flex">
       <SideBar />
-      <div className="w-[100%] lg:w-[85%] mb-14  bg-white ">
+      <div className="w-[100%] lg:w-[85%] mb-14 bg-white">
         <div>
           <HeaderAdmin />
         </div>
-        <div className="flex flex-col  justify-center items-center container mt-10 mx-auto">
+        <div className="flex flex-col justify-center items-center container mt-10 mx-auto">
           <div className="flex flex-col md:flex-row mt-2 justify-between w-full mb-4 items-center gap-2">
             <div>
               <h1 className="font-bold text-3xl">Data Penyakit</h1>
@@ -57,20 +60,15 @@ const Disease = () => {
             <div>
               <button
                 onClick={() => handleModal(null, "add")}
-                className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat "
+                className="bg-GREEN01 flex flex-row justify-center items-center p-[6px] rounded-lg gap-1 text-white font-bold font-Montserrat"
               >
-                {/* <img src={AddIcon} /> */}
                 <p>Tambah Data</p>
               </button>
-              {/* <AddCourse
-                  addCourse={activeModal === "addCourse"}
-                  setAddCourse={handleCloseModal}
-                /> */}
             </div>
           </div>
 
-          <div className="overflow-x-auto w-full ">
-            <table className="table table-striped w-full text-left ">
+          <div className="overflow-x-auto w-full">
+            <table className="table table-striped w-full text-left">
               <thead className="font-Montserrat text-xs whitespace-nowrap">
                 <tr>
                   {HeadTabel.map((data) => (
@@ -86,23 +84,23 @@ const Disease = () => {
               </thead>
               <tbody className="text-left text-xs">
                 {disease.map((data) => (
-                  <tr key={data.id} className="bg-white border-b font-Montserrat  ">
-                    <td scope="row" className="  pl-2 md:pl-4 whitespace-nowrap">
+                  <tr key={data.id} className="bg-white border-b font-Montserrat">
+                    <td scope="row" className="pl-2 md:pl-4 whitespace-nowrap">
                       {data.name}
                     </td>
-                    <td className=" py-4   px-2 md:px-4 whitespace-nowrap">
+                    <td className="py-4 px-2 md:px-4 whitespace-normal">
                       {data.symtomps ?? "-"}
                     </td>
-                    <td className=" py-4    px-2 md:px-4 whitespace-nowrap">
+                    <td className="py-4 px-2 md:px-4 whitespace-normal break-words">
                       {data.caused ?? "-"}
                     </td>
 
-                    <td className="pr-4  px-2 md:px-4 whitespace-nowrap">
+                    <td className="pr-4 px-2 md:px-4 whitespace-nowrap">
                       <div className="flex flex-row gap-2 font-bold text-white">
                         <div>
                           <button
                             onClick={() => handleModal(data.id, "edit")}
-                            className="p-1 bg-DARKBLUE05 rounded-md "
+                            className="p-1 bg-DARKBLUE05 rounded-md"
                           >
                             <AiFillEdit className="text-lg" />
                           </button>
@@ -115,7 +113,7 @@ const Disease = () => {
                         </button>
                       </div>
                     </td>
-                    <td className="pr-4  px-2 py-2 md:px-4 whitespace-nowrap">
+                    <td className="pr-4 px-2 py-2 md:px-4 whitespace-nowrap">
                       <div className="flex flex-col gap-1 font-bold">
                         <Link
                           to={`/penyakit/penanganan/${data.id}`}

@@ -5,6 +5,7 @@ const initialState = {
   popular: [],
   history: [],
   notification: [],
+  totalNotification: [],
   hasil: [],
   filter: [],
   data: [],
@@ -36,6 +37,9 @@ const courseSlice = createSlice({
     },
     setNotification: (state, action) => {
       state.notification = action.payload;
+    },
+    setTotalNotification: (state, action) => {
+      state.totalNotification = action.payload;
     },
     setHasil: (state, action) => {
       state.hasil = action.payload;
@@ -88,6 +92,7 @@ export const {
   setPopular,
   setHistory,
   setNotification,
+  setTotalNotification,
   setHasil,
   setFilter,
   setData,

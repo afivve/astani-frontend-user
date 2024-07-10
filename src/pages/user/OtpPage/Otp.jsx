@@ -78,7 +78,7 @@ const Otp = () => {
         <div className="w-[100%] lg:w-[50%] flex justify-start items-center mx-[23px] lg:px-[145px] relative ">
           <form
             onSubmit={handleSubmitOtp}
-            className="w-full border-2 rounded-lg shadow-xl px-6 py-6 bg-YELLOW04"
+            className="w-full border-2 rounded-lg shadow-xl px-6 py-6 bg-white"
           >
             <div>
               <h1 className="text-[26px] self-center font-bold text-ALERTRED my-5  text-center">
@@ -156,7 +156,7 @@ const Otp = () => {
 
             {/* Render the button only if email is present */}
             {email && (
-              <button className="flex items-center justify-center w-full font-Poppin text-[16px] font-semibold bg-YELLOW05  text-white py-[10px] rounded-xl mt-5 ">
+              <button className="flex items-center justify-center w-full font-Poppin text-[16px] font-semibold bg-GREEN01  text-white py-[10px] rounded-xl mt-5 ">
                 {isLoading ? <SpinnerLoading /> : "Verifikasi"}
               </button>
             )}

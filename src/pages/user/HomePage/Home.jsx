@@ -61,8 +61,8 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="bg-LightBlue5">
-        <div className="mx-auto flex flex-col lg:flex-row container ">
+      <div className="bg-LightBlue5 flex justify-center ">
+        <div className="mx-auto flex flex-col lg:flex-row container justify-center">
           <div className="lg:w-[60%] py-7 flex flex-col w-full gap-4 ">
             <div className=" font-bold text-2xl text-BLUE05 font-Montserrat text-center">
               Gunakan Kamera Untuk Identifikasi Penyakit
@@ -73,7 +73,7 @@ const HomePage = () => {
             <div className="flex flex-row mx-auto gap-3">
               <Link
                 to="/identifikasi"
-                className="border-2 text-white py-2 px-5 font-semibold bg-GREEN01 rounded-xl flex flex-row items-center gap-1"
+                className="border-2 text-xl text-white py-2 px-5 font-semibold bg-GREEN01 rounded-xl flex flex-row items-center gap-1"
               >
                 Coba Sekarang
               </Link>
@@ -82,6 +82,11 @@ const HomePage = () => {
         </div>
       </div>
 
+      
+      <div className="flex flex-col py-16  items-center">
+        <div className="text-center">
+          <h1 className="font-bold text-2xl">Forum Diskusi Teratas</h1>
+        </div>
       <div className="container grid lg:grid-cols-3  md:grid-cols-2 grid-cols-1 py-16 gap-6">
         {topicDiscussion.map((item) => (
           <div key={item.id}>
@@ -117,6 +122,7 @@ const HomePage = () => {
             </div>
           </div>
         ))}
+      </div>
       </div>
       <div className="drop-shadow-xl">
         <Footer />

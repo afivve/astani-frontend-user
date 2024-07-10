@@ -56,7 +56,7 @@ export const Indentify = (fileObj, setLoading) => async (dispatch, getState) => 
     formData.append("file", fileObj);
 
     const response = await axios.post(
-      `${VITE_API_URL}/predict-dummy`,
+      `${VITE_API_URL}/predict`,
       {
         file: fileObj,
       },

@@ -107,6 +107,7 @@ export const RequestPassword = (email, setIsLoading) => async () => {
 
     setIsLoading(false);
   } catch (error) {
+    console.log(error)
     if (axios.isAxiosError(error)) {
       toastify({
         message: error.response.data.message,
@@ -131,46 +132,46 @@ export const register =
     setIsLoading,
     navigate
   ) =>
-  async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.post(`${VITE_API_URL}/auth/register`, {
-        name,
-        email,
-        phone,
-        age,
-        gender,
-        province,
-        city,
-        password,
-        confPassword,
-      });
-
-      if (response.status === 201) {
-        const { email } = response.data.value;
-
-        // Menyimpan email ke dalam localStorage
-        localStorage.setItem("registeredEmail", email);
-
-        toastify({
-          message: response.data.message,
-          type: "success",
+    async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.post(`${VITE_API_URL}/auth/register`, {
+          name,
+          email,
+          phone,
+          age,
+          gender,
+          province,
+          city,
+          password,
+          confPassword,
         });
-        setTimeout(() => {
-          // Menunggu 2 detik sebelum navigasi ke halaman OTP
-          navigate("/otp");
-        }, 2000);
+
+        if (response.status === 201) {
+          const { email } = response.data.value;
+
+          // Menyimpan email ke dalam localStorage
+          localStorage.setItem("registeredEmail", email);
+
+          toastify({
+            message: response.data.message,
+            type: "success",
+          });
+          setTimeout(() => {
+            // Menunggu 2 detik sebelum navigasi ke halaman OTP
+            navigate("/otp");
+          }, 2000);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          toastify({
+            message: error.response.data.message,
+            type: "error",
+          });
+        }
+        setIsLoading(false);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toastify({
-          message: error.response.data.message,
-          type: "error",
-        });
-      }
-      setIsLoading(false);
-    }
-  };
+    };
 
 export const verify = (otp, setIsLoading, navigate) => async () => {
   try {
@@ -263,7 +264,7 @@ export const ChangePasswordUser =
     try {
       let { token } = getState().auth;
       // console.log(passwordOld);
-      const response = await axios.post(
+      const response = await axios.put(
         `${VITE_API_URL}/auth/change-password`,
         {
           oldPassword,

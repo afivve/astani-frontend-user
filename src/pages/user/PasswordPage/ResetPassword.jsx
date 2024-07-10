@@ -102,7 +102,7 @@ const ResetPassword = () => {
           <button
             onClick={handleClick}
             type="submit"
-            className="flex items-center justify-center w-full font-Poppins bg-YELLOW05  text-white py-[10px]  mt-5 rounded-xl font-bold"
+            className="flex items-center justify-center w-full font-Poppins bg-GREEN01  text-white py-[10px]  mt-5 rounded-xl font-bold"
           >
             {isLoading ? <SpinnerLoading /> : <span>Simpan</span>}
           </button>

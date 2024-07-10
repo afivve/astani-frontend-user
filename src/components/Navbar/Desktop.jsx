@@ -13,11 +13,37 @@ import Persone from "../../assets/persone_plus.svg";
 import { FaHome } from "react-icons/fa";
 import { FaCamera } from "react-icons/fa";
 import { MdForum } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { NotificationUser } from "../../redux/actions/CourseActions";
 
 const Desktop = ({ user }) => {
   const location = useLocation();
 
   const path = location.pathname;
+
+  const dispatch = useDispatch();
+
+  const { token } = useSelector((state) => state.auth);
+  const { totalNotification } = useSelector((state) => state.course);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(NotificationUser());
+    }
+  }, [dispatch, token]);
+
+  const badgeStyles = {
+    backgroundColor: 'red',
+    borderRadius: '50%',
+    color: 'white',
+    padding: '1px 4px',
+    fontSize: '12px',
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    transform: 'translate(50%, -50%)'
+  };
 
   return (
     <>
@@ -72,6 +98,7 @@ const Desktop = ({ user }) => {
                     >
                       <FaHome className="text-lg" />
                     </NavLink>
+
                     <NavLink
                       to="/identifikasi"
                       className={({ isActive }) =>
@@ -82,6 +109,7 @@ const Desktop = ({ user }) => {
                     >
                       <FaCamera className="text-sm" />
                     </NavLink>
+
                     <NavLink
                       to="/discussion"
                       className={({ isActive }) =>
@@ -96,11 +124,16 @@ const Desktop = ({ user }) => {
                       to="/notification"
                       className={({ isActive }) =>
                         isActive
-                          ? "flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Notifikasi']"
-                          : "px-2"
+                          ? "relative flex items-center rounded-[4px] bg-GREEN01 text-white gap-1.5 h-full pl-2.5 pr-3.5 after:content-['Notifikasi']"
+                          : "relative px-2"
                       }
                     >
                       <IoMdNotificationsOutline className="text-2xl" />
+                      {totalNotification > 0 && (
+                        <span style={badgeStyles}>
+                          {totalNotification}
+                        </span>
+                      )}
                     </NavLink>
                     <NavLink
                       to="/profile"
@@ -135,7 +168,7 @@ const Desktop = ({ user }) => {
                       <Link
                         to="/login"
                         className=" h-full flex bg-GREEN01 shadow-md text-white px-2 py-1 rounded-md items-center gap-2 text-base"
-                        // onClick={onLogin}
+                      // onClick={onLogin}
                       >
                         <FaArrowRightToBracket />
                         <p className="font-semibold ">Masuk</p>
@@ -145,7 +178,7 @@ const Desktop = ({ user }) => {
                       <Link
                         to="/register"
                         className=" h-full flex border-2 shadow-md bg-GREEN01 text-white px-2 py-1 rounded-md items-center gap-2 text-base"
-                        // onClick={onLogin}
+                      // onClick={onLogin}
                       >
                         <img src={Persone} />
                         <p className="font-semibold text-YELLOW05 ">Gabung</p>

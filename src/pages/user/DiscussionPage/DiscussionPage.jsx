@@ -33,7 +33,7 @@ export default function DiscussionPage() {
   const handleModal = (discussionId, type) => {
     if (token) {
       if (type === "add") {
-        setMessage("Tamab Diskusi");
+        setMessage("Buat Diskusi");
         setType("add");
         handleOpenModal("addDiscussion");
       } else if (type === "edit") {
@@ -161,7 +161,7 @@ export default function DiscussionPage() {
                             {item.closed == false && user?.name === item.username && (
                               <button
                                 type="button"
-                                className="text-white text-xs font-Montserrat font-bold flex flex-row gap-1 items-center bg-YELLOW05 border-2 p-1 border-YELLOW05 rounded-sm w-auto "
+                                className="text-white text-xs font-Montserrat font-bold flex flex-row gap-1 items-center bg-GREEN01 border-2 p-1 border-YELLOW05 rounded-sm w-auto "
                                 onClick={() => handleSelesai(id, item.discussionId)}
                               >
                                 Selesai
@@ -171,7 +171,7 @@ export default function DiscussionPage() {
                               <>
                                 <button
                                   type="button"
-                                  className="text-YELLOW05 text-xs font-Montserrat font-bold flex flex-row gap-1 items-center bg-YELLOW05/20 border-2 p-1 border-YELLOW05 rounded-sm w-auto "
+                                  className="text-YELLOW05 text-xs font-Montserrat font-bold flex flex-row gap-1 items-center bg-GREEN01/20 border-2 p-1 border-YELLOW05 rounded-sm w-auto "
                                   onClick={() => {
                                     handleModal(item.id, "edit");
                                   }}

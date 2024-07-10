@@ -44,21 +44,7 @@ const Mobile = ({ user }) => {
                     </Link>
                   </>
                 ) : (
-                  <>
-                    {/* <button
-                      className=" p-[1px] rounded-lg"
-                      onClick={() => setOpenSearch(true)}
-                    >
-                      <img src={Notification} />
-                    </button> */}
-                    <Link
-                      as={Link}
-                      to="/login"
-                      className="border-2 p-[1px] rounded-lg bg-YELLOW05"
-                    >
-                      <img src={LoginIcon} />
-                    </Link>
-                  </>
+                    <span></span>
                 )}
               </div>
 
@@ -152,7 +138,7 @@ const Mobile = ({ user }) => {
           >
             <BsFillPersonFill className="text-3xl self-center" />
             <p className="self-center text-sm font-medium align-bottom leading-3">
-              Forum
+              Akun
             </p>
           </NavLink>
         </nav>

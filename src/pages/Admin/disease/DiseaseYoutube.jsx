@@ -35,7 +35,7 @@ const DiseaseYoutube = () => {
   const handleModal = (id, type) => {
     if (type === "add") {
       handleOpenModal("addLiteratur");
-      setMessage("Tamabah URL Youtube Penyakit");
+      setMessage("Tambah URL Youtube Penyakit");
       setType("add");
     } else if (type === "edit") {
       setIdYt(id);
@@ -56,7 +56,7 @@ const DiseaseYoutube = () => {
         <div className="flex flex-col  justify-center items-center container mt-10 mx-auto">
           <div className="flex flex-col mt-2 justify-between w-full mb-4 items-center gap-2">
             <div className="w-full text-start text-xl font-bold gap-2  flex flex-row items-center ">
-              <h1>Data Penyakit {nameDisease}</h1>
+              <h1>Data Video YouTube Penyakit {nameDisease}</h1>
             </div>
             <div className="flex flex-row justify-between w-full mt-4 items-end gap-3">
               <Link

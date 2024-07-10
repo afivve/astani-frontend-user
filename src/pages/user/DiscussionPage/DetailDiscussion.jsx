@@ -95,7 +95,7 @@ export default function DetailDiscussion() {
                   />
                   <h3 className="font-semibold text-xl">{detailDiscussion.username}</h3>
                   <p className="font-gray-100 text-xs">
-                    {new Date(detailDiscussion.createdAt).toLocaleString()}
+                    {detailDiscussion.createdAt}
                   </p>
                 </div>
                 <div>
@@ -214,7 +214,7 @@ export default function DetailDiscussion() {
                             />
                             <h3 className="font-semibold text-lg">{item.username}</h3>
                             <p className="font-gray-100 text-xs">
-                              {new Date(item.createdAt).toLocaleString()}
+                              {item.createdAt}
                             </p>
                           </div>
                           <div className="flex justify-end">

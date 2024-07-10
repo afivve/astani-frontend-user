@@ -36,7 +36,7 @@ const DiseaseHandling = () => {
   const handleModal = (id, type) => {
     if (type === "add") {
       handleOpenModal("addSolution");
-      setMessage("Tamabah Solusi Penyakit");
+      setMessage("Tambah Solusi Penyakit");
       setType(type);
     } else if (type === "edit") {
       setIdPenanganan(id);
@@ -56,7 +56,7 @@ const DiseaseHandling = () => {
         <div className="flex flex-col  justify-center items-center container mt-10 mx-auto">
           <div className="flex flex-col mt-2 justify-between w-full mb-4 items-center gap-2">
             <div className="w-full text-start flex flex-row text-xl  font-bold ">
-              <h1>Data Penyakit {nameDisease}</h1>
+              <h1>Data Penanganan Penyakit {nameDisease}</h1>
             </div>
             <div className="flex flex-row justify-between w-full mt-4 items-end gap-3">
               <Link

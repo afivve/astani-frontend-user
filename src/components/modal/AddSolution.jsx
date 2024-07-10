@@ -19,9 +19,15 @@ const AddSolution = ({ modal, setModal, id, message, type, idPenanganan }) => {
 
   const handleSubmit = () => {
     if (type == "edit" && idPenanganan) {
-      dispatch(EditSolutionData(name, id, idPenanganan));
+      const result = dispatch(EditSolutionData(name, id, idPenanganan));
+      if (result) {
+        setModal(false); 
+      }
     } else {
-      dispatch(AddSolutionData(name, id));
+      const result = dispatch(AddSolutionData(name, id));
+      if (result) {
+        setModal(false); 
+      }
     }
   };
 
@@ -38,6 +44,8 @@ const AddSolution = ({ modal, setModal, id, message, type, idPenanganan }) => {
       setName(handlingDiseaseId || "");
     }
   }, [idPenanganan, handlingDiseaseId]);
+
+  const buttonText = type === "edit" ? "Perbarui" : "Tambah";
 
   return (
     <Modal show={modal} onClose={() => setModal(false)}>
@@ -57,7 +65,7 @@ const AddSolution = ({ modal, setModal, id, message, type, idPenanganan }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit}>{buttonText}</Button>
       </Modal.Footer>
     </Modal>
   );

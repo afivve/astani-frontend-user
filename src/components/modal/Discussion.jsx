@@ -67,7 +67,7 @@ const Discussion = ({ modal, setModal, id, idDiskusi, setIdDiskusi, message, typ
       setNotif("");
       handleHapus();
     }
-  }, [id, discussionToEdit, type, idDiskusi, judul, pertanyaan, setIdDiskusi]);
+  }, [id, discussionToEdit, type, idDiskusi, /* judul, */ /* pertanyaan, */ setIdDiskusi]);
 
   useEffect(() => {
     if (type === "edit" && idDiskusi) {

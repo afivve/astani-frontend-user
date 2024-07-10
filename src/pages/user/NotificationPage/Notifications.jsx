@@ -10,7 +10,7 @@ const Notifications = () => {
   const navigate = useNavigate();
 
   const { token } = useSelector((state) => state.auth);
-  const { notification } = useSelector((state) => state.identify);
+  const { notification } = useSelector((state) => state.course);
 
   useEffect(() => {
     if (token) {
@@ -41,13 +41,13 @@ const Notifications = () => {
                             <p className="text-black font-semibold md:text-sm text-[10px]">
                               {datas?.message}
                             </p>
-                            <p className="text-DEEPGRAY md:text-sm text-[10px] font-normal">
+                            {/* <p className="text-DEEPGRAY md:text-sm text-[10px] font-normal">
                               {datas?.keterangan}
-                            </p>
+                            </p> */}
                           </div>
                         </div>
                         <div className="md:text-sm text-[10px] font-semibold text-DEEPGRAY">
-                          {new Date(datas?.createdAt).toLocaleString() ?? "-"}
+                          {datas?.createdAt ?? "-"}
                         </div>
                       </div>
                     </div>

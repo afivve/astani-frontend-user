@@ -142,7 +142,7 @@ function App() {
           }
         />
 
-        <Route path="/reset-password/:id" element={<ResetPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="*" element={<NotFound />} />
         <Route
           path="/otp"

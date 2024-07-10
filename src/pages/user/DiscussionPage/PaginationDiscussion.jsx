@@ -44,7 +44,7 @@ function PaginationDiscussion({ setPageNumber, pageNumber }) {
           {nextPage !== null && (
             <li key={nextPage}>
               <button
-                className={`flex items-center justify-center px-3 h-8 leading-tight border border-GREEN01 text-gray-500 bg-white hover:bg-YELLOW05 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white`}
+                className={`flex items-center justify-center px-3 h-8 leading-tight border border-GREEN01 text-gray-500 bg-white hover:bg-GREEN01 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white`}
                 onClick={() => handlePage(nextPage)}
               >
                 {nextPage}
